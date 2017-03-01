@@ -1,2 +1,2 @@
-# Therrmopyl-n
-A Homoioi Studios Production.
+# Thermopylon
+A "Homoioi Studios" production.
