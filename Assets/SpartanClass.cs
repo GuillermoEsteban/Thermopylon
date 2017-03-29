@@ -5,9 +5,9 @@ using System;
 public class SpartanClass : MonoBehaviour {
 
     // Use this for initialization
-    float xPos,yPos;
-    float[] direction;
-    float speed;
+    public float xPos,yPos;
+    private float[] direction;
+    public float speed;
 
 
     void Start ()
@@ -32,5 +32,25 @@ public class SpartanClass : MonoBehaviour {
         direction[1] = y - yPos;
         modulo = (float)Math.Sqrt(Math.Pow(direction[0],2)+ Math.Pow(direction[1],2));
 
+    }
+
+    float getPositionX()
+    {
+        return xPos;
+    }
+
+    float getPositionY()
+    {
+        return yPos;
+    }
+
+    void setPositionX(float x)
+    {
+        xPos = x;
+    }
+
+    void setPositionY(float y)
+    {
+        yPos = y;
     }
 }
