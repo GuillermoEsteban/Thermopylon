@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 4538d9af45e3a184495e0dcc0fca55b2
 folderAsset: yes
 timeCreated: 1490384109
+=======
+guid: 1eb48c90df2cc9349b0acbe297394b58
+folderAsset: yes
+timeCreated: 1490395532
+>>>>>>> attack
 licenseType: Free
 DefaultImporter:
   userData: 

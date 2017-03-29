@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/Scene_prova1.unity
+=======
+- path: Assets/Scenes/MenuPrincipal.unity
+>>>>>>> attack
   isLoaded: 1
   isActive: 1
