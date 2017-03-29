@@ -20,7 +20,8 @@ public class Movement : MonoBehaviour {
     {
         for(int i = 0; i< 36; i++)
         {
-			Henomotia[i] = new Vector3 (i, i, 0);
+			//Henomotia[i] = new Vector3 (i, i, 0);
+            Henomotia[i].GetComponent<SpartanClass>();
         }
     }
 
