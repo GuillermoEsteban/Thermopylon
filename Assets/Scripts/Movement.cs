@@ -10,13 +10,23 @@ public class Movement : MonoBehaviour {
         Henomotia = new List<GameObject>();
         for(int i=0; i<36;i++)
         {
-            Henomotia.Add((GameObject)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2.0f, 0, 0), Quaternion.identity));         
+            Henomotia.Add((GameObject)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2f, 0, 0), Quaternion.identity));         
         }
 	}
-	
+
+
+	// Función para inicializar las posiciones de los espartanos de la Henomotia
+    void SetHenomotiaPosition()
+    {
+        for(int i = 0; i< 36; i++)
+        {
+			Henomotia[i] = new Vector3 (i, i, 0);
+        }
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
-	
+        
 	}
 }
