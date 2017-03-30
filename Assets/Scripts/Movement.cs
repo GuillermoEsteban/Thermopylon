@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 public class Movement : MonoBehaviour {
 
+    private const int N_HOPLITES = 36;
+
     List<GameObject> Henomotia;
 	void Start ()
     {
         Henomotia = new List<GameObject>();
-        for(int i=0; i<36;i++)
+        for(int i=0; i<N_HOPLITES;i++)
         {
             Henomotia.Add((GameObject)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2f, 0, 0), Quaternion.identity));         
         }

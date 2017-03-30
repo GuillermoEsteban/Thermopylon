@@ -11,17 +11,22 @@ public class SpartanClass : MonoBehaviour {
     public float speed;
 
     //ATTACKS***********************************
-    public bool sword = true;
-    public bool spear = false;
-    public bool shield = false;
-   
+    private enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
+    private Weapon myWeapon;
 
+    public Movement mov;//Hauríem de saber com tractar directament la instància dels espartans ja creats, o sinó crear-los aquí mateix!
+    private const int N_HOPLITES_ROW = 9;
 
 	void Start ()
     {
         Debug.Log("Per provar els canvis d'arma: SWORD (S), SPEAR (D) SHIELD(F)");
         direction = new float[2];
         speed = 0.5f;
+
+       /* for(int i=0;i<N_HOPLITES_ROW; ++i)
+        {
+            mov[i] = XIPHOS;
+        }*/
     }
 	
 	// Update is called once per frame
