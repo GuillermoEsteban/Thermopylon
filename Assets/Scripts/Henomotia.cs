@@ -12,7 +12,7 @@ public class Henomotia: MonoBehaviour {
 	List<Spartan> SpartanList;	//Lista que alberga todos los espartanos
 	int numSpartan;	//Número de espartanos de la henomotia
 	float posX, posY; 	//Posicición X e Y de la henomotia
-	Formacion formation;	//Formación de la henomotia
+	Formation formation;	//Formación de la henomotia
 	float speed;	//Velocidad de la henomotia
 	float []direction;	//Vector dirección de la henomotia
 	Weapon weapon;		//Definimos el arma de la henomotia
@@ -23,7 +23,7 @@ public class Henomotia: MonoBehaviour {
 		numSpartan = 36;
 
 		//Inicializamos la lista henomotia
-		SpartanList = new List<GameObject>();
+		SpartanList = new List<Spartan>();
 		for(int i=0; i<numSpartan;i++)
 		{
 			SpartanList.Add((Spartan)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2f, 0, 0), Quaternion.identity));         
@@ -36,7 +36,7 @@ public class Henomotia: MonoBehaviour {
 	{
 		for(int i=0; i<numSpartan;i++)
 		{
-			SpartanList [i].moveToPosition ();       
+			SpartanList [i].moveToPosition (1,1);       
 		}
 	}
 
@@ -52,7 +52,7 @@ public class Henomotia: MonoBehaviour {
 
 	bool isAlive()
 	{
-
+		return true;
 	}
 
 }

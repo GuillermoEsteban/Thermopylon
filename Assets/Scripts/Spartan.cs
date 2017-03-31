@@ -16,7 +16,6 @@ public class Spartan : MonoBehaviour {
     private enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
     private Weapon myWeapon;
 
-    public Movement mov;//Hauríem de saber com tractar directament la instància dels espartans ja creats, o sinó crear-los aquí mateix!
     private const int N_HOPLITES_ROW = 9;
 
 	void Start ()
@@ -107,7 +106,7 @@ public class Spartan : MonoBehaviour {
             return true;
         }
     }
-
+*/
 
 }
 
