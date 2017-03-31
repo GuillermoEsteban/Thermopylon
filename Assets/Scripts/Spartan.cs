@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class SpartanClass : MonoBehaviour {
+public class Spartan : MonoBehaviour {
 
     // Use this for initialization
     //MOVIMENT**********************************
@@ -40,7 +40,7 @@ public class SpartanClass : MonoBehaviour {
         }
 	}
 
-    void moveToPosition(float x, float y)
+    public void moveToPosition(float x, float y)
     {
         float modulo;
         direction[0] = x - xPos;
@@ -100,7 +100,7 @@ public class SpartanClass : MonoBehaviour {
     
     //Aquesta funció donarà errors de moment, ja que s'ha d'implementar la classe dels Perses i també buscar com tractar els colliders.
 
-    bool inContact(SpartanClass Spartan, PersianClass Persian)
+    bool inContact(Spartan Spartan, PersianClass Persian)
     {
         if (true)//colliders
         {
