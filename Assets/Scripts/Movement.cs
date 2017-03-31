@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Movement : MonoBehaviour {
 
-    private const int N_HOPLITES = 36;
+    private int N_HOPLITES = 36;
 
     List<GameObject> Henomotia;
 	void Start ()
