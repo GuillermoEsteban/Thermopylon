@@ -66,7 +66,7 @@ public class SpartanClass : MonoBehaviour {
         yPos = y;
     }
 
-
+    /*
     void changeSword()
     {
         //primer provarem amb un input que després haurem de canviar.
@@ -95,7 +95,7 @@ public class SpartanClass : MonoBehaviour {
             Debug.Log("SHIELD ON");
         }
     }
-    /*
+    
     //Aquesta funció donarà errors de moment, ja que s'ha d'implementar la classe dels Perses i també buscar com tractar els colliders.
 
     bool inContact(SpartanClass Spartan, PersianClass Persian)
