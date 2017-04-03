@@ -26,8 +26,12 @@ public class Henomotia: MonoBehaviour {
 		SpartanList = new List<Spartan>();
 		for(int i=0; i<numSpartan;i++)
 		{
-			SpartanList.Add((Spartan)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2.0f, 0.0f, 0.0f), Quaternion.identity));         
+			SpartanList.Add((Spartan)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2.0f, 0.0f,0.0f), Quaternion.identity));         
 		}
+	}
+
+	void Update()
+	{
 
 	}
 
@@ -36,7 +40,7 @@ public class Henomotia: MonoBehaviour {
 	{
 		for(int i=0; i<numSpartan;i++)
 		{
-			SpartanList [i].moveToPosition (1.0f,1.0f);       
+			SpartanList [i].moveToPosition();       
 		}
 	}
 
