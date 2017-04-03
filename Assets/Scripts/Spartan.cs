@@ -8,7 +8,7 @@ public class Spartan : MonoBehaviour {
 
     // Use this for initialization
     //MOVIMENT**********************************
-    float xPos,yPos;
+    float xPos,yPos,destinyX,destinyY;
     private float[] direction;
     public float speed;
 
@@ -22,7 +22,13 @@ public class Spartan : MonoBehaviour {
     {
         Debug.Log("Per provar els canvis d'arma: SWORD (S), SPEAR (D) SHIELD(F)");
         direction = new float[2];
+		direction [0] = 0.0f;
+		direction [1] = 0.0f;
         speed = 0.5f;
+		xPos = 0.0f;
+		yPos = 0.0f;
+		destinyX = xPos;
+		destinyY = yPos;
 
        /* for(int i=0;i<N_HOPLITES_ROW; ++i)
         {
@@ -35,17 +41,37 @@ public class Spartan : MonoBehaviour {
     {
 	    if(Input.GetMouseButtonDown(0))
         {
-            moveToPosition(Input.mousePosition.x, Input.mousePosition.y);
+			destinyX = Input.mousePosition.x;
+			destinyY = Input.mousePosition.y;
+			setDirection(Input.mousePosition.x, Input.mousePosition.y);
         }
+
 	}
 
-    public void moveToPosition(float x, float y)
+    public void setDirection(float x, float y)
     {
         float modulo;
         direction[0] = x - xPos;
         direction[1] = y - yPos;
         modulo = (float)Math.Sqrt(Math.Pow(direction[0], 2) + Math.Pow(direction[1], 2));
+		direction [0] = (direction [0] / modulo) * speed;
+		direction [1] = (direction [1] / modulo) * speed;
     }
+
+	public void moveToPosition(float x, float y)
+	{
+		if (Math.Abs (xPos - destinyX) > 0.01) 
+		{
+			xPos += direction [0];
+			yPos += direction [1];
+		} 
+		else
+		{
+			xPos = destinyX;
+			yPos = destinyY;
+		}
+			
+	}
 
     float getPositionX()
     {

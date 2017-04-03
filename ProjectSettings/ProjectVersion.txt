@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 m_EditorVersion: 5.3.5f1
 m_StandardAssetsVersion: 0
@@ -8,3 +9,6 @@ m_EditorVersion: 5.5.1f1
 m_EditorVersion: 5.5.2f1
 >>>>>>> Developement
 >>>>>>> Formaciones
+=======
+m_EditorVersion: 5.5.2f1
+>>>>>>> Stashed changes
