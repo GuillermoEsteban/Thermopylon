@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using UnityEngine.UI;
+
 
 public class Spartan : MonoBehaviour {
 
@@ -21,10 +21,10 @@ public class Spartan : MonoBehaviour {
     private Sprite[] sprites;
 
     //ATTACKS***********************************
-    private enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
-    private Weapon myWeapon;
-
-    private const int N_HOPLITES_ROW = 9;
+    private  enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
+    //Weapon at start is the spear (aspis)
+    Weapon myWeapon;
+    
 
 	void Start ()
     {
@@ -38,17 +38,17 @@ public class Spartan : MonoBehaviour {
         spriteR = gameObject.GetComponent<SpriteRenderer>();
         sprites = Resources.LoadAll<Sprite>("Sprites/spartans_walking");
 
-       /* for(int i=0;i<N_HOPLITES_ROW; ++i)
-        {
-            mov[i] = XIPHOS;
-        }*/
+
+       myWeapon = Weapon.ASPIS;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
 		moveToPosition();
-        
+        //Press S for shield, D for Javelin, A for Aspis, W for Xiphos
+        changeWeapon();
+
 	}
 
 	public void moveToPosition()
@@ -63,8 +63,6 @@ public class Spartan : MonoBehaviour {
             angle = Vector2.Angle(Vector2.right, vectorDirector.normalized);
             
             changeSprite(angle,posY);
-
-            
 
 		}
 		transform.position = Vector2.MoveTowards (transform.position, direction, speed * Time.deltaTime);
@@ -108,46 +106,39 @@ public class Spartan : MonoBehaviour {
             spriteR.sprite = sprites[7];
         }
 
+    }
 
-
-
+   private void changeWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            myWeapon = Weapon.SHIELD;
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            myWeapon = Weapon.ASPIS;
+        }
+        else if (Input.GetKey("w"))
+        {
+            myWeapon = Weapon.XIPHOS;
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            myWeapon = Weapon.JAVELIN;
+        }
+        
+        Debug.Log(myWeapon);
 
     }
 
    
-
-    /*
-    void changeSword()
-    {
-        //primer provarem amb un input que després haurem de canviar.
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            sword = true;
-            Debug.Log("SOWRD ON");
-            //aquí haurem de cridar la funció d'animàtica perq canviin l'arma i continuin lluitant amb les animacions de l'espasa.
-        }
-    }
-
-    void changeSpear()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            spear = true;
-            Debug.Log("SPEAR ON");
-        }
-    }
-
-    void changeShield()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            shield = true;
-            Debug.Log("SHIELD ON");
-        }
-    }
+        
+        
+     
     
     //Aquesta funció donarà errors de moment, ja que s'ha d'implementar la classe dels Perses i també buscar com tractar els colliders.
 
+/*
     bool inContact(Spartan Spartan, PersianClass Persian)
     {
         if (true)//colliders
