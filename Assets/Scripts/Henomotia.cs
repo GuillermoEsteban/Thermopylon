@@ -32,7 +32,7 @@ public class Henomotia: MonoBehaviour {
 
 	void Update()
 	{
-
+		MoveHenomotia ();
 	}
 
 	//MÉTODOS
