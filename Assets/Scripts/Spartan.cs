@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class Spartan : MonoBehaviour {
 
@@ -10,6 +11,14 @@ public class Spartan : MonoBehaviour {
     //MOVIMENT**********************************
 	private Vector2 direction;
     public float speed;
+    //angles:
+    float angle;
+    private Vector2 vectorDirector;
+    private Vector2 puntAnterior;
+    float posY;
+    //Canvi de sprites
+    private SpriteRenderer spriteR;
+    private Sprite[] sprites;
 
     //ATTACKS***********************************
     private enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
@@ -19,9 +28,15 @@ public class Spartan : MonoBehaviour {
 
 	void Start ()
     {
-        //Debug.Log("Per provar els canvis d'arma: SWORD (S), SPEAR (D) SHIELD(F)");
 		direction=transform.position;
-        speed = 2.0f;
+        speed = 5.0f;
+
+        //obtenim el punt inicial:
+        puntAnterior = transform.position;
+
+        //get first sprite:
+        spriteR = gameObject.GetComponent<SpriteRenderer>();
+        sprites = Resources.LoadAll<Sprite>("Sprites/spartans_walking");
 
        /* for(int i=0;i<N_HOPLITES_ROW; ++i)
         {
@@ -33,6 +48,7 @@ public class Spartan : MonoBehaviour {
 	void Update ()
     {
 		moveToPosition();
+        
 	}
 
 	public void moveToPosition()
@@ -40,10 +56,65 @@ public class Spartan : MonoBehaviour {
 		if (Input.GetMouseButtonDown (1))
 		{
 			direction = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+            
+            vectorDirector = (direction - puntAnterior);
+            posY = vectorDirector.y;
+            //calculem l'angle i canviem l'sprite.
+            angle = Vector2.Angle(Vector2.right, vectorDirector.normalized);
+            
+            changeSprite(angle,posY);
+
+            
 
 		}
-		transform.position = Vector2.MoveTowards (transform.position, direction, speed * Time.deltaTime);	
-	}
+		transform.position = Vector2.MoveTowards (transform.position, direction, speed * Time.deltaTime);
+        puntAnterior = transform.position;
+    }
+
+    //funció per canviar la imatge de l'sprite segons l'angle:
+    static int numberSprites = 8;
+    public void changeSprite(float angle, float posY)
+    {
+        if(angle<22.5f)
+        {
+            spriteR.sprite = sprites[2];
+        }
+        else if(22.5f<=angle && angle<67.5f && posY>0)
+        {
+            spriteR.sprite = sprites[3];
+        }
+        else if (67.5f <= angle && angle < 112.5f && posY > 0)
+        {
+            spriteR.sprite = sprites[4];
+        }
+        else if (112.5f <= angle && angle < 157.5f && posY > 0)
+        {
+            spriteR.sprite = sprites[5];
+        }
+        else if (angle>157.5f)
+        {
+            spriteR.sprite = sprites[6];
+        }
+        else if (22.5f <= angle && angle < 67.5f && posY < 0)
+        {
+            spriteR.sprite = sprites[1];
+        }
+        else if (67.5f <= angle && angle < 112.5f && posY < 0)
+        {
+            spriteR.sprite = sprites[0];
+        }
+        else if (112.5f <= angle && angle < 157.5f && posY < 0)
+        {
+            spriteR.sprite = sprites[7];
+        }
+
+
+
+
+
+    }
+
+   
 
     /*
     void changeSword()
