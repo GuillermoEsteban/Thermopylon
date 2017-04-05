@@ -70,8 +70,7 @@ public class Spartan : MonoBehaviour {
     }
 
     //funció per canviar la imatge de l'sprite segons l'angle:
-    static int numberSprites = 8;
-    public void changeSprite(float angle, float posY)
+     public void changeSprite(float angle, float posY)
     {
         if(angle<22.5f)
         {
@@ -110,25 +109,26 @@ public class Spartan : MonoBehaviour {
 
    private void changeWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey("s"))
         {
             myWeapon = Weapon.SHIELD;
+            Debug.Log(myWeapon);
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey("a"))
         {
             myWeapon = Weapon.ASPIS;
+            Debug.Log(myWeapon);
         }
         else if (Input.GetKey("w"))
         {
             myWeapon = Weapon.XIPHOS;
+            Debug.Log(myWeapon);
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKey("d"))
         {
             myWeapon = Weapon.JAVELIN;
-        }
-        
-        Debug.Log(myWeapon);
-
+            Debug.Log(myWeapon);
+        } 
     }
 
    
