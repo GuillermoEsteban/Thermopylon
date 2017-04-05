@@ -47,7 +47,6 @@ public class Spartan : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		moveToPosition();
         
 	}
 
@@ -56,24 +55,34 @@ public class Spartan : MonoBehaviour {
 		if (Input.GetMouseButtonDown (1))
 		{
 			direction = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-            
+		}
+		transform.position = Vector2.MoveTowards (transform.position, direction, speed * Time.deltaTime);
+    }
+
+    public void moveToPosition(Vector2 direction)
+    {
+        this.direction = direction;
+        transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
+
+    }
+
+    public void changeAngle()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
             vectorDirector = (direction - puntAnterior);
             posY = vectorDirector.y;
             //calculem l'angle i canviem l'sprite.
             angle = Vector2.Angle(Vector2.right, vectorDirector.normalized);
-            
-            changeSprite(angle,posY);
 
-            
-
-		}
-		transform.position = Vector2.MoveTowards (transform.position, direction, speed * Time.deltaTime);
+            changeSpriteDirection(angle, posY);
+        }
         puntAnterior = transform.position;
     }
 
     //funció per canviar la imatge de l'sprite segons l'angle:
     static int numberSprites = 8;
-    public void changeSprite(float angle, float posY)
+    public void changeSpriteDirection(float angle, float posY)
     {
         if(angle<22.5f)
         {

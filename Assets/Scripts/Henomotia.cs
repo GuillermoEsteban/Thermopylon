@@ -9,42 +9,50 @@ public class Henomotia: MonoBehaviour {
 	enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}	//Enum de las tres armas
 
 	//ATRIBUTOS
-	private List<Spartan> SpartanList;	//Lista que alberga todos los espartanos
+	private List<GameObject> SpartanList;	//Lista que alberga todos los espartanos
 	private int numSpartan;	//Número de espartanos de la henomotia
-	private float posX, posY; 	//Posicición X e Y de la henomotia
-	private Formation formation;	//Formación de la henomotia
-	private float speed;	//Velocidad de la henomotia
-	private float []direction;	//Vector dirección de la henomotia
-	private Weapon weapon;		//Definimos el arma de la henomotia
+	private Formation formation;    //Formación de la henomotia
+    private Vector2 direction; //Vector dirección de la henomotia
+    public float speed; 
+    private Weapon weapon;		//Definimos el arma de la henomotia
 
 	//START
 	void Start ()
 	{
-		numSpartan = 36;
+		numSpartan = 5;
 
 		//Inicializamos la lista henomotia
-		SpartanList = new List<Spartan>();
+		SpartanList = new List<GameObject>();
 		for(int i=0; i<numSpartan;i++)
 		{
-			SpartanList.Add((Spartan)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2.0f, 0.0f,0.0f), Quaternion.identity));         
+			SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan"), new Vector3(i * 2.0f, 0.0f,0.0f), Quaternion.identity));   
 		}
-	}
+
+        direction = transform.position;
+        speed = 5.0f;
+    }
 
 	void Update()
 	{
+        moveHenomotia();
+    }
 
-	}
+    //MÉTODOS
+    public void moveHenomotia()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            
+        }
+        for (int i=0;i<numSpartan;i++)
+        {
+            SpartanList[i].GetComponent<Spartan>().moveToPosition(direction);
+        }
+        transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
+    }
 
-	//MÉTODOS
-	public void MoveHenomotia()
-	{
-		for(int i=0; i<numSpartan;i++)
-		{
-			SpartanList [i].moveToPosition();       
-		}
-	}
-
-	public void ChangeWeapon()
+    public void ChangeWeapon()
 	{
 		
 	}
