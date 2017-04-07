@@ -78,31 +78,81 @@ public class Spartan : MonoBehaviour {
         }
         else if(22.5f<=angle && angle<67.5f && posY>0)
         {
-            spriteR.sprite = sprites[3];
+            //spriteR.sprite = sprites[3];
+            GetComponent<Animator>().SetBool("anim0", false);
+            GetComponent<Animator>().SetBool("anim1", false);
+            GetComponent<Animator>().SetBool("anim2", false);
+            GetComponent<Animator>().SetBool("anim3", true);
+            GetComponent<Animator>().SetBool("anim4", false);
+            GetComponent<Animator>().SetBool("anim5", false);
+            GetComponent<Animator>().SetBool("anim6", false);
+            GetComponent<Animator>().SetBool("anim7", false);
         }
         else if (67.5f <= angle && angle < 112.5f && posY > 0)
         {
-            spriteR.sprite = sprites[4];
+            GetComponent<Animator>().SetBool("anim0", false);
+            GetComponent<Animator>().SetBool("anim1", false);
+            GetComponent<Animator>().SetBool("anim2", false);
+            GetComponent<Animator>().SetBool("anim3", false);
+            GetComponent<Animator>().SetBool("anim4", true);
+            GetComponent<Animator>().SetBool("anim5", false);
+            GetComponent<Animator>().SetBool("anim6", false);
+            GetComponent<Animator>().SetBool("anim7", false);
         }
         else if (112.5f <= angle && angle < 157.5f && posY > 0)
         {
-            spriteR.sprite = sprites[5];
+            GetComponent<Animator>().SetBool("anim0", false);
+            GetComponent<Animator>().SetBool("anim1", false);
+            GetComponent<Animator>().SetBool("anim2", false);
+            GetComponent<Animator>().SetBool("anim3", false);
+            GetComponent<Animator>().SetBool("anim4", false);
+            GetComponent<Animator>().SetBool("anim5", true);
+            GetComponent<Animator>().SetBool("anim6", false);
+            GetComponent<Animator>().SetBool("anim7", false);
         }
         else if (angle>157.5f)
         {
-            spriteR.sprite = sprites[6];
+            GetComponent<Animator>().SetBool("anim0", false);
+            GetComponent<Animator>().SetBool("anim1", false);
+            GetComponent<Animator>().SetBool("anim2", false);
+            GetComponent<Animator>().SetBool("anim3", false);
+            GetComponent<Animator>().SetBool("anim4", false);
+            GetComponent<Animator>().SetBool("anim5", false);
+            GetComponent<Animator>().SetBool("anim6", true);
+            GetComponent<Animator>().SetBool("anim7", false);
         }
         else if (22.5f <= angle && angle < 67.5f && posY < 0)
         {
-            spriteR.sprite = sprites[1];
+            GetComponent<Animator>().SetBool("anim0", false);
+            GetComponent<Animator>().SetBool("anim1", false);
+            GetComponent<Animator>().SetBool("anim2", false);
+            GetComponent<Animator>().SetBool("anim3", false);
+            GetComponent<Animator>().SetBool("anim4", false);
+            GetComponent<Animator>().SetBool("anim5", false);
+            GetComponent<Animator>().SetBool("anim6", false);
+            GetComponent<Animator>().SetBool("anim7", true);
         }
         else if (67.5f <= angle && angle < 112.5f && posY < 0)
         {
-            spriteR.sprite = sprites[0];
+            GetComponent<Animator>().SetBool("anim0", true);
+            GetComponent<Animator>().SetBool("anim1", false);
+            GetComponent<Animator>().SetBool("anim2", false);
+            GetComponent<Animator>().SetBool("anim3", false);
+            GetComponent<Animator>().SetBool("anim4", false);
+            GetComponent<Animator>().SetBool("anim5", false);
+            GetComponent<Animator>().SetBool("anim6", false);
+            GetComponent<Animator>().SetBool("anim7", false);
         }
         else if (112.5f <= angle && angle < 157.5f && posY < 0)
         {
-            spriteR.sprite = sprites[7];
+            GetComponent<Animator>().SetBool("anim0", false);
+            GetComponent<Animator>().SetBool("anim1", true);
+            GetComponent<Animator>().SetBool("anim2", false);
+            GetComponent<Animator>().SetBool("anim3", false);
+            GetComponent<Animator>().SetBool("anim4", false);
+            GetComponent<Animator>().SetBool("anim5", false);
+            GetComponent<Animator>().SetBool("anim6", false);
+            GetComponent<Animator>().SetBool("anim7", false);
         }
 
     }
