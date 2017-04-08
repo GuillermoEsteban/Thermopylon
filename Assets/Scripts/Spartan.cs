@@ -5,6 +5,7 @@ using System.Collections;
 using System;
 
 
+
 public class Spartan : MonoBehaviour {
 
     // Use this for initialization
@@ -15,14 +16,14 @@ public class Spartan : MonoBehaviour {
     float angle;
     private Vector2 vectorDirector;
     private Vector2 puntAnterior;
+    private Vector2 puntNou;
     float posY;
     //Canvi de sprites
-    private SpriteRenderer spriteR;
-    private Sprite[] sprites;
+    public Animator anim;
+    private bool moving;
 
     //ATTACKS***********************************
     private  enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
-    //Weapon at start is the spear (aspis)
     Weapon myWeapon;
     
 
@@ -33,13 +34,15 @@ public class Spartan : MonoBehaviour {
 
         //obtenim el punt inicial:
         puntAnterior = transform.position;
+        puntNou = transform.position;
 
-        //get first sprite:
-        spriteR = gameObject.GetComponent<SpriteRenderer>();
-        sprites = Resources.LoadAll<Sprite>("Sprites/spartans_walking");
+        //l'arma per defecte serà l'Aspis, la llança.
+        myWeapon = Weapon.ASPIS;
 
-
-       myWeapon = Weapon.ASPIS;
+        //creem la variable animació per més comoditat:
+        anim = GetComponent<Animator>();
+        moving = false;
+        anim.SetBool("moving", false);
     }
 	
 	// Update is called once per frame
@@ -57,111 +60,123 @@ public class Spartan : MonoBehaviour {
 		{
 			direction = Camera.main.ScreenToWorldPoint (Input.mousePosition);
             
+
             vectorDirector = (direction - puntAnterior);
             posY = vectorDirector.y;
             //calculem l'angle i canviem l'sprite.
             angle = Vector2.Angle(Vector2.right, vectorDirector.normalized);
-            
-            changeSprite(angle,posY);
+        }
 
-		}
-		transform.position = Vector2.MoveTowards (transform.position, direction, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
+        puntNou = transform.position;
+
+        if (puntNou == puntAnterior)
+        {
+            anim.SetBool("moving", false);
+        }
+        else anim.SetBool("moving", true);
+
+        changeSprite(angle, posY);
+
+
         puntAnterior = transform.position;
     }
 
     //funció per canviar la imatge de l'sprite segons l'angle:
      public void changeSprite(float angle, float posY)
     {
-        if(angle<22.5f)
+        if(angle<22.5f && anim.GetBool("moving"))
         {
-            GetComponent<Animator>().SetBool("anim0", false);
-            GetComponent<Animator>().SetBool("anim1", false);
-            GetComponent<Animator>().SetBool("anim2", true);
-            GetComponent<Animator>().SetBool("anim3", false);
-            GetComponent<Animator>().SetBool("anim4", false);
-            GetComponent<Animator>().SetBool("anim5", false);
-            GetComponent<Animator>().SetBool("anim6", false);
-            GetComponent<Animator>().SetBool("anim7", false);
+                anim.SetBool("anim0", false);
+                anim.SetBool("anim1", false);
+                anim.SetBool("anim2", true);
+                anim.SetBool("anim3", false);
+                anim.SetBool("anim4", false);
+                anim.SetBool("anim5", false);
+                anim.SetBool("anim6", false);
+                anim.SetBool("anim7", false);
         }
-        else if(22.5f<=angle && angle<67.5f && posY>0)
+        else if(22.5f<=angle && angle<67.5f && posY>0 && anim.GetBool("moving"))
         {
-            GetComponent<Animator>().SetBool("anim0", false);
-            GetComponent<Animator>().SetBool("anim1", false);
-            GetComponent<Animator>().SetBool("anim2", false);
-            GetComponent<Animator>().SetBool("anim3", true);
-            GetComponent<Animator>().SetBool("anim4", false);
-            GetComponent<Animator>().SetBool("anim5", false);
-            GetComponent<Animator>().SetBool("anim6", false);
-            GetComponent<Animator>().SetBool("anim7", false);
+                anim.SetBool("anim0", false);
+                anim.SetBool("anim1", false);
+                anim.SetBool("anim2", false);
+                anim.SetBool("anim3", true);
+                anim.SetBool("anim4", false);
+                anim.SetBool("anim5", false);
+                anim.SetBool("anim6", false);
+                anim.SetBool("anim7", false);
         }
-        else if (67.5f <= angle && angle < 112.5f && posY > 0)
+        else if (67.5f <= angle && angle < 112.5f && posY > 0 && anim.GetBool("moving"))
         {
-            GetComponent<Animator>().SetBool("anim0", false);
-            GetComponent<Animator>().SetBool("anim1", false);
-            GetComponent<Animator>().SetBool("anim2", false);
-            GetComponent<Animator>().SetBool("anim3", false);
-            GetComponent<Animator>().SetBool("anim4", true);
-            GetComponent<Animator>().SetBool("anim5", false);
-            GetComponent<Animator>().SetBool("anim6", false);
-            GetComponent<Animator>().SetBool("anim7", false);
-        }
-        else if (112.5f <= angle && angle < 157.5f && posY > 0)
-        {
-            GetComponent<Animator>().SetBool("anim0", false);
-            GetComponent<Animator>().SetBool("anim1", false);
-            GetComponent<Animator>().SetBool("anim2", false);
-            GetComponent<Animator>().SetBool("anim3", false);
-            GetComponent<Animator>().SetBool("anim4", false);
-            GetComponent<Animator>().SetBool("anim5", true);
-            GetComponent<Animator>().SetBool("anim6", false);
-            GetComponent<Animator>().SetBool("anim7", false);
-        }
-        else if (angle>157.5f)
-        {
-            GetComponent<Animator>().SetBool("anim0", false);
-            GetComponent<Animator>().SetBool("anim1", false);
-            GetComponent<Animator>().SetBool("anim2", false);
-            GetComponent<Animator>().SetBool("anim3", false);
-            GetComponent<Animator>().SetBool("anim4", false);
-            GetComponent<Animator>().SetBool("anim5", false);
-            GetComponent<Animator>().SetBool("anim6", true);
-            GetComponent<Animator>().SetBool("anim7", false);
-        }
-        else if (22.5f <= angle && angle < 67.5f && posY < 0)
-        {
-            GetComponent<Animator>().SetBool("anim0", false);
-            GetComponent<Animator>().SetBool("anim1", true);
-            GetComponent<Animator>().SetBool("anim2", false);
-            GetComponent<Animator>().SetBool("anim3", false);
-            GetComponent<Animator>().SetBool("anim4", false);
-            GetComponent<Animator>().SetBool("anim5", false);
-            GetComponent<Animator>().SetBool("anim6", false);
-            GetComponent<Animator>().SetBool("anim7", false);
-        }
-        else if (67.5f <= angle && angle < 112.5f && posY < 0)
-        {
-            GetComponent<Animator>().SetBool("anim0", true);
-            GetComponent<Animator>().SetBool("anim1", false);
-            GetComponent<Animator>().SetBool("anim2", false);
-            GetComponent<Animator>().SetBool("anim3", false);
-            GetComponent<Animator>().SetBool("anim4", false);
-            GetComponent<Animator>().SetBool("anim5", false);
-            GetComponent<Animator>().SetBool("anim6", false);
-            GetComponent<Animator>().SetBool("anim7", false);
-        }
-        else if (112.5f <= angle && angle < 157.5f && posY < 0)
-        {
-            GetComponent<Animator>().SetBool("anim0", false);
-            GetComponent<Animator>().SetBool("anim1", false);
-            GetComponent<Animator>().SetBool("anim2", false);
-            GetComponent<Animator>().SetBool("anim3", false);
-            GetComponent<Animator>().SetBool("anim4", false);
-            GetComponent<Animator>().SetBool("anim5", false);
-            GetComponent<Animator>().SetBool("anim6", false);
-            GetComponent<Animator>().SetBool("anim7", true);
-        }
 
+                anim.SetBool("anim0", false);
+                anim.SetBool("anim1", false);
+                anim.SetBool("anim2", false);
+                anim.SetBool("anim3", false);
+                anim.SetBool("anim4", true);
+                anim.SetBool("anim5", false);
+                anim.SetBool("anim6", false);
+                anim.SetBool("anim7", false);  
+        }
+        else if (112.5f <= angle && angle < 157.5f && posY > 0 && anim.GetBool("moving"))
+        {
+                anim.SetBool("anim0", false);
+                anim.SetBool("anim1", false);
+                anim.SetBool("anim2", false);
+                anim.SetBool("anim3", false);
+                anim.SetBool("anim4", false);
+                anim.SetBool("anim5", true);
+                anim.SetBool("anim6", false);
+                anim.SetBool("anim7", false);
+        }
+        else if (angle>157.5f && anim.GetBool("moving"))
+        {
+                anim.SetBool("anim0", false);
+                anim.SetBool("anim1", false);
+                anim.SetBool("anim2", false);
+                anim.SetBool("anim3", false);
+                anim.SetBool("anim4", false);
+                anim.SetBool("anim5", false);
+                anim.SetBool("anim6", true);
+                anim.SetBool("anim7", false);
+        }
+        else if (22.5f <= angle && angle < 67.5f && posY < 0 && anim.GetBool("moving"))
+        {
+                anim.SetBool("anim0", false);
+                anim.SetBool("anim1", true);
+                anim.SetBool("anim2", false);
+                anim.SetBool("anim3", false);
+                anim.SetBool("anim4", false);
+                anim.SetBool("anim5", false);
+                anim.SetBool("anim6", false);
+                anim.SetBool("anim7", false);
+        }
+        else if (67.5f <= angle && angle < 112.5f && posY < 0 && anim.GetBool("moving"))
+        {
+
+                anim.SetBool("anim0", true);
+                anim.SetBool("anim1", false);
+                anim.SetBool("anim2", false);
+                anim.SetBool("anim3", false);
+                anim.SetBool("anim4", false);
+                anim.SetBool("anim5", false);
+                anim.SetBool("anim6", false);
+                anim.SetBool("anim7", false);
+        }
+        else if (112.5f <= angle && angle < 157.5f && posY < 0 && anim.GetBool("moving"))
+        {
+                anim.SetBool("anim0", false);
+                anim.SetBool("anim1", false);
+                anim.SetBool("anim2", false);
+                anim.SetBool("anim3", false);
+                anim.SetBool("anim4", false);
+                anim.SetBool("anim5", false);
+                anim.SetBool("anim6", false);
+                anim.SetBool("anim7", true);
+        }
     }
+
 
    private void changeWeapon()
     {
