@@ -10,13 +10,13 @@ public class Spartan : MonoBehaviour {
 
     // Use this for initialization
     //MOVIMENT**********************************
-	private Vector2 direction;
+	private Vector3 destiny;
     public float speed;
     //angles:
     float angle;
-    private Vector2 vectorDirector;
-    private Vector2 puntAnterior;
-    private Vector2 puntNou;
+    private Vector3 vectorDirector;
+    private Vector3 puntAnterior;
+    private Vector3 puntNou;
     float posY;
     //Canvi de sprites
     public Animator anim;
@@ -29,7 +29,7 @@ public class Spartan : MonoBehaviour {
 
 	void Start ()
     {
-		direction=transform.position;
+		destiny=transform.position;
         speed = 5.0f;
 
         //obtenim el punt inicial:
@@ -58,16 +58,13 @@ public class Spartan : MonoBehaviour {
 	{
 		if (Input.GetMouseButtonDown (1))
 		{
-			direction = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-            
-
-            vectorDirector = (direction - puntAnterior);
+            vectorDirector = (destiny - puntAnterior);
             posY = vectorDirector.y;
             //calculem l'angle i canviem l'sprite.
-            angle = Vector2.Angle(Vector2.right, vectorDirector.normalized);
+            angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
         puntNou = transform.position;
 
         if (puntNou == puntAnterior)
@@ -80,6 +77,16 @@ public class Spartan : MonoBehaviour {
 
 
         puntAnterior = transform.position;
+    }
+
+    public void setDestiny(Vector3 direction)
+    {
+        destiny = transform.position + direction;
+    }
+
+    public Vector3 getDestiny()
+    {
+        return destiny;
     }
 
     //funció per canviar la imatge de l'sprite segons l'angle:
