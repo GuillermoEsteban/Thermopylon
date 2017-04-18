@@ -1,11 +1,16 @@
 fileFormatVersion: 2
 guid: dd4e5806da5d0824b975b39435df3caa
-timeCreated: 1492457358
+timeCreated: 1492512198
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: spartan_walk_1_0
     21300002: spartan_walk_1_1
+    21300004: spartan_walk_1_2
+    21300006: spartan_walk_1_3
+    21300008: spartan_walk_1_4
+    21300010: spartan_walk_1_5
+    21300012: spartan_walk_1_6
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -121,6 +126,71 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_1_2
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_1_3
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_1_4
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_1_5
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_1_6
+      rect:
+        serializedVersion: 2
+        x: 3840
         y: 0
         width: 640
         height: 640

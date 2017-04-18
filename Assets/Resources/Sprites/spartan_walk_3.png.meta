@@ -1,11 +1,17 @@
 fileFormatVersion: 2
 guid: 71c3c0acabb24744cab09175369c747d
-timeCreated: 1492457392
+timeCreated: 1492512170
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: spartan_walk_3_0
     21300002: spartan_walk_3_1
+    21300004: spartan_walk_3_2
+    21300006: spartan_walk_3_3
+    21300008: spartan_walk_3_4
+    21300010: spartan_walk_3_5
+    21300012: spartan_walk_3_6
+    21300014: spartan_walk_3_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -121,6 +127,84 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 640
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_3_2
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_3_3
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_3_4
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_3_5
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_3_6
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spartan_walk_3_7
+      rect:
+        serializedVersion: 2
+        x: 4480
         y: 0
         width: 640
         height: 640

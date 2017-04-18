@@ -41,7 +41,7 @@ public class Spartan : MonoBehaviour {
 
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
-        moving = false;
+        
         anim.SetBool("moving", false);
     }
 	
