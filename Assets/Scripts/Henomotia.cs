@@ -69,6 +69,7 @@ public class Henomotia: MonoBehaviour {
         if (Input.GetMouseButtonDown(1))
         {
             destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            destiny = new Vector3(destiny.x, destiny.y, 0.0f);
             vectorDirector = destiny - transform.position;
 
             for(int i=0; i<numSpartan;i++)
