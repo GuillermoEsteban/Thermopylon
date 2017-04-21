@@ -20,7 +20,7 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
-		numSpartan = 36;
+		numSpartan = 13;
 
         speed = 5.0f;
 
