@@ -96,3 +96,109 @@ public class Henomotia: MonoBehaviour {
 	}
 
 }
+
+
+
+
+
+public void CircleFormation()
+{
+	//Constante radio
+	const int r= 10;
+	//Radio de la circunferencia de la henomotia
+	float radius = r;
+	//Contador
+	int i;
+	//Angulo auxiliar que marca la dirección de los espartanos
+	float auxAngle = 0;
+
+	if (SpartanList.Count == numSpartan) 
+	{
+		for(i = 0; i<4;i++ , auxAngle += (360/4))
+		{
+			radius /= 3;
+			SpartanList[i].moveToPosition((Vector2 (radius * Math.Cos (auxAngle), radius * Math.Sin (auxAngle)) + transform.position) - SpartanList[i].transform.position);
+		}
+		auxAngle = 0;
+		radius = r;
+
+		for(i = 0; i<16;i++ , auxAngle += (360/8))
+		{
+			radius /= 3 * 2;
+			SpartanList[i].moveToPosition((Vector2 (radius * Math.Cos (auxAngle), radius * Math.Sin (auxAngle)) + transform.position) - SpartanList[i].transform.position);
+		}
+
+		radius = r;
+		auxAngle = 45/2;
+		for(i = 0; i<24;i++ , auxAngle += (360/8))
+		{
+			SpartanList[i].moveToPosition((Vector2 (radius * Math.Cos (auxAngle), radius * Math.Sin (auxAngle)) + transform.position) - SpartanList[i].transform.position);
+		}
+
+		auxAngle = 0;
+		for(i = 0; i<36;i++ , auxAngle += (360/16))
+		{
+			SpartanList[i].moveToPosition((Vector2 (radius * Math.Cos (auxAngle), radius * Math.Sin (auxAngle)) + transform.position) - SpartanList[i].transform.position);
+		}
+	}
+}
+
+
+
+public void SquareFormation()
+{
+	//Constante del tamaño de la henomotia
+	const float width= 4.5;
+	const float heigth= 2;
+	//Divisiones entre espartanos
+	int HeigthDivision = heigth/2;
+	int WidthDivision = width/4.5;
+	int z = 0; //Contador espartanos
+
+
+	for (float  i= heigth; i >= -heigth; i -= HeigthDivision) 
+	{
+		for (float j = -width; j <= width; j += WidthDivision, z++) 
+		{
+			SpartanList[z].moveToPosition(Vector2(i , j));
+		}
+	}
+}
+
+public void DeltaFormation()
+{
+	//Constante del tamaño de la henomotia
+	const float width= 3;
+	const float heigth= 5.5;
+	//Divisiones entre espartanos
+	int HeigthDivision = heigth/5.5;
+	int WidthDivision = width/3;
+	int z = 0; //Contador de espartanos
+
+	float i, j;
+
+	for(i=heigth, j=-width; z<11; z++, i-HeigthDivision)
+	{
+		SpartanList[z].moveToPosition(Vector2(i , j));
+	}
+	for(i=heigth, j=-width+WidthDivision; z<20; z++, i-HeigthDivision)
+	{
+		SpartanList[z].moveToPosition(Vector2(i , j));
+	}
+	for(i=heigth, j=-width+(WidthDivision*2); z<27; z++, i-HeigthDivision)
+	{
+		SpartanList[z].moveToPosition(Vector2(i , j));
+	}
+	for(i=heigth, j=-width+(WidthDivision*3); z<32; z++, i-HeigthDivision)
+	{
+		SpartanList[z].moveToPosition(Vector2(i , j));
+	}
+	for(i=heigth, j=-width+(WidthDivision*4); z<35; z++, i-HeigthDivision)
+	{
+		SpartanList[z].moveToPosition(Vector2(i , j));
+	}
+	for(i=heigth, j=-width+(WidthDivision*5); z<36; z++, i-HeigthDivision)
+	{
+		SpartanList[z].moveToPosition(Vector2(i , j));
+	}
+}
