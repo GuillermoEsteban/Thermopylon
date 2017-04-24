@@ -20,7 +20,11 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
+<<<<<<< Updated upstream
 		numSpartan = 36;
+=======
+		numSpartan = 100;
+>>>>>>> Stashed changes
 
         speed = 5.0f;
 
@@ -102,8 +106,13 @@ public class Henomotia: MonoBehaviour {
 
 
 
+<<<<<<< Updated upstream
 
 /*
+=======
+/*
+
+>>>>>>> Stashed changes
 public void CircleFormation()
 {
 	//Constante radio
@@ -204,4 +213,9 @@ public void DeltaFormation()
 	{
 		SpartanList[z].moveToPosition(Vector2(i , j));
 	}
+<<<<<<< Updated upstream
 }*/
+=======
+}
+*/
+>>>>>>> Stashed changes
