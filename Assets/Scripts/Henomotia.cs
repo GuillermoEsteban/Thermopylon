@@ -20,11 +20,11 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 		numSpartan = 36;
-=======
+//=======
 		numSpartan = 100;
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 
         speed = 5.0f;
 
@@ -106,7 +106,7 @@ public class Henomotia: MonoBehaviour {
 
 
 
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
 /*
 =======
@@ -215,7 +215,7 @@ public void DeltaFormation()
 	}
 <<<<<<< Updated upstream
 }*/
-=======
-}
-*/
->>>>>>> Stashed changes
+//=======
+//}
+
+//>>>>>>> Stashed changes
