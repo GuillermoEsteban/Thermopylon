@@ -17,6 +17,9 @@ public class Henomotia: MonoBehaviour {
 	private Weapon weapon;  //Definimos el arma de la henomotia
     private Vector3 vectorDirector;
 
+    //SET PARENT:
+
+
 	//START
 	void Start ()
 	{
@@ -31,6 +34,7 @@ public class Henomotia: MonoBehaviour {
         {
             
             SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
+            SpartanList[i].transform.parent = gameObject.transform;
         }
 
         initializeSpartanPos();

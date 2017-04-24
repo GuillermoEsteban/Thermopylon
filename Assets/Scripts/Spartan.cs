@@ -50,7 +50,7 @@ public class Spartan : MonoBehaviour {
     {
 		moveToPosition();
         //Press S for shield, D for Javelin, A for Aspis, W for Xiphos
-        changeWeapon();
+        //changeWeapon();
 
 	}
 

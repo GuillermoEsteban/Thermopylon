@@ -10,18 +10,21 @@ public class CameraController : MonoBehaviour {
     private static int minZoom = 60;
     public static Sprite background;
 
+    private float CameraSpeed;
+    private Vector3 goodPosition;
+
 
     // Use this for initialization
     void Start() {
         cam = Camera.main;
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>().sprite;
+        CameraSpeed = cam.orthographicSize / 10.0f;
     }
 
     // Update is called once per frame
     void Update() {
         zoomCamera();
-        moveCamera();
-        limitCamera();
+        moveCamera();   
     }
 
 
@@ -47,57 +50,56 @@ public class CameraController : MonoBehaviour {
 
     public void moveCamera()
     {
+        goodPosition = cam.transform.position;
         if (Input.GetKey("w"))
         {
-            cam.transform.Translate(0,1,0);
+            cam.transform.Translate(0, CameraSpeed, 0);
+            limitCamera(goodPosition);
             if (Input.GetKey("d"))
             {
-                cam.transform.Translate(1, 1, 0);
+                cam.transform.Translate(CameraSpeed, CameraSpeed, 0);
+                limitCamera(goodPosition);
             }
             else if (Input.GetKey("a"))
             {
-                cam.transform.Translate(-1, 1, 0);
+                cam.transform.Translate(-CameraSpeed, CameraSpeed, 0);
+                limitCamera(goodPosition);
             }
         }
         else if (Input.GetKey("s"))
         {
-            cam.transform.Translate(0, -1, 0);
+            cam.transform.Translate(0, -CameraSpeed, 0);
+            limitCamera(goodPosition);
             if (Input.GetKey("d"))
             {
-                cam.transform.Translate(1, -1, 0);
+                cam.transform.Translate(CameraSpeed, -CameraSpeed, 0);
+                limitCamera(goodPosition);
             }
             else if (Input.GetKey("a"))
             {
-                cam.transform.Translate(-1, -1, 0);
+                cam.transform.Translate(-CameraSpeed, -CameraSpeed, 0);
+                limitCamera(goodPosition);
             }
         }
         else if (Input.GetKey("a"))
         {
-            cam.transform.Translate(-1, 0, 0);
+            cam.transform.Translate(-CameraSpeed, 0, 0);
+            limitCamera(goodPosition);
         }
         else if (Input.GetKey("d"))
         {
-            cam.transform.Translate(1, 0, 0);
+            cam.transform.Translate(CameraSpeed, 0, 0);
+            limitCamera(goodPosition);
         }
+        
     }
 
-    public void limitCamera()
+    public void limitCamera(Vector3 goodPosition)
     {
-        if((cam.transform.position.x + cam.pixelWidth/2)>= background.border.x)
+        if(cam.transform.position.x <= 0 || cam.transform.position.y>=0 || cam.transform.position.x>=500 || cam.transform.position.y <= -280)
         {
-            //cam.transform.position(cam.transform.position.x-1,transform.position.y,transform.position.z);
+            cam.transform.position = goodPosition;
         }
-        else if ((cam.transform.position.x - cam.pixelWidth / 2) <= 0)
-        {
-            cam.transform.Translate(1, 0, 0);
-        }
-        else if ((cam.transform.position.y + cam.pixelHeight / 2) >= background.border.y)
-        {
-            cam.transform.Translate(0, -1, 0);
-        }
-        else if ((cam.transform.position.y - cam.pixelHeight / 2) <= 0)
-        {
-            cam.transform.Translate(0, 1, 0);
-        }
+       
     }
 }
