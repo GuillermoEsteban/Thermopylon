@@ -20,7 +20,7 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
-		numSpartan = 13;
+		numSpartan = 36;
 
         speed = 5.0f;
 
@@ -100,7 +100,7 @@ public class Henomotia: MonoBehaviour {
 
 
 
-
+/*
 public void CircleFormation()
 {
 	//Constante radio
@@ -201,4 +201,4 @@ public void DeltaFormation()
 	{
 		SpartanList[z].moveToPosition(Vector2(i , j));
 	}
-}
+}*/
