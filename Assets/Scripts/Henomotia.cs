@@ -27,9 +27,9 @@ public class Henomotia: MonoBehaviour {
         //Inicializamos la lista henomotia
         SpartanList = new List<GameObject>();
 
-
         for (int i = 0; i < numSpartan; i++)
         {
+            
             SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
         }
 
@@ -51,14 +51,17 @@ public class Henomotia: MonoBehaviour {
     {
         int x = 0;
         int y = 0;
-        for(int i=0; i<numSpartan;i++)
+        float posZ = 0.0f;
+
+        for (int i=0; i<numSpartan;i++)
         {
-            SpartanList[i].transform.position = new Vector3(x * 3.0f, y * 3.0f,0.0f);
+            SpartanList[i].transform.position = new Vector3(x * 3.0f, y * 3.0f,posZ);
 
             if (x >= Mathf.Floor(Mathf.Sqrt(numSpartan))-1)
             {
                 x = -1;
                 y++;
+                posZ += 1.0f;
             }
             x++;
         }
