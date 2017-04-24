@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour {
     void Start() {
         cam = Camera.main;
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>().sprite;
-        CameraSpeed = cam.orthographicSize / 10.0f;
+        
     }
 
     // Update is called once per frame
@@ -50,6 +50,7 @@ public class CameraController : MonoBehaviour {
 
     public void moveCamera()
     {
+        CameraSpeed = cam.orthographicSize / 50.0f;
         goodPosition = cam.transform.position;
         if (Input.GetKey("w"))
         {
