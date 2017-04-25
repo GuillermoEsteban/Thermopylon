@@ -51,6 +51,8 @@ public class Henomotia: MonoBehaviour {
 	void Update()
 	{
         MoveHenomotia();
+
+
 	}
 
 	//MÉTODOS
@@ -116,7 +118,19 @@ public class Henomotia: MonoBehaviour {
 		return true;
 	}
 
+	public void OnTriggerEnter(Collider other)
+	{
+		for (int i = 0; i < numSpartan; i++) 
+		{
+			SpartanList[i].GetComponent<Spartan>().setDestiny(new Vector3(0.0f, 0.0f, 0.0f));
+		}
+	}
+
 }
+
+
+
+
 
 
 
