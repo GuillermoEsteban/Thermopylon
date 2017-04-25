@@ -1,6 +1,4 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System;
 
@@ -13,14 +11,13 @@ public class Spartan : MonoBehaviour {
 	private Vector3 destiny;
     public float speed;
     //angles:
-    float angle;
+    private float angle;
     private Vector3 vectorDirector;
     private Vector3 puntAnterior;
     private Vector3 puntNou;
-    float posY;
+    private float posY;
     //Canvi de sprites
     public Animator anim;
-    private bool moving;
 
     //ATTACKS***********************************
     private  enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
@@ -50,7 +47,7 @@ public class Spartan : MonoBehaviour {
     {
 		moveToPosition();
         //Press S for shield, D for Javelin, A for Aspis, W for Xiphos
-        changeWeapon();
+        //changeWeapon();
 
 	}
 
@@ -187,7 +184,7 @@ public class Spartan : MonoBehaviour {
 
    private void changeWeapon()
     {
-        if (Input.GetKey("s"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             myWeapon = Weapon.SHIELD;
             Debug.Log(myWeapon);
