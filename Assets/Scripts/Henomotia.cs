@@ -17,6 +17,9 @@ public class Henomotia: MonoBehaviour {
 	private Weapon weapon;  //Definimos el arma de la henomotia
     private Vector3 vectorDirector;
 
+    //SELECCIONAR HENOMOTIA:
+    private string selectedHenomotia;
+
     
 
 
@@ -47,6 +50,9 @@ public class Henomotia: MonoBehaviour {
         transform.position = new Vector3((Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f)*0.5f, (Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f) * 0.5f, 0.0f);
 
         destiny = transform.position;
+
+        //inicialitzem la Henomotia com la base:
+        selectedHenomotia = "Henomotia";
     }
 
 	void Update()
@@ -78,21 +84,32 @@ public class Henomotia: MonoBehaviour {
 
 	public void MoveHenomotia()
 	{
-        if (Input.GetMouseButtonDown(1))
+        if(this.gameObject.name== selectedHenomotia)
         {
-            destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-            vectorDirector = destiny - transform.position;
-
-            for(int i=0; i<numSpartan;i++)
+            if (Input.GetMouseButtonDown(1))
             {
-                SpartanList[i].GetComponent<Spartan>().setDestiny(vectorDirector);
-            }
-        }
-        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
-	}
+                destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                destiny = new Vector3(destiny.x, destiny.y, 0.0f);
+                vectorDirector = destiny - transform.position;
 
-	public void ChangeWeapon()
+                for (int i = 0; i < numSpartan; i++)
+                {
+                    SpartanList[i].GetComponent<Spartan>().setDestiny(vectorDirector);
+                }
+            }
+            transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+        }
+    }
+
+    //seleccionar un collider:
+    //canvia el nom selectedHenomotia.
+    private void OnMouseDown()
+    {
+        selectedHenomotia = GetComponent<Rigidbody2D>().name;
+        Debug.Log(selectedHenomotia);
+    }
+
+    public void ChangeWeapon()
 	{
 		
 	}
