@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Persian : MonoBehaviour {
 
+	private List<GameObject> PersianList;	//Lista que alberga todos los espartanos
+	private int numPersian;	//Número de espartanos de la henomotia
+	private float speed;
+
+	private const int filas =9;
+	private const float dist = 3;
+
     //walk cap a una henomotia:
     public GameObject henomotia;
     public GameObject henomotia_1;
@@ -25,6 +32,10 @@ public class Persian : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+		numPersian = 36;
+		speed = 5.0f;
+
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
 
@@ -36,12 +47,15 @@ public class Persian : MonoBehaviour {
 
         posicioActual = transform.position;
         posicioAnterior = transform.position;
+
+		initializePersianPos ();
     }
 	
 	// Update is called once per frame
 	void Update () {
         moveToSpartans();
 	}
+
     //funció per canviar la imatge de l'sprite segons l'angle:
     public void changeSprite()
     {
@@ -139,37 +153,25 @@ public class Persian : MonoBehaviour {
         }
     }
 
-    public void moveToSpartans()
-    {
-        posicioHenomotia = henomotia.transform.position;
-        posicioHenomotia_comparacio = henomotia_1.transform.position;
-        vectorDirector = posicioHenomotia - posicioActual;
-        vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
 
-        //de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
-        if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
-        {
-            vectorDirector = vectorDirector_comparacio;
-            posicioHenomotia = posicioHenomotia_comparacio;
-        }
-        if (vectorDirector.magnitude <= minDistance)
-        {
-            posY = vectorDirector.y;
-            //calculem l'angle i canviem l'sprite.
-            angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-            transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
+	public void initializePersianPos()
+	{
+		float col = numPersian / filas;   //filas es una constante que vale 9, ya que siempre queremos 9 filas.
+		Vector3 PersianPos = new Vector3((col * dist) * 0.5f, (filas * dist)*0.5f, 0.0f); //calculamos la posición del primer espartano.
+		Vector3 cont = new Vector3(0.0f,0.0f,0.0f); //creamos un contador de tipo vector.
 
-            posicioActual = transform.position;
-
-            if (posicioActual == posicioAnterior)
-            {
-                anim.SetBool("moving", false);
-            }
-            else anim.SetBool("moving", true);
-
-            changeSprite();
-
-            posicioAnterior = transform.position; 
-        }
-    }
+		for (int i = 0,j = 0;i<numPersian;i++,j++)
+		{
+			if(j==filas)    //cuando la j llega a 9 es decir a la ultima fila saltamos de columna hacia atrás mediante la variable cont.
+			{
+				j = 0;
+				cont.y = 0.0f;
+				cont.z = 0.0f;
+				cont.x -= dist;
+			}
+			PersianList[i].transform.position = transform.position + PersianPos + cont;   //la posición de cada epersa se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador. 
+			cont.y -= dist;
+			cont.z -= 0.1f;
+		}
+	}
 }
