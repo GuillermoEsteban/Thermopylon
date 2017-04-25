@@ -23,12 +23,8 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
-//<<<<<<< Updated upstream
-		numSpartan = 36;
-//=======
-		numSpartan = 100;
-//>>>>>>> Stashed changes
 
+		numSpartan = 36;
         speed = 5.0f;
 
         //Inicializamos la lista henomotia
@@ -38,13 +34,11 @@ public class Henomotia: MonoBehaviour {
         {
             
             SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
-            //SET PARENT:
-            SpartanList[i].transform.parent = gameObject.transform;
         }
 
         initializeSpartanPos();
 
-        transform.position = new Vector3((Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f)*0.5f, (Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f) * 0.5f, 0.0f);
+        //transform.position = new Vector3((Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f)*0.5f, (Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f) * 0.5f, 0.0f);
 
         destiny = transform.position;
     }
@@ -58,21 +52,20 @@ public class Henomotia: MonoBehaviour {
 
     public void initializeSpartanPos()
     {
-        int x = 0;
-        int y = 0;
-        float posZ = 0.0f;
+        float n = numSpartan / 9;
+        Vector3 spartPos = new Vector3((n * 3.0f) * 0.5f, (9.0f * 3.0f)*0.5f, 0.0f);
+        Vector3 cont = new Vector3(0.0f,0.0f,0.0f);
 
-        for (int i=0; i<numSpartan;i++)
+        for (int i = 0,j = 0;i<numSpartan;i++,j++)
         {
-            SpartanList[i].transform.position = new Vector3(x * 3.0f, y * 3.0f,posZ);
-
-            if (x >= Mathf.Floor(Mathf.Sqrt(numSpartan))-1)
+            if(j==9)
             {
-                x = -1;
-                y++;
-                posZ += 1.0f;
+                j = 0;
+                cont.y = 0.0f;
+                cont.x -= 3.0f;
             }
-            x++;
+            SpartanList[i].transform.position = transform.position + spartPos + cont;
+            cont.y -= 3.0f;
         }
     }
 
