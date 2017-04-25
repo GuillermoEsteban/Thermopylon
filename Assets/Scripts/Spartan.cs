@@ -61,7 +61,7 @@ public class Spartan : MonoBehaviour {
             angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);  //movemos el espartano a la posición definida en destiny.
         puntNou = transform.position;
 
         if (puntNou == puntAnterior)
@@ -76,7 +76,7 @@ public class Spartan : MonoBehaviour {
         puntAnterior = transform.position;
     }
 
-    public void setDestiny(Vector3 direction)
+    public void setDestiny(Vector3 direction)   //calcula la posición destino del espartano sumando el vector entrante a la posición relativa del espartano.
     {
         destiny = transform.position + direction;
     }

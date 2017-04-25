@@ -16,6 +16,7 @@ public class Henomotia: MonoBehaviour {
     private Vector3 destiny;
 	private Weapon weapon;  //Definimos el arma de la henomotia
     private Vector3 vectorDirector;
+    private const int filas =9;
 
     
 
@@ -38,8 +39,6 @@ public class Henomotia: MonoBehaviour {
 
         initializeSpartanPos();
 
-        //transform.position = new Vector3((Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f)*0.5f, (Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f) * 0.5f, 0.0f);
-
         destiny = transform.position;
     }
 
@@ -52,37 +51,37 @@ public class Henomotia: MonoBehaviour {
 
     public void initializeSpartanPos()
     {
-        float n = numSpartan / 9;
-        Vector3 spartPos = new Vector3((n * 3.0f) * 0.5f, (9.0f * 3.0f)*0.5f, 0.0f);
-        Vector3 cont = new Vector3(0.0f,0.0f,0.0f);
+        float col = numSpartan / filas;   //filas es una constante que vale 9, ya que siempre queremos 9 filas.
+        Vector3 spartPos = new Vector3((col * 3.0f) * 0.5f, (filas * 3.0f)*0.5f, 0.0f); //calculamos la posición del primer espartano.
+        Vector3 cont = new Vector3(0.0f,0.0f,0.0f); //creamos un contador de tipo vector.
 
         for (int i = 0,j = 0;i<numSpartan;i++,j++)
         {
-            if(j==9)
+            if(j==filas)    //cuando la j llega a 9 es decir a la ultima fila saltamos de columna hacia atrás mediante la variable cont.
             {
                 j = 0;
                 cont.y = 0.0f;
                 cont.x -= 3.0f;
             }
-            SpartanList[i].transform.position = transform.position + spartPos + cont;
+            SpartanList[i].transform.position = transform.position + spartPos + cont;   //la posición de cada espartano se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador. 
             cont.y -= 3.0f;
         }
     }
 
 	public void MoveHenomotia()
 	{
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))    //cuando hacemos clic con el boton derecho y transformamos la posición del raton en una posición de mundo.
         {
             destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-            vectorDirector = destiny - transform.position;
+            vectorDirector = destiny - transform.position;  //calculamos el vector (destiny,posición Henomotia)
 
-            for(int i=0; i<numSpartan;i++)
+            for(int i=0; i<numSpartan;i++)  //para cada espartano llamamos al método setDestiny con el vector (destiny,posicion Henomotia) como parámetro.
             {
                 SpartanList[i].GetComponent<Spartan>().setDestiny(vectorDirector);
             }
         }
-        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);  //finalmente movemos el centro de la Henomotia al lugar donde el jugador ha hecho clic.
 	}
 
 	public void ChangeWeapon()
