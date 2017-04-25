@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d7e59a63a4d7d423cac455ba7ea0c0e3
-timeCreated: 1493054086
+timeCreated: 1493080973
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -74,6 +74,38 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 1
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Samsung TV
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -81,12 +113,12 @@ TextureImporter:
       name: Persa_walk_4_0
       rect:
         serializedVersion: 2
-        x: 221
-        y: 13
-        width: 214
-        height: 499
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 0
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -94,12 +126,12 @@ TextureImporter:
       name: Persa_walk_4_1
       rect:
         serializedVersion: 2
-        x: 733
-        y: 29
-        width: 214
-        height: 483
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -107,12 +139,12 @@ TextureImporter:
       name: Persa_walk_4_2
       rect:
         serializedVersion: 2
-        x: 1229
-        y: 29
-        width: 230
-        height: 470
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -120,12 +152,12 @@ TextureImporter:
       name: Persa_walk_4_3
       rect:
         serializedVersion: 2
-        x: 1757
-        y: 29
-        width: 214
-        height: 470
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -133,12 +165,12 @@ TextureImporter:
       name: Persa_walk_4_4
       rect:
         serializedVersion: 2
-        x: 2269
-        y: 13
-        width: 214
-        height: 470
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 2048
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -146,12 +178,12 @@ TextureImporter:
       name: Persa_walk_4_5
       rect:
         serializedVersion: 2
-        x: 2781
-        y: 13
-        width: 214
-        height: 470
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 2560
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -159,12 +191,12 @@ TextureImporter:
       name: Persa_walk_4_6
       rect:
         serializedVersion: 2
-        x: 3293
-        y: 13
-        width: 214
-        height: 486
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 3072
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -172,12 +204,12 @@ TextureImporter:
       name: Persa_walk_4_7
       rect:
         serializedVersion: 2
-        x: 3805
-        y: 13
-        width: 214
-        height: 486
-      alignment: 9
-      pivot: {x: 8, y: 8}
+        x: 3584
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
