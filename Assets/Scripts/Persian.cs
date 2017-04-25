@@ -42,6 +42,44 @@ public class Persian : MonoBehaviour {
 	void Update () {
         moveToSpartans();
 	}
+
+	public void moveToSpartans()
+	{
+		posicioHenomotia = henomotia.transform.position;
+		posicioHenomotia_comparacio = henomotia_1.transform.position;
+		vectorDirector = posicioHenomotia - posicioActual;
+		vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
+
+		//de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
+		if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
+		{
+			vectorDirector = vectorDirector_comparacio;
+			posicioHenomotia = posicioHenomotia_comparacio;
+		}
+		if (vectorDirector.magnitude <= minDistance)
+		{
+			posY = vectorDirector.y;
+			//calculem l'angle i canviem l'sprite.
+			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
+			transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
+
+			posicioActual = transform.position;
+
+			if (posicioActual == posicioAnterior)
+			{
+				anim.SetBool("moving", false);
+			}
+			else anim.SetBool("moving", true);
+
+			changeSprite();
+
+			posicioAnterior = transform.position; 
+		}
+	}
+
+
+
+
     //funció per canviar la imatge de l'sprite segons l'angle:
     public void changeSprite()
     {
@@ -139,37 +177,4 @@ public class Persian : MonoBehaviour {
         }
     }
 
-    public void moveToSpartans()
-    {
-        posicioHenomotia = henomotia.transform.position;
-        posicioHenomotia_comparacio = henomotia_1.transform.position;
-        vectorDirector = posicioHenomotia - posicioActual;
-        vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
-
-        //de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
-        if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
-        {
-            vectorDirector = vectorDirector_comparacio;
-            posicioHenomotia = posicioHenomotia_comparacio;
-        }
-        if (vectorDirector.magnitude <= minDistance)
-        {
-            posY = vectorDirector.y;
-            //calculem l'angle i canviem l'sprite.
-            angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-            transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
-
-            posicioActual = transform.position;
-
-            if (posicioActual == posicioAnterior)
-            {
-                anim.SetBool("moving", false);
-            }
-            else anim.SetBool("moving", true);
-
-            changeSprite();
-
-            posicioAnterior = transform.position; 
-        }
-    }
 }
