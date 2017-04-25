@@ -15,9 +15,9 @@ public class Henomotia: MonoBehaviour {
 	private float speed;	//Velocidad de la henomotia
     private Vector3 destiny;
 	private Weapon weapon;  //Definimos el arma de la henomotia
-    private Vector3 vectorDirector;
     private const int filas =9;
     private const float dist = 3;
+    Quaternion hRotation;
 
     //SELECCIONAR HENOMOTIA:
     private string selectedHenomotia;
@@ -39,6 +39,7 @@ public class Henomotia: MonoBehaviour {
         {
             
             SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
+            SpartanList[i].transform.parent= transform;
         }
 
         initializeSpartanPos();
@@ -65,7 +66,7 @@ public class Henomotia: MonoBehaviour {
     public void initializeSpartanPos()
     {
         float col = numSpartan / filas;   //filas es una constante que vale 9, ya que siempre queremos 9 filas.
-        Vector3 spartPos = new Vector3((col * dist) * 0.5f, (filas * dist)*0.5f, 0.0f); //calculamos la posición del primer espartano.
+        Vector3 spartPos = new Vector3((col * dist * 0.5f)-1.8f, ((filas * dist)*0.5f)-1, 0.0f); //calculamos la posición del primer espartano.
         Vector3 cont = new Vector3(0.0f,0.0f,0.0f); //creamos un contador de tipo vector.
 
         for (int i = 0,j = 0;i<numSpartan;i++,j++)
@@ -77,7 +78,8 @@ public class Henomotia: MonoBehaviour {
                 cont.z = 0.0f;
                 cont.x -= dist;
             }
-            SpartanList[i].transform.position = transform.position + spartPos + cont;   //la posición de cada espartano se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador. 
+            SpartanList[i].transform.position= spartPos + cont + transform.position;
+            SpartanList[i].GetComponent<Spartan>().setRelativePosition(spartPos + cont);   //la posición de cada espartano se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador. 
             cont.y -= dist;
             cont.z -= 0.1f;
         }
@@ -91,13 +93,10 @@ public class Henomotia: MonoBehaviour {
             {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-                vectorDirector = destiny - transform.position;
-
-                for (int i = 0; i < numSpartan; i++)
-                {
-                    SpartanList[i].GetComponent<Spartan>().setDestiny(vectorDirector);
-                }
+                transform.rotation = Quaternion.FromToRotation(transform.right,destiny);           
             }
+
+            //transform.rotation= Quaternion.RotateTowards(transform.rotation,hRotation, 10 * Time.deltaTime);
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
         }
     }
@@ -125,14 +124,6 @@ public class Henomotia: MonoBehaviour {
 		return true;
 	}
 
-    void OnCollisionStay2D(Collision2D collision)
-    {
-		for (int i = 0; i < numSpartan; i++) 
-		{
-            SpartanList[i].GetComponent<Spartan>().setDestiny(new Vector3(0.0f, 0.0f, 0.0f));
-		}
-	}
-
     public void SquareFormation()
     {
         Debug.Log("squareFormation");
@@ -148,7 +139,7 @@ public class Henomotia: MonoBehaviour {
                 cont.y = 0.0f;
                 cont.x -= dist;
             }
-            SpartanList[i].GetComponent<Spartan>().setDestiny((transform.position + spartPos + cont) - (SpartanList[i].transform.position)); 
+            //SpartanList[i].GetComponent<Spartan>().setDestiny((transform.position + spartPos + cont) - (SpartanList[i].transform.position)); 
             cont.y -= dist;
         }
     }

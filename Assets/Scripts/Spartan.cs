@@ -10,6 +10,7 @@ public class Spartan : MonoBehaviour {
     //MOVIMENT**********************************
 	private Vector3 destiny;
     public float speed;
+    private Vector3 relativePosition;
 
     //angles:
     private float angle;
@@ -30,12 +31,11 @@ public class Spartan : MonoBehaviour {
 
     void Start ()
     {
-		destiny=transform.position;
         speed = 5.0f;
 
         //obtenim el punt inicial:
-        puntAnterior = transform.position;
-        puntNou = transform.position;
+        puntAnterior = transform.parent.position;
+        puntNou = transform.parent.position;
 
         //l'arma per defecte serà l'Aspis, la llança.
         myWeapon = Weapon.ASPIS;
@@ -53,26 +53,26 @@ public class Spartan : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		moveToPosition();
+		AngleUpdate();
         //Press space for shield, 1 for Javelin, 2 for Aspis, 3 for Xiphos
         changeWeapon();
 	}
 
-	public void moveToPosition()
+	public void AngleUpdate()
 	{
         //només si no s'utilitza l'escut s'hauria de poder caminar:
         if (anim.GetBool("shieldUp") == false)
         {
-                if (Input.GetMouseButtonDown (1))
+            if (Input.GetMouseButtonDown (1))
 		    {
+                destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 vectorDirector = (destiny - puntAnterior);
                 posY = vectorDirector.y;
                 //calculem l'angle i canviem l'sprite.
                 angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
             }
-        
-            transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
-            puntNou = transform.position;
+
+            puntNou = transform.parent.position;
 
             if (puntNou == puntAnterior)
             {
@@ -83,7 +83,7 @@ public class Spartan : MonoBehaviour {
             changeSprite(angle, posY);
 
 
-            puntAnterior = transform.position;
+            puntAnterior = puntNou;
         }
 
         else if (anim.GetBool("shieldUp") == true)
@@ -94,14 +94,14 @@ public class Spartan : MonoBehaviour {
         
     }
 
-    public void setDestiny(Vector3 direction)   //calcula la posición destino del espartano sumando el vector entrante a la posición relativa del espartano.
+    public void setRelativePosition(Vector3 relativePosition)
     {
-        destiny = transform.position + direction;
+        this.relativePosition = relativePosition;
     }
 
-    public Vector3 getDestiny()
+    public Vector3 getRelativePosition()
     {
-        return destiny;
+        return relativePosition;
     }
 
     //funció per canviar la imatge de l'sprite segons l'angle:
