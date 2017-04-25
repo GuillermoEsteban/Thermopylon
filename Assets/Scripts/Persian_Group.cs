@@ -25,7 +25,7 @@ public class Persian_Group : MonoBehaviour {
 			PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
             PersianList[i].transform.parent = transform;
 		}
-			
+		initializePersianPos ();
 	}
 	
 	// Update is called once per frame
