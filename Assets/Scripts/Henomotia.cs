@@ -18,6 +18,7 @@ public class Henomotia: MonoBehaviour {
     private const int filas =9;
     private const float dist = 3;
     Quaternion hRotation;
+    Vector3 destVector;
 
     //SELECCIONAR HENOMOTIA:
     private string selectedHenomotia;
@@ -93,11 +94,13 @@ public class Henomotia: MonoBehaviour {
             {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-                transform.rotation = Quaternion.FromToRotation(transform.right,destiny);           
+                destVector = destiny - transform.position;
+                hRotation = Quaternion.FromToRotation(transform.right,destVector);
+                hRotation = new Quaternion(0.0f, 0.0f, hRotation.z,hRotation.w);      
             }
 
-            //transform.rotation= Quaternion.RotateTowards(transform.rotation,hRotation, 10 * Time.deltaTime);
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, hRotation, 10 * Time.deltaTime);
         }
     }
 
