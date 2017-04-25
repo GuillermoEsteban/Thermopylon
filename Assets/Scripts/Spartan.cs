@@ -93,7 +93,7 @@ public class Spartan : MonoBehaviour {
         
     }
 
-    public void setDestiny(Vector3 direction)
+    public void setDestiny(Vector3 direction)   //calcula la posición destino del espartano sumando el vector entrante a la posición relativa del espartano.
     {
         destiny = transform.position + direction;
     }

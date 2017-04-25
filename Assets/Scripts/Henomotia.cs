@@ -16,6 +16,7 @@ public class Henomotia: MonoBehaviour {
     private Vector3 destiny;
 	private Weapon weapon;  //Definimos el arma de la henomotia
     private Vector3 vectorDirector;
+    private const int filas =9;
 
     //SELECCIONAR HENOMOTIA:
     private string selectedHenomotia;
@@ -26,12 +27,8 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
-//<<<<<<< Updated upstream
-		numSpartan = 36;
-//=======
-		numSpartan = 100;
-//>>>>>>> Stashed changes
 
+		numSpartan = 36;
         speed = 5.0f;
 
         //Inicializamos la lista henomotia
@@ -41,13 +38,9 @@ public class Henomotia: MonoBehaviour {
         {
             
             SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
-            //SET PARENT:
-            SpartanList[i].transform.parent = gameObject.transform;
         }
 
         initializeSpartanPos();
-
-        transform.position = new Vector3((Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f)*0.5f, (Mathf.Floor(Mathf.Sqrt(numSpartan)) * 3.0f) * 0.5f, 0.0f);
 
         destiny = transform.position;
 
@@ -64,21 +57,20 @@ public class Henomotia: MonoBehaviour {
 
     public void initializeSpartanPos()
     {
-        int x = 0;
-        int y = 0;
-        float posZ = 0.0f;
+        float col = numSpartan / filas;   //filas es una constante que vale 9, ya que siempre queremos 9 filas.
+        Vector3 spartPos = new Vector3((col * 3.0f) * 0.5f, (filas * 3.0f)*0.5f, 0.0f); //calculamos la posición del primer espartano.
+        Vector3 cont = new Vector3(0.0f,0.0f,0.0f); //creamos un contador de tipo vector.
 
-        for (int i=0; i<numSpartan;i++)
+        for (int i = 0,j = 0;i<numSpartan;i++,j++)
         {
-            SpartanList[i].transform.position = new Vector3(x * 3.0f, y * 3.0f,posZ);
-
-            if (x >= Mathf.Floor(Mathf.Sqrt(numSpartan))-1)
+            if(j==filas)    //cuando la j llega a 9 es decir a la ultima fila saltamos de columna hacia atrás mediante la variable cont.
             {
-                x = -1;
-                y++;
-                posZ += 1.0f;
+                j = 0;
+                cont.y = 0.0f;
+                cont.x -= 3.0f;
             }
-            x++;
+            SpartanList[i].transform.position = transform.position + spartPos + cont;   //la posición de cada espartano se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador. 
+            cont.y -= 3.0f;
         }
     }
 
