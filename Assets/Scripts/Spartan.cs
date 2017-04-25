@@ -10,21 +10,25 @@ public class Spartan : MonoBehaviour {
     //MOVIMENT**********************************
 	private Vector3 destiny;
     public float speed;
+
     //angles:
     private float angle;
     private Vector3 vectorDirector;
     private Vector3 puntAnterior;
     private Vector3 puntNou;
     private float posY;
+
     //Canvi de sprites
     public Animator anim;
 
     //ATTACKS***********************************
     private  enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
     Weapon myWeapon;
-    
+    //escut:
+    private bool firstShield;
 
-	void Start ()
+
+    void Start ()
     {
 		destiny=transform.position;
         speed = 5.0f;
@@ -40,40 +44,53 @@ public class Spartan : MonoBehaviour {
         anim = GetComponent<Animator>();
         
         anim.SetBool("moving", false);
+        anim.SetBool("shieldUp", false);
+
+        //inicialització escut:
+        firstShield = false;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
 		moveToPosition();
-        //Press S for shield, D for Javelin, A for Aspis, W for Xiphos
-        //changeWeapon();
-
+        //Press space for shield, 1 for Javelin, 2 for Aspis, 3 for Xiphos
+        changeWeapon();
 	}
 
 	public void moveToPosition()
 	{
-		if (Input.GetMouseButtonDown (1))
-		{
-            vectorDirector = (destiny - puntAnterior);
-            posY = vectorDirector.y;
-            //calculem l'angle i canviem l'sprite.
-            angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-        }
-
-        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
-        puntNou = transform.position;
-
-        if (puntNou == puntAnterior)
+        //només si no s'utilitza l'escut s'hauria de poder caminar:
+        if (anim.GetBool("shieldUp") == false)
         {
-            anim.SetBool("moving", false);
+                if (Input.GetMouseButtonDown (1))
+		    {
+                vectorDirector = (destiny - puntAnterior);
+                posY = vectorDirector.y;
+                //calculem l'angle i canviem l'sprite.
+                angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
+            }
+        
+            transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+            puntNou = transform.position;
+
+            if (puntNou == puntAnterior)
+            {
+                anim.SetBool("moving", false);
+            }
+            else anim.SetBool("moving", true);
+
+            changeSprite(angle, posY);
+
+
+            puntAnterior = transform.position;
         }
-        else anim.SetBool("moving", true);
 
-        changeSprite(angle, posY);
-
-
-        puntAnterior = transform.position;
+        else if (anim.GetBool("shieldUp") == true)
+        {
+            //Component.GetComponent<Rigidbody2D>().RigidbodyConstraints2D.FreezeAll;
+        }
+        
     }
 
     public void setDestiny(Vector3 direction)
@@ -184,22 +201,30 @@ public class Spartan : MonoBehaviour {
 
    private void changeWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space)&&firstShield==false)
         {
             myWeapon = Weapon.SHIELD;
-            Debug.Log(myWeapon);
+            anim.SetBool("shieldUp",true);
+            firstShield = true;
         }
-        else if (Input.GetKey("a"))
+        else if (Input.GetKey(KeyCode.Space) && firstShield==true)
+        {
+            myWeapon = Weapon.ASPIS;
+            anim.SetBool("shieldUp", false);
+            firstShield = false;
+        }
+
+        else if (Input.GetKey("1"))
         {
             myWeapon = Weapon.ASPIS;
             Debug.Log(myWeapon);
         }
-        else if (Input.GetKey("w"))
+        else if (Input.GetKey("2"))
         {
             myWeapon = Weapon.XIPHOS;
             Debug.Log(myWeapon);
         }
-        else if (Input.GetKey("d"))
+        else if (Input.GetKey("3"))
         {
             myWeapon = Weapon.JAVELIN;
             Debug.Log(myWeapon);

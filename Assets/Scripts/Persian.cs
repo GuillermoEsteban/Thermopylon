@@ -32,7 +32,7 @@ public class Persian : MonoBehaviour {
         henomotia = GameObject.Find("Henomotia");
         henomotia_1 = GameObject.Find("Henomotia(1)");
 
-        //persianSpeed = .15f; //*Time.deltaTime;
+        persianSpeed = .15f; //*Time.deltaTime;
 
         posicioActual = transform.position;
         posicioAnterior = transform.position;
