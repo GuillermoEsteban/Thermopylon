@@ -19,6 +19,9 @@ public class Henomotia: MonoBehaviour {
     private const int filas =9;
     private const float dist = 3;
 
+    //SELECCIONAR HENOMOTIA:
+    private string selectedHenomotia;
+
     
 
 
@@ -41,6 +44,9 @@ public class Henomotia: MonoBehaviour {
         initializeSpartanPos();
 
         destiny = transform.position;
+
+        //inicialitzem la Henomotia com la base:
+        selectedHenomotia = "Henomotia";
     }
 
 	void Update()
@@ -79,21 +85,32 @@ public class Henomotia: MonoBehaviour {
 
 	public void MoveHenomotia()
 	{
-        if (Input.GetMouseButtonDown(1))    //cuando hacemos clic con el boton derecho y transformamos la posición del raton en una posición de mundo.
+        if(this.gameObject.name== selectedHenomotia)
         {
-            destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-            vectorDirector = destiny - transform.position;  //calculamos el vector (destiny,posición Henomotia)
-
-            for(int i=0; i<numSpartan;i++)  //para cada espartano llamamos al método setDestiny con el vector (destiny,posicion Henomotia) como parámetro.
+            if (Input.GetMouseButtonDown(1))
             {
-                SpartanList[i].GetComponent<Spartan>().setDestiny(vectorDirector);
-            }
-        }
-        transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);  //finalmente movemos el centro de la Henomotia al lugar donde el jugador ha hecho clic.
-	}
+                destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                destiny = new Vector3(destiny.x, destiny.y, 0.0f);
+                vectorDirector = destiny - transform.position;
 
-	public void ChangeWeapon()
+                for (int i = 0; i < numSpartan; i++)
+                {
+                    SpartanList[i].GetComponent<Spartan>().setDestiny(vectorDirector);
+                }
+            }
+            transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+        }
+    }
+
+    //seleccionar un collider:
+    //canvia el nom selectedHenomotia.
+    private void OnMouseDown()
+    {
+        selectedHenomotia = GetComponent<Rigidbody2D>().name;
+        Debug.Log(selectedHenomotia);
+    }
+
+    public void ChangeWeapon()
 	{
 		
 	}
