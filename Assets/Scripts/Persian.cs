@@ -20,11 +20,28 @@ public class Persian : MonoBehaviour {
     private float angle;
     private float posY;
 
+
+	private Vector3 destiny;
+	public float speed;
+	private Vector3 relativePosition;
+
+	//angles:
+
+	private Vector3 puntAnterior;
+	private Vector3 puntNou;
+
+
+
     //Canvi de sprites
     public Animator anim;
 
     // Use this for initialization
     void Start () {
+
+		puntAnterior = transform.parent.position;
+		puntNou = transform.parent.position;
+
+
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
 
@@ -39,44 +56,42 @@ public class Persian : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-        moveToSpartans();
-	}
-
-	public void moveToSpartans()
+	void Update () 
 	{
-		posicioHenomotia = henomotia.transform.position;
-		posicioHenomotia_comparacio = henomotia_1.transform.position;
-		vectorDirector = posicioHenomotia - posicioActual;
-		vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
-
-		//de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
-		if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
-		{
-			vectorDirector = vectorDirector_comparacio;
-			posicioHenomotia = posicioHenomotia_comparacio;
-		}
-		if (vectorDirector.magnitude <= minDistance)
-		{
-			posY = vectorDirector.y;
-			//calculem l'angle i canviem l'sprite.
-			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-			transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
-
-			posicioActual = transform.position;
-
-			if (posicioActual == posicioAnterior)
-			{
-				anim.SetBool("moving", false);
-			}
-			else anim.SetBool("moving", true);
-
-			changeSprite();
-
-			posicioAnterior = transform.position; 
-		}
+		AngleUpdate();    
 	}
 
+	public void AngleUpdate()
+	{
+		destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		vectorDirector = (destiny - puntAnterior);
+		posY = vectorDirector.y;
+		//calculem l'angle i canviem l'sprite.
+		angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
+			
+
+		puntNou = transform.parent.position;
+
+		if (puntNou == puntAnterior)
+		{
+			anim.SetBool("moving", false);
+		}
+		else anim.SetBool("moving", true);
+
+//		changeSprite(angle, posY);
+
+		puntAnterior = puntNou;
+	}
+
+	public void setRelativePosition(Vector3 relativePosition)
+	{
+		this.relativePosition = relativePosition;
+	}
+
+	public Vector3 getRelativePosition()
+	{
+		return relativePosition;
+	}
 
 
 

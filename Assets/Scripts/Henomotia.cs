@@ -54,12 +54,12 @@ public class Henomotia: MonoBehaviour {
 	void Update()
 	{
         MoveHenomotia();
-        if (Input.GetKeyDown("c"))
-            Debug.Log("circleFormation");
-        else if (Input.GetKeyDown("x"))
-            SquareFormation();
-        else if(Input.GetKeyDown("v"))
-            Debug.Log("DeltaFormation");
+//        if (Input.GetKeyDown("c"))
+//            Debug.Log("circleFormation");
+//        else if (Input.GetKeyDown("x"))
+//            SquareFormation();
+//        else if(Input.GetKeyDown("v"))
+ //           Debug.Log("DeltaFormation");
     }
 
 	//MÉTODOS
@@ -126,7 +126,7 @@ public class Henomotia: MonoBehaviour {
 	{
 		return true;
 	}
-
+	/*
     public void SquareFormation()
     {
         Debug.Log("squareFormation");
@@ -146,7 +146,7 @@ public class Henomotia: MonoBehaviour {
             cont.y -= dist;
         }
     }
-
+*/
     //public void CircleFormation()
     //{
     //    //Constante radio

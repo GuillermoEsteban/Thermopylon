@@ -10,6 +10,28 @@ public class Persian_Group : MonoBehaviour {
 	private const int filas =9;
 	private const float dist = 3;
 
+
+	//walk cap a una henomotia:
+	public GameObject henomotia;
+	public GameObject henomotia_1;
+	private Vector2 posicioHenomotia;
+	private Vector2 posicioHenomotia_comparacio;
+	public float persianSpeed;
+
+	Vector2 vectorDirector;
+	Vector2 vectorDirector_comparacio;
+	Vector2 posicioActual;
+	Vector2 posicioAnterior;
+
+	private static float minDistance=1000.0f; //de moment és 1000, fins que el Guillermo acabi lo de les posicions de les Henomoties.
+	private float angle;
+	private float posY;
+
+	private Vector3 destiny;
+	Quaternion hRotation;
+	Vector3 destVector;
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -26,11 +48,17 @@ public class Persian_Group : MonoBehaviour {
             PersianList[i].transform.parent = transform;
 		}
 		initializePersianPos ();
+
+
+		destiny = transform.position;
+
+
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update () 
+	{
+		moveToSpartans();
 	}
 
 
@@ -56,24 +84,46 @@ public class Persian_Group : MonoBehaviour {
 		}
 	}
 
-	/*
-	public void MoveHenomotia()
+	public void moveToSpartans()
 	{
-		if(this.gameObject.name== selectedHenomotia)
-		{
-			if (Input.GetMouseButtonDown(1))
-			{
-				destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-				vectorDirector = destiny - transform.position;
+		posicioHenomotia = henomotia.transform.position;
+		posicioHenomotia_comparacio = henomotia_1.transform.position;
+		vectorDirector = posicioHenomotia - posicioActual;
+		vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
 
-				for (int i = 0; i < numSpartan; i++)
-				{
-					SpartanList[i].GetComponent<Spartan>().setDestiny(vectorDirector);
-				}
-			}
-			transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+		//de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
+		if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
+		{
+			vectorDirector = vectorDirector_comparacio;
+			destiny = vectorDirector;
+			posicioHenomotia = posicioHenomotia_comparacio;
 		}
+		if (vectorDirector.magnitude <= minDistance)
+		{
+			posY = vectorDirector.y;
+			//calculem l'angle i canviem l'sprite.
+			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
+			transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
+
+			posicioActual = transform.position;
+
+
+			posicioAnterior = transform.position; 
+		}
+
+
+		destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		destiny = new Vector3(destiny.x, destiny.y, 0.0f);
+		destVector = destiny - transform.position;
+		hRotation = Quaternion.FromToRotation(transform.right,destVector);
+		hRotation = new Quaternion(0.0f, 0.0f, hRotation.z,hRotation.w);      
+
+
+		transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, hRotation, 10 * Time.deltaTime);
 	}
-*/
+
 }
+
+
+
