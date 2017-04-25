@@ -22,7 +22,8 @@ public class Persian_Group : MonoBehaviour {
 		for (int i = 0; i < numPersian; i++)
 		{
 
-			PersianList.Add((GameObject)Instantiate(Resources.Load("Persians"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
+			PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
+            PersianList[i].transform.parent = transform;
 		}
 			
 	}
