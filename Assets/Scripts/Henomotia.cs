@@ -118,11 +118,11 @@ public class Henomotia: MonoBehaviour {
 		return true;
 	}
 
-	public void OnTriggerEnter(Collider other)
-	{
+    void OnCollisionStay2D(Collision2D collision)
+    {
 		for (int i = 0; i < numSpartan; i++) 
 		{
-			SpartanList[i].GetComponent<Spartan>().setDestiny(new Vector3(0.0f, 0.0f, 0.0f));
+            SpartanList[i].GetComponent<Spartan>().setDestiny(new Vector3(0.0f, 0.0f, 0.0f));
 		}
 	}
 
