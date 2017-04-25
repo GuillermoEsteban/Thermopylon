@@ -4,27 +4,36 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
+    //ZOOM DE LA CÀMERA
     public static Camera cam;
     private int zoomSpeed = 5;
     private static int maxZoom = 10;
     private static int minZoom = 60;
     public static Sprite background;
 
+    //MOVIMENT DE LA CÀMERA
     private float CameraSpeed;
     private Vector3 goodPosition;
+
+    //CORRECCIÓ D'SCROLL EN EL MARGE
+    bool correccioScrollMarge;
+    bool marge;
 
 
     // Use this for initialization
     void Start() {
         cam = Camera.main;
         background = GameObject.Find("Background").GetComponent<SpriteRenderer>().sprite;
+
+        correccioScrollMarge = false;
+        marge = false;
         
     }
 
     // Update is called once per frame
     void Update() {
         zoomCamera();
-        moveCamera();   
+        moveCamera();
     }
 
 
@@ -37,13 +46,29 @@ public class CameraController : MonoBehaviour {
             {
                 cam.orthographicSize = minZoom;
             }
+            if (marge)
+            {
+                correccioScrollMarge = true;
+            }
+            else
+            {
+                correccioScrollMarge = false;
+            }
         }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
         {
             cam.orthographicSize -= zoomSpeed;
             if (cam.orthographicSize < 10)
             {
                 cam.orthographicSize = maxZoom;
+            }
+            if (marge)
+            {
+                correccioScrollMarge = true;
+            }
+            else
+            {
+                correccioScrollMarge = false;
             }
         }
     }
@@ -55,52 +80,67 @@ public class CameraController : MonoBehaviour {
         if (Input.GetKey("w"))
         {
             cam.transform.Translate(0, CameraSpeed, 0);
-            limitCamera(goodPosition);
             if (Input.GetKey("d"))
             {
                 cam.transform.Translate(CameraSpeed, CameraSpeed, 0);
-                limitCamera(goodPosition);
             }
             else if (Input.GetKey("a"))
             {
                 cam.transform.Translate(-CameraSpeed, CameraSpeed, 0);
-                limitCamera(goodPosition);
             }
         }
         else if (Input.GetKey("s"))
         {
             cam.transform.Translate(0, -CameraSpeed, 0);
-            limitCamera(goodPosition);
             if (Input.GetKey("d"))
             {
                 cam.transform.Translate(CameraSpeed, -CameraSpeed, 0);
-                limitCamera(goodPosition);
             }
             else if (Input.GetKey("a"))
             {
                 cam.transform.Translate(-CameraSpeed, -CameraSpeed, 0);
-                limitCamera(goodPosition);
             }
         }
         else if (Input.GetKey("a"))
         {
             cam.transform.Translate(-CameraSpeed, 0, 0);
-            limitCamera(goodPosition);
         }
         else if (Input.GetKey("d"))
         {
-            cam.transform.Translate(CameraSpeed, 0, 0);
-            limitCamera(goodPosition);
+            cam.transform.Translate(CameraSpeed, 0, 0);   
         }
-        
+        limitCamera(goodPosition);
+
     }
 
     public void limitCamera(Vector3 goodPosition)
     {
-        if(cam.transform.position.x <= 0 || cam.transform.position.y>=0 || cam.transform.position.x>=500 || cam.transform.position.y <= -280)
+        if(cam.transform.position.x - cam.orthographicSize * 1.8f <= 0 || cam.transform.position.y + cam.orthographicSize >= 0 || cam.transform.position.x + cam.orthographicSize * 1.8f >= 500 || cam.transform.position.y - cam.orthographicSize <= -280)
         {
+            marge = true;
+            zoomCamera();
+            if (correccioScrollMarge)
+            {
+                if(cam.transform.position.x - cam.orthographicSize * 1.8f <= 0)
+                {
+                    goodPosition.x += 20;
+                }
+                if(cam.transform.position.y + cam.orthographicSize >= 0)
+                {
+                    goodPosition.y -= 10;
+                }
+                if(cam.transform.position.x + cam.orthographicSize * 1.8f >= 500)
+                {
+                    goodPosition.x -= 20;
+                }
+                if (cam.transform.position.y - cam.orthographicSize <= -280)
+                {
+                    goodPosition.y += 10;
+                }
+            }
             cam.transform.position = goodPosition;
+            marge = false;
+            correccioScrollMarge = false;
         }
-       
     }
 }
