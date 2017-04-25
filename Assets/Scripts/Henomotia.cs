@@ -125,6 +125,14 @@ public class Henomotia: MonoBehaviour {
 		return true;
 	}
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+		for (int i = 0; i < numSpartan; i++) 
+		{
+            SpartanList[i].GetComponent<Spartan>().setDestiny(new Vector3(0.0f, 0.0f, 0.0f));
+		}
+	}
+
     public void SquareFormation()
     {
         Debug.Log("squareFormation");

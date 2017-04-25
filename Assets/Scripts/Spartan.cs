@@ -90,6 +90,7 @@ public class Spartan : MonoBehaviour {
         {
             //Component.GetComponent<Rigidbody2D>().RigidbodyConstraints2D.FreezeAll;
         }
+
         
     }
 
@@ -230,11 +231,7 @@ public class Spartan : MonoBehaviour {
             Debug.Log(myWeapon);
         } 
     }
-
-   
-        
-        
-     
+		
     
     //Aquesta funció donarà errors de moment, ja que s'ha d'implementar la classe dels Perses i també buscar com tractar els colliders.
 
