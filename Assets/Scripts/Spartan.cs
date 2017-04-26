@@ -90,8 +90,6 @@ public class Spartan : MonoBehaviour {
         {
             //Component.GetComponent<Rigidbody2D>().RigidbodyConstraints2D.FreezeAll;
         }
-
-        
     }
 
     public void setRelativePosition(Vector3 relativePosition)

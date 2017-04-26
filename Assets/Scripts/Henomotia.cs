@@ -33,6 +33,8 @@ public class Henomotia: MonoBehaviour {
 		numSpartan = 36;
         speed = 5.0f;
 
+        formation = Formation.square;
+
         //Inicializamos la lista henomotia
         SpartanList = new List<GameObject>();
 
@@ -55,11 +57,12 @@ public class Henomotia: MonoBehaviour {
 	{
         MoveHenomotia();
         if (Input.GetKeyDown("c"))
-            Debug.Log("circleFormation");
+            CircleFormation();
         else if (Input.GetKeyDown("x"))
             SquareFormation();
-        else if(Input.GetKeyDown("v"))
+        else if (Input.GetKeyDown("v"))
             Debug.Log("DeltaFormation");
+        updateFormation();
     }
 
 	//MÉTODOS
@@ -94,13 +97,15 @@ public class Henomotia: MonoBehaviour {
             {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-                destVector = destiny - transform.position;
-                hRotation = Quaternion.FromToRotation(transform.right,destVector);
-                hRotation = new Quaternion(0.0f, 0.0f, hRotation.z,hRotation.w);      
+                //destVector = destiny - transform.position;
+                //hRotation = Quaternion.FromToRotation(transform.right,destVector);
+                //hRotation = new Quaternion(0.0f, 0.0f, hRotation.z,hRotation.w);      
             }
 
+            transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, hRotation, 10 * Time.deltaTime);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, hRotation, 10 * Time.deltaTime);
         }
     }
 
@@ -129,65 +134,96 @@ public class Henomotia: MonoBehaviour {
 
     public void SquareFormation()
     {
-        Debug.Log("squareFormation");
-        float col = numSpartan / filas;   //filas es una constante que vale 9, ya que siempre queremos 9 filas.
-        Vector3 spartPos = new Vector3((col * dist) * 0.5f, (filas * dist) * 0.5f, 0.0f); //calculamos la posición del primer espartano.
-        Vector3 cont = new Vector3(0.0f, 0.0f, 0.0f); //creamos un contador de tipo vector.
+        formation = Formation.square;
 
+        float col = numSpartan / filas;
+        Vector3 spartPos = new Vector3((col * dist) * 0.5f, (filas * dist) * 0.5f, 0.0f);
+        Vector3 cont = new Vector3(0.0f, 0.0f, 0.0f);
         for (int i = 0, j = 0; i < numSpartan; i++, j++)
         {
-            if (j == filas)    //cuando la j llega a 9 es decir a la ultima fila saltamos de columna hacia atrás mediante la variable cont.
+            if (j == filas)
             {
                 j = 0;
                 cont.y = 0.0f;
                 cont.x -= dist;
             }
-            //SpartanList[i].GetComponent<Spartan>().setDestiny((transform.position + spartPos + cont) - (SpartanList[i].transform.position)); 
+            SpartanList[i].GetComponent<Spartan>().setRelativePosition(spartPos + cont);
             cont.y -= dist;
         }
     }
 
-    //public void CircleFormation()
-    //{
-    //    //Constante radio
-    //    const int r = 10;
-    //    //Radio de la circunferencia de la henomotia
-    //    float radius = r;
-    //    //Contador
-    //    int i;
-    //    //Angulo auxiliar que marca la dirección de los espartanos
-    //    float auxAngle = 0;
+    public void updateFormation()
+    {
+        for(int i=0;i<numSpartan;i++)
+        {
+            SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + SpartanList[i].GetComponent<Spartan>().getRelativePosition(), speed * Time.deltaTime);
+        }
+    }
 
-    //    if (SpartanList.Count == numSpartan)
-    //    {
-    //        for (i = 0; i < 4; i++, auxAngle += (360 / 4))
-    //        {
-    //            radius /= 3;
-    //            SpartanList[i].moveToPosition((Vector2(radius * Math.Cos(auxAngle), radius * Math.Sin(auxAngle)) + transform.position) - SpartanList[i].transform.position);
-    //        }
-    //        auxAngle = 0;
-    //        radius = r;
+    public void CircleFormation()
+    {
+        Debug.Log("circleFormation");
 
-    //        for (i = 0; i < 16; i++, auxAngle += (360 / 8))
-    //        {
-    //            radius /= 3 * 2;
-    //            SpartanList[i].moveToPosition((Vector2(radius * Math.Cos(auxAngle), radius * Math.Sin(auxAngle)) + transform.position) - SpartanList[i].transform.position);
-    //        }
+        formation = Formation.circle;
 
-    //        radius = r;
-    //        auxAngle = 45 / 2;
-    //        for (i = 0; i < 24; i++, auxAngle += (360 / 8))
-    //        {
-    //            SpartanList[i].moveToPosition((Vector2(radius * Math.Cos(auxAngle), radius * Math.Sin(auxAngle)) + transform.position) - SpartanList[i].transform.position);
-    //        }
+        Vector3 relativePosition;
+        float radi;
+        float angle= 0.0f;
+        float threshold1,threshold2,threshold3;
+        float n;
+        int spartansLeft=0;
 
-    //        auxAngle = 0;
-    //        for (i = 0; i < 36; i++, auxAngle += (360 / 16))
-    //        {
-    //            SpartanList[i].moveToPosition((Vector2(radius * Math.Cos(auxAngle), radius * Math.Sin(auxAngle)) + transform.position) - SpartanList[i].transform.position);
-    //        }
-    //    }
-    //}
+        if (numSpartan < 20)
+        {
+            radi = (numSpartan * 10.0f) / 20.0f;
+            n = 360.0f / numSpartan;
+            for (int i = 0; i < numSpartan; i++)
+            {
+                relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
+                angle = (angle + n) % 360;
+                spartansLeft++;
+            }
+        }
+        else
+        {
+            radi = 10.0f;
+            threshold1 = Mathf.Floor((4.0f / 7.0f) * numSpartan);
+            n = 360.0f / threshold1;
+
+            for (int i = 0; i < threshold1; i++)
+            {
+                relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
+                angle = (angle + n) % 360;
+                spartansLeft++;
+            }
+
+            radi -= 3;
+            threshold2 = Mathf.Floor((1.0f / 2.0f) * threshold1);
+            n = 360.0f / threshold2;
+
+            for (int i = 0; i < threshold2; i++)
+            {
+                relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
+                angle = (angle + n) % 360;
+                spartansLeft++;
+            }
+
+            radi -= 3;
+            threshold3 = numSpartan - threshold1 - threshold2;
+            n = 360.0f / threshold3;
+
+            for (int i = 0; i < threshold3; i++)
+            {
+                relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
+                angle = (angle + n) % 360;
+                spartansLeft++;
+            }
+        }
+    }
 
 }
 /*
