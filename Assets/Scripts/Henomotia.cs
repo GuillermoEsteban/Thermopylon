@@ -56,12 +56,15 @@ public class Henomotia: MonoBehaviour {
 	{
         MoveHenomotia();
 
-        if (Input.GetKeyDown("c"))
-            CircleFormation();
-        else if (Input.GetKeyDown("x"))
-            SquareFormation();
-        else if (Input.GetKeyDown("v"))
-            DeltaFormation();
+        if (selectedHenomotia == name)
+        {
+            if (Input.GetKeyDown("c"))
+                CircleFormation();
+            else if (Input.GetKeyDown("x"))
+                SquareFormation();
+            else if (Input.GetKeyDown("v"))
+                DeltaFormation();
+        }
         updateFormation();
     }
 
@@ -91,7 +94,7 @@ public class Henomotia: MonoBehaviour {
 
 	public void MoveHenomotia()
 	{
-        if (SpartanList[0].GetComponent<Spartan>().getShieldUp()==false)
+        if (SpartanList[0].GetComponent<Spartan>().getShieldUp()==false && formation != Formation.circle)
         {
             if (correctHenomotia() && Input.GetMouseButtonDown(1))
             {
@@ -227,12 +230,55 @@ public class Henomotia: MonoBehaviour {
 
     public void DeltaFormation()
     {
-        Vector3 relativePosition;
+        formation = Formation.delta;
 
-        for (int i=0; i<numSpartan;i++)
+        Vector3 relativePosition;
+        Vector3 frstSpartPos = new Vector3(12.0f, 0.0f , 0.0f);
+        Vector3 vectorLeft = new Vector3(-8.0f,6.0f,0.0f);
+        Vector3 vectorRight = new Vector3(-8.0f, -6.0f, 0.0f);
+        float spartansToPlace = Mathf.Floor(numSpartan / 2.0f);
+        float leftSpartans= numSpartan - spartansToPlace;
+        float landa = 0.2f;
+        int cont = 1;
+
+        relativePosition = frstSpartPos;
+        SpartanList[0].GetComponent<Spartan>().setRelativePosition(relativePosition);
+
+        for (int i=0; i<spartansToPlace-1;i++)
         {
-            //relativePosition = new Vector3(,,0.0f);
-            //SpartanList[i].GetComponent<Spartan>().setRelativePosition();
+            if(i%2==0)
+            {
+                relativePosition = frstSpartPos + (landa * vectorLeft);
+            }
+            else
+            {
+                relativePosition = frstSpartPos + (landa * vectorRight);
+                landa += 0.2f;
+            }
+            SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
+            cont++;
+        }
+
+        landa = 0.2f;
+        spartansToPlace = leftSpartans;
+        frstSpartPos = frstSpartPos + new Vector3(-6.0f,0.0f,0.0f);
+        relativePosition = frstSpartPos;
+        SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
+        cont++;
+
+        for (int i=0;i<spartansToPlace-1;i++)
+        {
+            if (i % 2 == 0)
+            {
+                relativePosition = frstSpartPos + (landa * vectorLeft);
+            }
+            else
+            {
+                relativePosition = frstSpartPos + (landa * vectorRight);
+                landa += 0.2f;
+            }
+            SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
+            cont++;
         }
     }
 
