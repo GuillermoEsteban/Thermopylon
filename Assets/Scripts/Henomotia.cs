@@ -22,6 +22,8 @@ public class Henomotia: MonoBehaviour {
     Quaternion hRotation;
     Vector3 destVector;
 
+	private bool enabled = true;
+
     //SELECCIONAR HENOMOTIA:
     private static string selectedHenomotia;
 
@@ -139,6 +141,10 @@ public class Henomotia: MonoBehaviour {
     {
         formation = Formation.square;
 
+		this.gameObject.GetComponent (CircleCollider2D) = !enabled;
+		this.gameObject.GetComponent (BoxCollider2D) = enabled; 
+
+
         float col = numSpartan / filas;
         Vector3 spartPos = new Vector3((col * dist) * 0.5f, (filas * dist) * 0.5f, 0.0f);
         Vector3 cont = new Vector3(0.0f, 0.0f, 0.0f);
@@ -167,6 +173,11 @@ public class Henomotia: MonoBehaviour {
     {
 
         formation = Formation.circle;
+
+		this.gameObject.GetComponent (BoxCollider2D) = !enabled;
+		this.gameObject.GetComponent (CircleCollider2D) = enabled;
+
+
 
         Vector3 relativePosition;
         float radi;
