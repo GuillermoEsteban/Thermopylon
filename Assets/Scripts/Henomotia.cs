@@ -244,7 +244,7 @@ public class Henomotia: MonoBehaviour {
         relativePosition = frstSpartPos;
         SpartanList[0].GetComponent<Spartan>().setRelativePosition(relativePosition);
 
-        for (int i=0; i<spartansToPlace;i++)
+        for (int i=0; i<spartansToPlace-1;i++)
         {
             if(i%2==0)
             {
@@ -266,7 +266,7 @@ public class Henomotia: MonoBehaviour {
         SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
         cont++;
 
-        for (int i=0;i<spartansToPlace;i++)
+        for (int i=0;i<spartansToPlace-1;i++)
         {
             if (i % 2 == 0)
             {
