@@ -93,7 +93,7 @@ public class Henomotia: MonoBehaviour {
 	{
         if (SpartanList[0].GetComponent<Spartan>().getShieldUp()==false)
         {
-            if (correctHenomotia())
+            if (correctHenomotia() && Input.GetMouseButtonDown(1))
             {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 destiny = new Vector3(destiny.x, destiny.y, 0.0f);
