@@ -184,13 +184,23 @@ public class Persian : MonoBehaviour {
                 posicioHenomotia = posicioHenomotia_comparacio;
             }
         }
+    }
 
-        //de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
-        if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        bool isHenomotia = false;
+        for(int i=0; i<=8; i++)
         {
-            vectorDirector = vectorDirector_comparacio;
-            posicioHenomotia = posicioHenomotia_comparacio;
+            if (coll.gameObject.name == "Henomotia (" + i.ToString() + ")")
+            {
+                isHenomotia=true;
+            }   
         }
+        if (isHenomotia)
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
 }

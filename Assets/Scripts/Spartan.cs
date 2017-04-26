@@ -241,17 +241,5 @@ public class Spartan : MonoBehaviour {
     {
         return anim.GetBool("shieldUp");
     }
-    //Aquesta funció donarà errors de moment, ja que s'ha d'implementar la classe dels Perses i també buscar com tractar els colliders.
-
-/*
-    bool inContact(Spartan Spartan, PersianClass Persian)
-    {
-        if (true)//colliders
-        {
-            return true;
-        }
-    }
-*/
-
 }
 
