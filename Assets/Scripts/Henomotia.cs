@@ -162,7 +162,6 @@ public class Henomotia: MonoBehaviour {
 
     public void CircleFormation()
     {
-        Debug.Log("circleFormation");
 
         formation = Formation.circle;
 
@@ -225,49 +224,16 @@ public class Henomotia: MonoBehaviour {
         }
     }
 
+
+    public void DeltaFormation()
+    {
+        Vector3 relativePosition;
+
+        for (int i=0; i<numSpartan;i++)
+        {
+            //relativePosition = new Vector3(,,0.0f);
+            //SpartanList[i].GetComponent<Spartan>().setRelativePosition();
+        }
+    }
+
 }
-/*
-
-
-
-
-
-
-public void DeltaFormation()
-{
-    //Constante del tamaño de la henomotia
-    const float width = 3;
-    const float heigth = 5.5;
-    //Divisiones entre espartanos
-    int HeigthDivision = heigth / 5.5;
-    int WidthDivision = width / 3;
-    int z = 0; //Contador de espartanos
-
-    float i, j;
-
-    for (i = heigth, j = -width; z < 11; z++, i - HeigthDivision)
-    {
-        SpartanList[z].moveToPosition(Vector2(i, j));
-    }
-    for (i = heigth, j = -width + WidthDivision; z < 20; z++, i - HeigthDivision)
-    {
-        SpartanList[z].moveToPosition(Vector2(i, j));
-    }
-    for (i = heigth, j = -width + (WidthDivision * 2); z < 27; z++, i - HeigthDivision)
-    {
-        SpartanList[z].moveToPosition(Vector2(i, j));
-    }
-    for (i = heigth, j = -width + (WidthDivision * 3); z < 32; z++, i - HeigthDivision)
-    {
-        SpartanList[z].moveToPosition(Vector2(i, j));
-    }
-    for (i = heigth, j = -width + (WidthDivision * 4); z < 35; z++, i - HeigthDivision)
-    {
-        SpartanList[z].moveToPosition(Vector2(i, j));
-    }
-    for (i = heigth, j = -width + (WidthDivision * 5); z < 36; z++, i - HeigthDivision)
-    {
-        SpartanList[z].moveToPosition(Vector2(i, j));
-    }
-}
-*/
