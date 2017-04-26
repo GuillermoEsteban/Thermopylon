@@ -56,12 +56,15 @@ public class Henomotia: MonoBehaviour {
 	{
         MoveHenomotia();
 
-        if (Input.GetKeyDown("c"))
-            CircleFormation();
-        else if (Input.GetKeyDown("x"))
-            SquareFormation();
-        else if (Input.GetKeyDown("v"))
-            DeltaFormation();
+        if (selectedHenomotia == name)
+        {
+            if (Input.GetKeyDown("c"))
+                CircleFormation();
+            else if (Input.GetKeyDown("x"))
+                SquareFormation();
+            else if (Input.GetKeyDown("v"))
+                DeltaFormation();
+        }
         updateFormation();
     }
 
@@ -91,7 +94,7 @@ public class Henomotia: MonoBehaviour {
 
 	public void MoveHenomotia()
 	{
-        if (SpartanList[0].GetComponent<Spartan>().getShieldUp()==false)
+        if (SpartanList[0].GetComponent<Spartan>().getShieldUp()==false && formation != Formation.circle)
         {
             if (correctHenomotia() && Input.GetMouseButtonDown(1))
             {
