@@ -61,7 +61,7 @@ public class Henomotia: MonoBehaviour {
         else if (Input.GetKeyDown("x"))
             SquareFormation();
         else if (Input.GetKeyDown("v"))
-            Debug.Log("DeltaFormation");
+            DeltaFormation();
         updateFormation();
     }
 
@@ -231,8 +231,8 @@ public class Henomotia: MonoBehaviour {
 
         for (int i=0; i<numSpartan;i++)
         {
-            //relativePosition = new Vector3(,,0.0f);
-            //SpartanList[i].GetComponent<Spartan>().setRelativePosition();
+            relativePosition = new Vector3(,,0.0f);
+            SpartanList[i].GetComponent<Spartan>().setRelativePosition();
         }
     }
 
