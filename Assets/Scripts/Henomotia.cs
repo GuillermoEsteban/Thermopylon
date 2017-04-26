@@ -73,6 +73,20 @@ public class Henomotia: MonoBehaviour {
                 SquareFormation();
             else if (Input.GetKeyDown("v"))
                 DeltaFormation();
+
+            foreach (GameObject spartan in SpartanList)
+            {
+                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                renderer.color = new Color(0, 1, 1, 0.5f);
+            }
+        }
+        else
+        {
+            foreach (GameObject spartan in SpartanList)
+            {
+                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                renderer.color = new Color(1, 1, 1, 1);
+            }
         }
         updateFormation();
     }
