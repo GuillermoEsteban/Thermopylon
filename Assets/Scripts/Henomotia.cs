@@ -66,6 +66,7 @@ public class Henomotia: MonoBehaviour {
                 DeltaFormation();
         }
         updateFormation();
+
     }
 
 	//MÉTODOS
@@ -281,5 +282,30 @@ public class Henomotia: MonoBehaviour {
             cont++;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.name == "Persian(Clone)")
+        {
+            foreach (GameObject spartan in SpartanList)
+            {
+                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                renderer.color = new Color(1, 0, 0, 0.5f);
+            }
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Persian(Clone)")
+        {
+            foreach (GameObject spartan in SpartanList)
+            {
+                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                renderer.color = new Color(1, 1, 1, 1);
+            }
+        }
+    }
+
+
 
 }

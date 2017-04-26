@@ -186,12 +186,12 @@ public class Persian : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         bool isHenomotia = false;
         for(int i=0; i<=8; i++)
         {
-            if (coll.gameObject.name == "Henomotia (" + i.ToString() + ")")
+            if (collision.gameObject.name == "Henomotia (" + i.ToString() + ")")
             {
                 isHenomotia=true;
             }   

@@ -7,13 +7,15 @@ public class PersianArmy : MonoBehaviour {
     private List<GameObject> PersianList;
     private const int numPersians = 400;
 
+    public int maxAreaX = 50;
+    public int maxAreaY = 30;
+
 	// Use this for initialization
 	void Start () {
         PersianList = new List<GameObject>();
         for(int i = 0; i <= numPersians; i++)
         {
-
-            PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), new Vector3(Random.Range(transform.position.x -50,transform.position.x + 50), Random.Range(transform.position.y + 40,transform.position.y - 40), 0.0f), Quaternion.identity));
+            PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), new Vector3(Random.Range(transform.position.x -maxAreaX,transform.position.x + maxAreaX), Random.Range(transform.position.y + maxAreaY,transform.position.y - maxAreaY), 0.0f), Quaternion.identity));
             PersianList[i].transform.parent = transform;
         }
 	}
