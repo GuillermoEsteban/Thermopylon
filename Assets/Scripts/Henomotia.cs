@@ -52,6 +52,9 @@ public class Henomotia: MonoBehaviour {
 
         //inicialitzem la Henomotia com la base:
         selectedHenomotia = "Henomotia";
+
+        gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 
 	void Update()
@@ -141,8 +144,8 @@ public class Henomotia: MonoBehaviour {
     {
         formation = Formation.square;
 
-		this.gameObject.GetComponent (CircleCollider2D) = !enabled;
-		this.gameObject.GetComponent (BoxCollider2D) = enabled; 
+		gameObject.GetComponent<CircleCollider2D>().enabled = false;
+		gameObject.GetComponent<BoxCollider2D>().enabled = true; 
 
 
         float col = numSpartan / filas;
@@ -174,8 +177,8 @@ public class Henomotia: MonoBehaviour {
 
         formation = Formation.circle;
 
-		this.gameObject.GetComponent (BoxCollider2D) = !enabled;
-		this.gameObject.GetComponent (CircleCollider2D) = enabled;
+        gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
 
 
