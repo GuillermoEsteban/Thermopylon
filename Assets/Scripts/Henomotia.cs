@@ -231,8 +231,8 @@ public class Henomotia: MonoBehaviour {
 
         for (int i=0; i<numSpartan;i++)
         {
-            relativePosition = new Vector3(,,0.0f);
-            SpartanList[i].GetComponent<Spartan>().setRelativePosition();
+            //relativePosition = new Vector3(,,0.0f);
+            //SpartanList[i].GetComponent<Spartan>().setRelativePosition();
         }
     }
 
