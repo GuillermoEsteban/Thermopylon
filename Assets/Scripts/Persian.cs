@@ -5,8 +5,7 @@ using UnityEngine;
 public class Persian : MonoBehaviour {
 
     //walk cap a una henomotia:
-    private GameObject henomotia;
-    private GameObject henomotia_1;
+    private List<GameObject> HenomotiaList;
     private Vector2 posicioHenomotia;
     private Vector2 posicioHenomotia_comparacio;
     private float persianSpeed;
@@ -17,7 +16,7 @@ public class Persian : MonoBehaviour {
     Vector2 posicioActual;
     Vector2 posicioAnterior;
 
-    private static float minDistance=150.0f; 
+    public static float minDistance=10000.0f; 
     private float angle;
     private float posY;
     
@@ -26,12 +25,17 @@ public class Persian : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        HenomotiaList = new List<GameObject>();
+
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
 
         anim.SetBool("moving", false);
-        henomotia = GameObject.Find("Henomotia");
-        henomotia_1 = GameObject.Find("Henomotia(1)");
+        for(int i = 0; i <= 8;i++)
+        {
+            HenomotiaList.Add(GameObject.Find("Henomotia ("+i.ToString()+")"));
+        }
 
         persianSpeed = .15f; //*Time.deltaTime;
 
@@ -46,17 +50,8 @@ public class Persian : MonoBehaviour {
 
 	public void moveToSpartans()
 	{
-		posicioHenomotia = henomotia.transform.position;
-		posicioHenomotia_comparacio = henomotia_1.transform.position;
-		vectorDirector = posicioHenomotia - posicioActual;
-		vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
+        closestHenomotia();
 
-		//de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
-		if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
-		{
-			vectorDirector = vectorDirector_comparacio;
-			posicioHenomotia = posicioHenomotia_comparacio;
-		}
 		if (vectorDirector.magnitude <= minDistance)
 		{
 			posY = vectorDirector.y;
@@ -171,6 +166,30 @@ public class Persian : MonoBehaviour {
                 anim.SetBool("walk_7", false);
                 anim.SetBool("walk_8", true);
             }
+        }
+    }
+
+    public void closestHenomotia()
+    {
+        posicioHenomotia = HenomotiaList[0].transform.position;
+        vectorDirector = posicioHenomotia - posicioActual;
+        for (int i =1; i <= 8; i++)
+        { 
+            posicioHenomotia_comparacio = HenomotiaList[i].transform.position;
+            vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
+
+            if (vectorDirector.magnitude > vectorDirector_comparacio.magnitude)
+            {
+                vectorDirector = vectorDirector_comparacio;
+                posicioHenomotia = posicioHenomotia_comparacio;
+            }
+        }
+
+        //de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
+        if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
+        {
+            vectorDirector = vectorDirector_comparacio;
+            posicioHenomotia = posicioHenomotia_comparacio;
         }
     }
 
