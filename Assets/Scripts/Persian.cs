@@ -5,37 +5,42 @@ using UnityEngine;
 public class Persian : MonoBehaviour {
 
     //walk cap a una henomotia:
-    public GameObject henomotia;
-    public GameObject henomotia_1;
+    private List<GameObject> HenomotiaList;
     private Vector2 posicioHenomotia;
     private Vector2 posicioHenomotia_comparacio;
-    public float persianSpeed;
+    private float persianSpeed;
 
     Vector2 vectorDirector;
     Vector2 vectorDirector_comparacio;
+
     Vector2 posicioActual;
     Vector2 posicioAnterior;
 
-    private static float minDistance=1000.0f; //de moment és 1000, fins que el Guillermo acabi lo de les posicions de les Henomoties.
+    public static float minDistance=10000.0f; 
     private float angle;
     private float posY;
-
+    
     //Canvi de sprites
     public Animator anim;
 
     // Use this for initialization
     void Start () {
+
+        HenomotiaList = new List<GameObject>();
+
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
 
         anim.SetBool("moving", false);
-        henomotia = GameObject.Find("Henomotia");
-        henomotia_1 = GameObject.Find("Henomotia(1)");
+        for(int i = 0; i <= 8;i++)
+        {
+            HenomotiaList.Add(GameObject.Find("Henomotia ("+i.ToString()+")"));
+        }
 
         persianSpeed = .15f; //*Time.deltaTime;
 
-        posicioActual = transform.position;
-        posicioAnterior = transform.position;
+        posicioActual = GetComponent<Rigidbody2D>().transform.position;
+        posicioAnterior = GetComponent<Rigidbody2D>().transform.position;
     }
 	
 	// Update is called once per frame
@@ -45,25 +50,16 @@ public class Persian : MonoBehaviour {
 
 	public void moveToSpartans()
 	{
-		posicioHenomotia = henomotia.transform.position;
-		posicioHenomotia_comparacio = henomotia_1.transform.position;
-		vectorDirector = posicioHenomotia - posicioActual;
-		vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
+        closestHenomotia();
 
-		//de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
-		if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
-		{
-			vectorDirector = vectorDirector_comparacio;
-			posicioHenomotia = posicioHenomotia_comparacio;
-		}
 		if (vectorDirector.magnitude <= minDistance)
 		{
 			posY = vectorDirector.y;
 			//calculem l'angle i canviem l'sprite.
 			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-			transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
+			this.GetComponent<Rigidbody2D>().transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
 
-			posicioActual = transform.position;
+			posicioActual = GetComponent<Rigidbody2D>().transform.position;
 
 			if (posicioActual == posicioAnterior)
 			{
@@ -73,13 +69,9 @@ public class Persian : MonoBehaviour {
 
 			changeSprite();
 
-			posicioAnterior = transform.position; 
+			posicioAnterior = GetComponent<Rigidbody2D>().transform.position; 
 		}
 	}
-
-
-
-
     //funció per canviar la imatge de l'sprite segons l'angle:
     public void changeSprite()
     {
@@ -174,6 +166,30 @@ public class Persian : MonoBehaviour {
                 anim.SetBool("walk_7", false);
                 anim.SetBool("walk_8", true);
             }
+        }
+    }
+
+    public void closestHenomotia()
+    {
+        posicioHenomotia = HenomotiaList[0].transform.position;
+        vectorDirector = posicioHenomotia - posicioActual;
+        for (int i =1; i <= 8; i++)
+        { 
+            posicioHenomotia_comparacio = HenomotiaList[i].transform.position;
+            vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
+
+            if (vectorDirector.magnitude > vectorDirector_comparacio.magnitude)
+            {
+                vectorDirector = vectorDirector_comparacio;
+                posicioHenomotia = posicioHenomotia_comparacio;
+            }
+        }
+
+        //de moment comparem entre les dues distàncies del persa a les henomoties i seguim la més propera.
+        if (vectorDirector.magnitude >= vectorDirector_comparacio.magnitude)
+        {
+            vectorDirector = vectorDirector_comparacio;
+            posicioHenomotia = posicioHenomotia_comparacio;
         }
     }
 
