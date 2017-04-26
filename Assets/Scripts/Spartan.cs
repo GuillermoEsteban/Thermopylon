@@ -25,14 +25,16 @@ public class Spartan : MonoBehaviour {
     //ATTACKS***********************************
     private  enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
     Weapon myWeapon;
+
     //escut:
     private bool firstShield;
+
+    //parent henomotia:
+    public Henomotia henomotia;
 
 
     void Start ()
     {
-        speed = 5.0f;
-
         //obtenim el punt inicial:
         puntAnterior = transform.parent.position;
         puntNou = transform.parent.position;
@@ -48,13 +50,15 @@ public class Spartan : MonoBehaviour {
 
         //inicialització escut:
         firstShield = false;
+
+        //busquem la henomotia del parent de l'espartà per a després poder saber si és la que l'usuari controla.
+        henomotia = this.gameObject.GetComponentInParent<Henomotia>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
 		AngleUpdate();
-        //Press space for shield, 1 for Javelin, 2 for Aspis, 3 for Xiphos
         changeWeapon();
 	}
 
@@ -68,7 +72,7 @@ public class Spartan : MonoBehaviour {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 vectorDirector = (destiny - puntAnterior);
                 posY = vectorDirector.y;
-                //calculem l'angle i canviem l'sprite.
+                //calculem l'angle
                 angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
             }
 
@@ -81,8 +85,6 @@ public class Spartan : MonoBehaviour {
             else anim.SetBool("moving", true);
 
             changeSprite(angle, posY);
-
-
             puntAnterior = puntNou;
         }
 
@@ -200,37 +202,45 @@ public class Spartan : MonoBehaviour {
 
    private void changeWeapon()
     {
-        if (Input.GetKey(KeyCode.Space)&&firstShield==false)
+        if (henomotia.correctHenomotia())
         {
-            myWeapon = Weapon.SHIELD;
-            anim.SetBool("shieldUp",true);
-            firstShield = true;
-        }
-        else if (Input.GetKey(KeyCode.Space) && firstShield==true)
-        {
-            myWeapon = Weapon.ASPIS;
-            anim.SetBool("shieldUp", false);
-            firstShield = false;
-        }
+            if (Input.GetKeyDown(KeyCode.Space) && firstShield == false)
+            {
+                myWeapon = Weapon.SHIELD;
+                anim.SetBool("shieldUp", true);
+                firstShield = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && firstShield == true)
+            {
+                myWeapon = Weapon.ASPIS;
+                anim.SetBool("shieldUp", false);
+                firstShield = false;
+            }
 
-        else if (Input.GetKey("1"))
-        {
-            myWeapon = Weapon.ASPIS;
-            Debug.Log(myWeapon);
+            else if (Input.GetKey("1"))
+            {
+                myWeapon = Weapon.ASPIS;
+                Debug.Log(myWeapon);
+            }
+            else if (Input.GetKey("2"))
+            {
+                myWeapon = Weapon.XIPHOS;
+                Debug.Log(myWeapon);
+            }
+            else if (Input.GetKey("3"))
+            {
+                myWeapon = Weapon.JAVELIN;
+                Debug.Log(myWeapon);
+            }
         }
-        else if (Input.GetKey("2"))
-        {
-            myWeapon = Weapon.XIPHOS;
-            Debug.Log(myWeapon);
-        }
-        else if (Input.GetKey("3"))
-        {
-            myWeapon = Weapon.JAVELIN;
-            Debug.Log(myWeapon);
-        } 
+        
     }
 		
-    
+    //retorna si està amb els escuts o no:
+    public bool getShieldUp()
+    {
+        return anim.GetBool("shieldUp");
+    }
     //Aquesta funció donarà errors de moment, ja que s'ha d'implementar la classe dels Perses i també buscar com tractar els colliders.
 
 /*

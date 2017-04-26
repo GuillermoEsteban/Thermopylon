@@ -6,6 +6,8 @@ public class Henomotia: MonoBehaviour {
 	
 	//ENUMS
 	enum Formation { circle , square , delta }	//Enum de las tres formaciones
+
+    //això ja està en cada espartà!
 	enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}	//Enum de las tres armas
 
 	//ATRIBUTOS
@@ -23,13 +25,10 @@ public class Henomotia: MonoBehaviour {
     //SELECCIONAR HENOMOTIA:
     private string selectedHenomotia;
 
-    
-
 
 	//START
 	void Start ()
 	{
-
 		numSpartan = 36;
         speed = 5.0f;
 
@@ -56,6 +55,7 @@ public class Henomotia: MonoBehaviour {
 	void Update()
 	{
         MoveHenomotia();
+
         if (Input.GetKeyDown("c"))
             CircleFormation();
         else if (Input.GetKeyDown("x"))
@@ -91,9 +91,9 @@ public class Henomotia: MonoBehaviour {
 
 	public void MoveHenomotia()
 	{
-        if(this.gameObject.name== selectedHenomotia)
+        if (SpartanList[0].GetComponent<Spartan>().getShieldUp()==false)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (correctHenomotia())
             {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 destiny = new Vector3(destiny.x, destiny.y, 0.0f);
@@ -117,10 +117,10 @@ public class Henomotia: MonoBehaviour {
         Debug.Log(selectedHenomotia);
     }
 
-    public void ChangeWeapon()
-	{
-		
-	}
+    public bool correctHenomotia()
+    {
+        return this.gameObject.name == selectedHenomotia;
+    }
 
 	public void ChangeFormation()
 	{
