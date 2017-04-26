@@ -27,6 +27,9 @@ public class Henomotia: MonoBehaviour {
     //SELECCIONAR HENOMOTIA:
     private static string selectedHenomotia;
 
+    //COLLIDE:
+    private bool isColliding;
+
 
 	//START
 	void Start ()
@@ -59,6 +62,8 @@ public class Henomotia: MonoBehaviour {
 
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
+        isColliding = false;
     }
 
 	void Update()
@@ -82,11 +87,15 @@ public class Henomotia: MonoBehaviour {
         }
         else
         {
-            foreach (GameObject spartan in SpartanList)
+            if (!isColliding)
             {
-                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                renderer.color = new Color(1, 1, 1, 1);
+                foreach (GameObject spartan in SpartanList)
+                {
+                    SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                    renderer.color = new Color(1, 1, 1, 1);
+                }
             }
+            
         }
         updateFormation();
     }
@@ -330,7 +339,13 @@ public class Henomotia: MonoBehaviour {
                 SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
                 renderer.color = new Color(1, 0, 0, 0.5f);
             }
+            isColliding = true;
         }
+        else
+        {
+            isColliding = false;
+        }
+        
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
