@@ -34,6 +34,10 @@ public class Henomotia: MonoBehaviour {
 		numSpartan = 36;
         speed = 5.0f;
 
+		gameObject.GetComponent<CircleCollider2D>().enabled = false;
+		gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+		gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
         formation = Formation.square;
 
         //Inicializamos la lista henomotia
@@ -145,6 +149,7 @@ public class Henomotia: MonoBehaviour {
         formation = Formation.square;
 
 		gameObject.GetComponent<CircleCollider2D>().enabled = false;
+		gameObject.GetComponent<PolygonCollider2D>().enabled = false;
 		gameObject.GetComponent<BoxCollider2D>().enabled = true; 
 
 
@@ -177,8 +182,10 @@ public class Henomotia: MonoBehaviour {
 
         formation = Formation.circle;
 
-        gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
+		gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+		gameObject.GetComponent<CircleCollider2D>().enabled = true;
 
 
 
@@ -245,6 +252,10 @@ public class Henomotia: MonoBehaviour {
     public void DeltaFormation()
     {
         formation = Formation.delta;
+
+		gameObject.GetComponent<CircleCollider2D>().enabled = false;
+		gameObject.GetComponent<BoxCollider2D>().enabled = false;
+		gameObject.GetComponent<PolygonCollider2D>().enabled = true;
 
         Vector3 relativePosition;
         Vector3 frstSpartPos = new Vector3(12.0f, 0.0f , 0.0f);
