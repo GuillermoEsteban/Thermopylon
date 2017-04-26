@@ -22,6 +22,8 @@ public class Henomotia: MonoBehaviour {
     Quaternion hRotation;
     Vector3 destVector;
 
+	private bool enabled = true;
+
     //SELECCIONAR HENOMOTIA:
     private static string selectedHenomotia;
 
@@ -50,6 +52,9 @@ public class Henomotia: MonoBehaviour {
 
         //inicialitzem la Henomotia com la base:
         selectedHenomotia = "Henomotia";
+
+        gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 
 	void Update()
@@ -140,6 +145,10 @@ public class Henomotia: MonoBehaviour {
     {
         formation = Formation.square;
 
+		gameObject.GetComponent<CircleCollider2D>().enabled = false;
+		gameObject.GetComponent<BoxCollider2D>().enabled = true; 
+
+
         float col = numSpartan / filas;
         Vector3 spartPos = new Vector3((col * dist) * 0.5f, (filas * dist) * 0.5f, 0.0f);
         Vector3 cont = new Vector3(0.0f, 0.0f, 0.0f);
@@ -168,6 +177,11 @@ public class Henomotia: MonoBehaviour {
     {
 
         formation = Formation.circle;
+
+        gameObject.GetComponent<CircleCollider2D>().enabled = true;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+
 
         Vector3 relativePosition;
         float radi;
@@ -245,7 +259,7 @@ public class Henomotia: MonoBehaviour {
         relativePosition = frstSpartPos;
         SpartanList[0].GetComponent<Spartan>().setRelativePosition(relativePosition);
 
-        for (int i=0; i<spartansToPlace;i++)
+        for (int i=0; i<spartansToPlace-1;i++)
         {
             if(i%2==0)
             {
@@ -267,7 +281,7 @@ public class Henomotia: MonoBehaviour {
         SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
         cont++;
 
-        for (int i=0;i<spartansToPlace;i++)
+        for (int i=0;i<spartansToPlace-1;i++)
         {
             if (i % 2 == 0)
             {

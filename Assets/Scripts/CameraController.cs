@@ -10,8 +10,8 @@ public class CameraController : MonoBehaviour {
     private static int maxZoom = 20;
     private static int minZoom = 115;
     public static Sprite background;
-	private static int limitX = 1000;
-	private static int limitY = 500;
+	private static int limitX = 1040;
+	private static int limitY = 588;
 
     //MOVIMENT DE LA CÀMERA
     private float CameraSpeed;
