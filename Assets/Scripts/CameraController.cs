@@ -7,9 +7,11 @@ public class CameraController : MonoBehaviour {
     //ZOOM DE LA CÀMERA
     public static Camera cam;
     private int zoomSpeed = 5;
-    private static int maxZoom = 10;
-    private static int minZoom = 60;
+    private static int maxZoom = 20;
+    private static int minZoom = 115;
     public static Sprite background;
+	private static int limitX = 1000;
+	private static int limitY = 500;
 
     //MOVIMENT DE LA CÀMERA
     private float CameraSpeed;
@@ -42,7 +44,7 @@ public class CameraController : MonoBehaviour {
         if (Input.GetAxis("Mouse ScrollWheel") < 0) // back
         {
             cam.orthographicSize += zoomSpeed;
-            if (cam.orthographicSize > 60)
+            if (cam.orthographicSize > minZoom)
             {
                 cam.orthographicSize = minZoom;
             }
@@ -58,7 +60,7 @@ public class CameraController : MonoBehaviour {
         else if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
         {
             cam.orthographicSize -= zoomSpeed;
-            if (cam.orthographicSize < 10)
+            if (cam.orthographicSize < maxZoom)
             {
                 cam.orthographicSize = maxZoom;
             }
@@ -75,7 +77,7 @@ public class CameraController : MonoBehaviour {
 
     public void moveCamera()
     {
-        CameraSpeed = cam.orthographicSize / 50.0f;
+        CameraSpeed = cam.orthographicSize / 30.0f;
         goodPosition = cam.transform.position;
         if (Input.GetKey("w"))
         {
@@ -115,7 +117,7 @@ public class CameraController : MonoBehaviour {
 
     public void limitCamera(Vector3 goodPosition)
     {
-        if(cam.transform.position.x - cam.orthographicSize * 1.8f <= 0 || cam.transform.position.y + cam.orthographicSize >= 0 || cam.transform.position.x + cam.orthographicSize * 1.8f >= 500 || cam.transform.position.y - cam.orthographicSize <= -280)
+        if(cam.transform.position.x - cam.orthographicSize * 1.8f <= 0 || cam.transform.position.y + cam.orthographicSize >= 0 || cam.transform.position.x + cam.orthographicSize * 1.8f >= limitX || cam.transform.position.y - cam.orthographicSize <= -limitY)
         {
             marge = true;
             zoomCamera();
