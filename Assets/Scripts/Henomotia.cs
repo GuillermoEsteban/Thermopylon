@@ -75,7 +75,6 @@ public class Henomotia: MonoBehaviour {
                 DeltaFormation();
         }
         updateFormation();
-
     }
 
 	//MÉTODOS
