@@ -16,7 +16,7 @@ public class Henomotia: MonoBehaviour {
 	private Formation formation;	//Formación de la henomotia
 	private float speed;	//Velocidad de la henomotia
     private Vector3 destiny;
-	private Weapon weapon;  //Definimos el arma de la henomotia
+	private Weapon myWeapon;  //Definimos el arma de la henomotia
     private const int filas =9;
     private const float dist = 3;
     Quaternion hRotation;
@@ -66,14 +66,17 @@ public class Henomotia: MonoBehaviour {
 
         isColliding = false;
 
+        myWeapon = Weapon.ASPIS;
     }
 
 	void Update()
 	{
         MoveHenomotia();
+        
 
         if (selectedHenomotia == name)
         {
+            changeWeapon();
             if (Input.GetKeyDown("c"))
                 CircleFormation();
             else if (Input.GetKeyDown("x"))
@@ -89,12 +92,31 @@ public class Henomotia: MonoBehaviour {
         }
         else
         {
-            if (!isColliding)
+            if (!isColliding )
             {
-                foreach (GameObject spartan in SpartanList)
+                if (myWeapon == Weapon.ASPIS)
                 {
-                    SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                    renderer.color = new Color(1, 1, 1, 1);
+                    foreach (GameObject spartan in SpartanList)
+                    {
+                        SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                        renderer.color = new Color(1, 1, 1, 1);
+                    }
+                }
+                else if (myWeapon == Weapon.XIPHOS)
+                {
+                    foreach (GameObject spartan in SpartanList)
+                    {
+                        SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                        renderer.color = new Color(0, 0, 0, 0.5f);
+                    }
+                }
+                else if (myWeapon == Weapon.JAVELIN)
+                {
+                    foreach (GameObject spartan in SpartanList)
+                    {
+                        SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                        renderer.color = new Color(1, 0, 1, 0.5f);
+                    }
                 }
             }
             
@@ -360,4 +382,23 @@ public class Henomotia: MonoBehaviour {
             }
         }
     }
+
+    private void changeWeapon()
+    {
+        if (Input.GetKey("1"))
+        {
+            myWeapon = Weapon.ASPIS;
+        }
+        else if (Input.GetKey("2"))
+        {
+            myWeapon = Weapon.XIPHOS;
+        }
+        else if (Input.GetKey("3"))
+        {
+            myWeapon = Weapon.JAVELIN;
+        }
+    }
+
+
+
 }

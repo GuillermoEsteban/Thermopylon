@@ -7,8 +7,8 @@ public class PersianArmy : MonoBehaviour {
     private List<GameObject> PersianList;
     private const int numPersians = 400;
 
-    public int maxAreaX = 50;
-    public int maxAreaY = 30;
+    public int maxAreaX;
+    public int maxAreaY;
 
 	// Use this for initialization
 	void Start () {
