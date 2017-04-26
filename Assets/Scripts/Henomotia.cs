@@ -22,7 +22,7 @@ public class Henomotia: MonoBehaviour {
     Quaternion hRotation;
     Vector3 destVector;
 
-	private bool enabled = true;
+
 
     //SELECCIONAR HENOMOTIA:
     private static string selectedHenomotia;
@@ -34,6 +34,7 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
+
 		numSpartan = 36;
         speed = 5.0f;
 
@@ -64,6 +65,7 @@ public class Henomotia: MonoBehaviour {
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
 
         isColliding = false;
+
     }
 
 	void Update()
@@ -358,7 +360,4 @@ public class Henomotia: MonoBehaviour {
             }
         }
     }
-
-
-
 }

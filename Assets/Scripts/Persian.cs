@@ -5,16 +5,16 @@ using UnityEngine;
 public class Persian : MonoBehaviour {
 
     //walk cap a una henomotia:
-    private List<GameObject> HenomotiaList;
-    private Vector2 posicioHenomotia;
-    private Vector2 posicioHenomotia_comparacio;
+    private static List<GameObject> HenomotiaList;
+    private Vector3 posicioHenomotia;
+    private Vector3 posicioHenomotia_comparacio;
     private float persianSpeed;
 
-    Vector2 vectorDirector;
-    Vector2 vectorDirector_comparacio;
+    Vector3 vectorDirector;
+    Vector3 vectorDirector_comparacio;
 
-    Vector2 posicioActual;
-    Vector2 posicioAnterior;
+    Vector3 posicioActual;
+    Vector3 posicioAnterior;
 
     public static float minDistance=10000.0f; 
     private float angle;
@@ -23,8 +23,9 @@ public class Persian : MonoBehaviour {
     //Canvi de sprites
     public Animator anim;
 
-    // Use this for initialization
-    void Start () {
+// Use this for initialization
+void Start ()
+    {
 
         HenomotiaList = new List<GameObject>();
 
@@ -44,7 +45,8 @@ public class Persian : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         moveToSpartans();
 	}
 
@@ -57,9 +59,9 @@ public class Persian : MonoBehaviour {
 			posY = vectorDirector.y;
 			//calculem l'angle i canviem l'sprite.
 			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-			this.GetComponent<Rigidbody2D>().transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
+			transform.position = Vector3.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
 
-			posicioActual = GetComponent<Rigidbody2D>().transform.position;
+			posicioActual = transform.position;
 
 			if (posicioActual == posicioAnterior)
 			{
