@@ -58,8 +58,12 @@ public class Spartan : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		AngleUpdate();
-        changeWeapon();
+        if (henomotia.correctHenomotia())
+        {
+            AngleUpdate();
+            changeWeapon();
+        }
+		
 	}
 
 	public void AngleUpdate()
@@ -202,38 +206,34 @@ public class Spartan : MonoBehaviour {
 
    private void changeWeapon()
     {
-        if (henomotia.correctHenomotia())
+        if (Input.GetKeyDown(KeyCode.Space) && firstShield == false)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && firstShield == false)
-            {
-                myWeapon = Weapon.SHIELD;
-                anim.SetBool("shieldUp", true);
-                firstShield = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.Space) && firstShield == true)
-            {
-                myWeapon = Weapon.ASPIS;
-                anim.SetBool("shieldUp", false);
-                firstShield = false;
-            }
-
-            else if (Input.GetKey("1"))
-            {
-                myWeapon = Weapon.ASPIS;
-                Debug.Log(myWeapon);
-            }
-            else if (Input.GetKey("2"))
-            {
-                myWeapon = Weapon.XIPHOS;
-                Debug.Log(myWeapon);
-            }
-            else if (Input.GetKey("3"))
-            {
-                myWeapon = Weapon.JAVELIN;
-                Debug.Log(myWeapon);
-            }
+            myWeapon = Weapon.SHIELD;
+            anim.SetBool("shieldUp", true);
+            firstShield = true;
         }
-        
+        else if (Input.GetKeyDown(KeyCode.Space) && firstShield == true)
+        {
+            myWeapon = Weapon.ASPIS;
+            anim.SetBool("shieldUp", false);
+            firstShield = false;
+        }
+
+        else if (Input.GetKey("1"))
+        {
+            myWeapon = Weapon.ASPIS;
+            Debug.Log(myWeapon);
+        }
+        else if (Input.GetKey("2"))
+        {
+            myWeapon = Weapon.XIPHOS;
+            Debug.Log(myWeapon);
+        }
+        else if (Input.GetKey("3"))
+        {
+            myWeapon = Weapon.JAVELIN;
+            Debug.Log(myWeapon);
+        }
     }
 		
     //retorna si està amb els escuts o no:

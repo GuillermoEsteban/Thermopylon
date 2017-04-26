@@ -5,21 +5,22 @@ using UnityEngine;
 public class Persian : MonoBehaviour {
 
     //walk cap a una henomotia:
-    public GameObject henomotia;
-    public GameObject henomotia_1;
+    private GameObject henomotia;
+    private GameObject henomotia_1;
     private Vector2 posicioHenomotia;
     private Vector2 posicioHenomotia_comparacio;
-    public float persianSpeed;
+    private float persianSpeed;
 
     Vector2 vectorDirector;
     Vector2 vectorDirector_comparacio;
+
     Vector2 posicioActual;
     Vector2 posicioAnterior;
 
-    private static float minDistance=1000.0f; //de moment és 1000, fins que el Guillermo acabi lo de les posicions de les Henomoties.
+    private static float minDistance=150.0f; 
     private float angle;
     private float posY;
-
+    
     //Canvi de sprites
     public Animator anim;
 
@@ -34,8 +35,8 @@ public class Persian : MonoBehaviour {
 
         persianSpeed = .15f; //*Time.deltaTime;
 
-        posicioActual = transform.position;
-        posicioAnterior = transform.position;
+        posicioActual = GetComponent<Rigidbody2D>().transform.position;
+        posicioAnterior = GetComponent<Rigidbody2D>().transform.position;
     }
 	
 	// Update is called once per frame
@@ -61,9 +62,9 @@ public class Persian : MonoBehaviour {
 			posY = vectorDirector.y;
 			//calculem l'angle i canviem l'sprite.
 			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-			transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
+			this.GetComponent<Rigidbody2D>().transform.position = Vector2.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
 
-			posicioActual = transform.position;
+			posicioActual = GetComponent<Rigidbody2D>().transform.position;
 
 			if (posicioActual == posicioAnterior)
 			{
@@ -73,13 +74,9 @@ public class Persian : MonoBehaviour {
 
 			changeSprite();
 
-			posicioAnterior = transform.position; 
+			posicioAnterior = GetComponent<Rigidbody2D>().transform.position; 
 		}
 	}
-
-
-
-
     //funció per canviar la imatge de l'sprite segons l'angle:
     public void changeSprite()
     {

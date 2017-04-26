@@ -23,7 +23,7 @@ public class Henomotia: MonoBehaviour {
     Vector3 destVector;
 
     //SELECCIONAR HENOMOTIA:
-    private string selectedHenomotia;
+    private static string selectedHenomotia;
 
 
 	//START
