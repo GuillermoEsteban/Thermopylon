@@ -83,12 +83,6 @@ public class Henomotia: MonoBehaviour {
                 SquareFormation();
             else if (Input.GetKeyDown("v"))
                 DeltaFormation();
-
-            foreach (GameObject spartan in SpartanList)
-            {
-                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                renderer.color = new Color(0, 1, 1, 0.5f);
-            }
         }
         else
         {
@@ -131,6 +125,7 @@ public class Henomotia: MonoBehaviour {
         float col = numSpartan / filas;   //filas es una constante que vale 9, ya que siempre queremos 9 filas.
         Vector3 spartPos = new Vector3((col * dist * 0.5f)-1.8f, ((filas * dist)*0.5f)-1, 0.0f); //calculamos la posición del primer espartano.
         Vector3 cont = new Vector3(0.0f,0.0f,0.0f); //creamos un contador de tipo vector.
+        Vector3 finalPos;
 
         for (int i = 0,j = 0;i<numSpartan;i++,j++)
         {
@@ -141,10 +136,11 @@ public class Henomotia: MonoBehaviour {
                 cont.z = 0.0f;
                 cont.x -= dist;
             }
-            SpartanList[i].transform.position= spartPos + cont + transform.position;
-            SpartanList[i].GetComponent<Spartan>().setRelativePosition(spartPos + cont);   //la posición de cada espartano se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador. 
+            finalPos = spartPos + cont;
+            finalPos.z = finalPos.y / 1000.0f;
+            SpartanList[i].GetComponent<Spartan>().setRelativePosition(finalPos);   //la posición de cada espartano se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador.
+            SpartanList[i].transform.position = finalPos + transform.position; 
             cont.y -= dist;
-            cont.z -= 0.1f;
         }
     }
 
@@ -174,6 +170,12 @@ public class Henomotia: MonoBehaviour {
     {
         selectedHenomotia = GetComponent<Rigidbody2D>().name;
         Debug.Log(selectedHenomotia);
+
+        foreach (GameObject spartan in SpartanList)
+        {
+            SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+            renderer.color = new Color(0, 1, 1, 0.5f);
+        }
     }
 
     public bool correctHenomotia()
@@ -201,8 +203,9 @@ public class Henomotia: MonoBehaviour {
 
 
         float col = numSpartan / filas;
-        Vector3 spartPos = new Vector3((col * dist) * 0.5f, (filas * dist) * 0.5f, 0.0f);
+        Vector3 spartPos = new Vector3((col * dist * 0.5f) - 1.8f, ((filas * dist) * 0.5f) - 1, 0.0f);
         Vector3 cont = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 finalPos;
         for (int i = 0, j = 0; i < numSpartan; i++, j++)
         {
             if (j == filas)
@@ -211,7 +214,9 @@ public class Henomotia: MonoBehaviour {
                 cont.y = 0.0f;
                 cont.x -= dist;
             }
-            SpartanList[i].GetComponent<Spartan>().setRelativePosition(spartPos + cont);
+            finalPos = spartPos + cont;
+            finalPos.z = finalPos.y / 1000.0f;
+            SpartanList[i].GetComponent<Spartan>().setRelativePosition(finalPos);
             cont.y -= dist;
         }
     }
@@ -250,6 +255,7 @@ public class Henomotia: MonoBehaviour {
             for (int i = 0; i < numSpartan; i++)
             {
                 relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                relativePosition.z = relativePosition.y/1000.0f;
                 SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
                 angle = (angle + n) % 360;
                 spartansLeft++;
@@ -264,6 +270,7 @@ public class Henomotia: MonoBehaviour {
             for (int i = 0; i < threshold1; i++)
             {
                 relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                relativePosition.z = relativePosition.y / 1000.0f;
                 SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
                 angle = (angle + n) % 360;
                 spartansLeft++;
@@ -276,6 +283,7 @@ public class Henomotia: MonoBehaviour {
             for (int i = 0; i < threshold2; i++)
             {
                 relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                relativePosition.z = relativePosition.y / 1000.0f;
                 SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
                 angle = (angle + n) % 360;
                 spartansLeft++;
@@ -288,6 +296,7 @@ public class Henomotia: MonoBehaviour {
             for (int i = 0; i < threshold3; i++)
             {
                 relativePosition = new Vector3(radi * Mathf.Cos(angle * Mathf.Deg2Rad), radi * Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+                relativePosition.z = relativePosition.y / 1000.0f;
                 SpartanList[spartansLeft].GetComponent<Spartan>().setRelativePosition(relativePosition);
                 angle = (angle + n) % 360;
                 spartansLeft++;
@@ -314,6 +323,7 @@ public class Henomotia: MonoBehaviour {
         int cont = 1;
 
         relativePosition = frstSpartPos;
+        relativePosition.z = relativePosition.y / 1000.0f;
         SpartanList[0].GetComponent<Spartan>().setRelativePosition(relativePosition);
 
         for (int i=0; i<spartansToPlace-1;i++)
@@ -327,6 +337,7 @@ public class Henomotia: MonoBehaviour {
                 relativePosition = frstSpartPos + (landa * vectorRight);
                 landa += 0.2f;
             }
+            relativePosition.z = relativePosition.y / 1000.0f;
             SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
             cont++;
         }
@@ -335,6 +346,7 @@ public class Henomotia: MonoBehaviour {
         spartansToPlace = leftSpartans;
         frstSpartPos = frstSpartPos + new Vector3(-6.0f,0.0f,0.0f);
         relativePosition = frstSpartPos;
+        relativePosition.z = relativePosition.y / 1000.0f;
         SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
         cont++;
 
@@ -349,6 +361,7 @@ public class Henomotia: MonoBehaviour {
                 relativePosition = frstSpartPos + (landa * vectorRight);
                 landa += 0.2f;
             }
+            relativePosition.z = relativePosition.y / 1000.0f;
             SpartanList[cont].GetComponent<Spartan>().setRelativePosition(relativePosition);
             cont++;
         }
