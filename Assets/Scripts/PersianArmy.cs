@@ -5,7 +5,7 @@ using UnityEngine;
 public class PersianArmy : MonoBehaviour {
 
     private List<GameObject> PersianList;
-    private const int numPersians = 400;
+	public const int numPersians = 300;
 
     public int maxAreaX;
     public int maxAreaY;

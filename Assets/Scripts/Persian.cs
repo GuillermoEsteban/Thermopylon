@@ -8,7 +8,7 @@ public class Persian : MonoBehaviour {
     private static List<GameObject> HenomotiaList;
     private Vector3 posicioHenomotia;
     private Vector3 posicioHenomotia_comparacio;
-    private float persianSpeed;
+	public float persianSpeed;
 
     Vector3 vectorDirector;
     Vector3 vectorDirector_comparacio;
@@ -19,6 +19,8 @@ public class Persian : MonoBehaviour {
     public static float minDistance=10000.0f; 
     private float angle;
     private float posY;
+
+	private Rigidbody2D rb;
     
     //Canvi de sprites
     public Animator anim;
@@ -38,10 +40,12 @@ void Start ()
             HenomotiaList.Add(GameObject.Find("Henomotia ("+i.ToString()+")"));
         }
 
-        persianSpeed = .15f; //*Time.deltaTime;
+        persianSpeed = 300; //*Time.deltaTime;
 
         posicioActual = GetComponent<Rigidbody2D>().transform.position;
         posicioAnterior = GetComponent<Rigidbody2D>().transform.position;
+
+		rb = GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
@@ -59,7 +63,8 @@ void Start ()
 			posY = vectorDirector.y;
 			//calculem l'angle i canviem l'sprite.
 			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
-			transform.position = Vector3.MoveTowards(posicioActual, posicioHenomotia, persianSpeed);
+			//rb.MovePosition(posicioActual + (posicioHenomotia - posicioActual).normalized * Time.deltaTime * 10);
+			rb.velocity = ((posicioHenomotia - posicioActual).normalized * Time.deltaTime * persianSpeed);
 
 			posicioActual = transform.position;
 
