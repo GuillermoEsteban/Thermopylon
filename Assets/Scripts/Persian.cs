@@ -5,85 +5,84 @@ using UnityEngine;
 public class Persian : MonoBehaviour {
 
     //walk cap a una henomotia:
-    private static List<GameObject> HenomotiaList;
+    private static List<GameObject> HenomotiaList;//variable de la llista de Henomoties 
     private Vector3 posicioHenomotia;
-    private Vector3 posicioHenomotia_comparacio;
-	public float persianSpeed;
+    private Vector3 posicioHenomotia_comparacio;//l'utilitzarem per comparar les dues posicions.
+	public float persianSpeed;//la rapidesa dels perses, pública perquè podem modificar-ho com vulguem.
 
-    Vector3 vectorDirector;
-    Vector3 vectorDirector_comparacio;
+    Vector3 vectorDirector;//serà el vector que va de la posició de cada persa a la de l'henomotia.
+    Vector3 vectorDirector_comparacio;//el comparem amb un altre.
 
-    Vector3 posicioActual;
-    Vector3 posicioAnterior;
+    Vector3 posicioActual;//la posició actual del persa
+    Vector3 posicioAnterior;//la posició al frame anterior
 
-    public static float minDistance=10000.0f; 
-    private float angle;
-    private float posY;
+    public static float minDistance=10000.0f; //la distància mínima en què el persa anirà cap als espartans
+    private float angle;//angle de l'eix x al vector de moviment de cada persa
+    private float posY;//si el persa va amunt en l'eix de les y o avall.
 
 	private Rigidbody2D rb;
     
     //Canvi de sprites
-    public Animator anim;
+    public Animator anim;//variable de l'animator per a poder-hi accedir.
 
 // Use this for initialization
 void Start ()
     {
 
-        HenomotiaList = new List<GameObject>();
+        HenomotiaList = new List<GameObject>();//creem la llista buida.
 
-        //creem la variable animació per més comoditat:
-        anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>(); //agafem l'Animator propi de cada persa.
 
-        anim.SetBool("moving", false);
+        anim.SetBool("moving", false); //comencen sense moure's.
+
         for(int i = 0; i <= 8;i++)
         {
-            HenomotiaList.Add(GameObject.Find("Henomotia ("+i.ToString()+")"));
+            HenomotiaList.Add(GameObject.Find("Henomotia ("+i.ToString()+")"));//busca les 8 henomoties i les afegeix a la llista.
         }
 
-        persianSpeed = 300; //*Time.deltaTime;
+        persianSpeed = 300; //inicialitzem la velocitat dels perses a 300, però està subjecte a canvis.
 
-        posicioActual = GetComponent<Rigidbody2D>().transform.position;
+        posicioActual = GetComponent<Rigidbody2D>().transform.position;//adquirim la posició del rigidbody, que serà la mateixa per l'actual i l'anterior.
         posicioAnterior = GetComponent<Rigidbody2D>().transform.position;
 
 		rb = GetComponent<Rigidbody2D>();
     }
 	
-	// Update is called once per frame
 	void Update ()
     {
-        moveToSpartans();
+        moveToSpartans();//l'única funció en l'update que es cridarà cada frame. La IA de moment es basa en trobar l'espartà més proper i apropar-s'hi. 
 	}
 
 	public void moveToSpartans()
 	{
-        closestHenomotia();
+        closestHenomotia();//primer busquem quina és l'henomotia més propera en el frame actual. Això definirà les variables 'vectorDirector' i 'posicioHenomotia' correctes.
 
-		if (vectorDirector.magnitude <= minDistance)
+		if (vectorDirector.magnitude <= minDistance)//si la distància del persa a la henomotia és més petita que la distància que li hem definit:
 		{
-			posY = vectorDirector.y;
-			//calculem l'angle i canviem l'sprite.
-			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);
+			posY = vectorDirector.y;//agafem la y d'aquest vector per a saber si és positiu o negatiu.
+			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);//calculem l'angle, que va del vector cap a la dreta al vectorDirector normalitzat (unitari)
+
 			//rb.MovePosition(posicioActual + (posicioHenomotia - posicioActual).normalized * Time.deltaTime * 10);
 			rb.velocity = ((posicioHenomotia - posicioActual).normalized * Time.deltaTime * persianSpeed);
 
-			posicioActual = transform.position;
+			posicioActual = GetComponent<Rigidbody2D>().transform.position;//la posició actual del rigidbody.
 
-			if (posicioActual == posicioAnterior)
+			if (posicioActual == posicioAnterior)// si és la mateixa, aleshores vol dir que no s'ha mogut i per tant la variable moving és falsa.
 			{
 				anim.SetBool("moving", false);
 			}
-			else anim.SetBool("moving", true);
+			else anim.SetBool("moving", true);//sinó, és que es mou.
 
-			changeSprite();
+			changeSprite();//canviem l'sprite ara que sabem les dades 'angle', 'posY' i 'moving'.
 
-			posicioAnterior = GetComponent<Rigidbody2D>().transform.position; 
+			posicioAnterior = GetComponent<Rigidbody2D>().transform.position; //un cop hem fet el que volíem, tornem a agafar la posició actual com a l'anterior per tornar a entrar el loop.
 		}
 	}
     //funció per canviar la imatge de l'sprite segons l'angle:
     public void changeSprite()
     {
-        if (anim.GetBool("moving")){ 
-            if (angle < 22.5f)
+        if (anim.GetBool("moving")){ //sempre que no s'estigui movent:
+            if (angle < 22.5f)//aquesta funció bàsicament utilitza la variable 'angle' per a posar un booleà de l'animator true o false. En cada if posarem un true i la resta false.
             {
                 anim.SetBool("walk_1", false);
                 anim.SetBool("walk_2", false);
@@ -162,7 +161,7 @@ void Start ()
                 anim.SetBool("walk_7", false);
                 anim.SetBool("walk_8", false);
             }
-            else if (112.5f <= angle && angle < 157.5f && posY < 0)
+            else if (112.5f <= angle && angle < 157.5f && posY < 0)//la vuitena posició
             {
                 anim.SetBool("walk_1", false);
                 anim.SetBool("walk_2", false);
@@ -176,36 +175,37 @@ void Start ()
         }
     }
 
-    public void closestHenomotia()
+    public void closestHenomotia()//funció per a trobar l'henomotia més propera.
     {
-        posicioHenomotia = HenomotiaList[0].transform.position;
-        vectorDirector = posicioHenomotia - posicioActual;
-        for (int i =1; i <= 8; i++)
+        posicioHenomotia = HenomotiaList[0].transform.position;//primer la posició de l'henomotia és la de la 1
+        vectorDirector = posicioHenomotia - posicioActual;//el vector serà el de la posició del persa a la henomotia 1
+        for (int i =1; i <= 8; i++)//per a les 8 següents henomoties:
         { 
-            posicioHenomotia_comparacio = HenomotiaList[i].transform.position;
+            posicioHenomotia_comparacio = HenomotiaList[i].transform.position;//fem el mateix per a les comparacions per a cada henomotia.
             vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
 
-            if (vectorDirector.magnitude > vectorDirector_comparacio.magnitude)
+            if (vectorDirector.magnitude > vectorDirector_comparacio.magnitude)//si la distància entre l'henomotia inicial és més gran que la de la comparació:
             {
-                vectorDirector = vectorDirector_comparacio;
-                posicioHenomotia = posicioHenomotia_comparacio;
+                vectorDirector = vectorDirector_comparacio;//aleshores canviem les dues variables per a les de la comparació
+                posicioHenomotia = posicioHenomotia_comparacio;//d'aquesta manera ens quedaran les variables finals com a les més properes a cada persa.
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)//on Collision Enter 2D és una funció predefinida a unity que es crida sola, quan capta que el collider del persa ha estat col·lisionat.
     {
-        bool isHenomotia = false;
+        bool isHenomotia = false;//és una variable que ens dirà si la col·lisió és d'una henomotia o no. També pot ser del mapa.
         for(int i=0; i<=8; i++)
         {
-            if (collision.gameObject.name == "Henomotia (" + i.ToString() + ")")
+            if (collision.gameObject.name == "Henomotia (" + i.ToString() + ")")//detecta si el nom del gameObject col·lisionat és d'alguna de les 8 henomoties
             {
-                isHenomotia=true;
+                isHenomotia=true;//en cas afirmatiu, retorna true.
             }   
         }
         if (isHenomotia)
         {
-            Destroy(gameObject);
+            Destroy(gameObject);//si és true, aleshores es destrueix. F
+            //fem això de moment, ja que després hauran de lluitar abans de destruir-se.
         }
         
     }

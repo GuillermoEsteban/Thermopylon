@@ -7,7 +7,6 @@ public class Henomotia: MonoBehaviour {
 	//ENUMS
 	enum Formation { circle , square , delta }	//Enum de las tres formaciones
 
-    //això ja està en cada espartà!
 	enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}	//Enum de las tres armas
 
 	//ATRIBUTOS

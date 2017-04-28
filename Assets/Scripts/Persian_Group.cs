@@ -6,7 +6,7 @@ public class Persian_Group : MonoBehaviour {
 
 	private List<GameObject> PersianList;	//Lista que alberga todos los espartanos
 	private int numPersian;
-	private float speed;
+	//private float speed;
 	private const int filas =9;
 	private const float dist = 3;
 
@@ -14,7 +14,7 @@ public class Persian_Group : MonoBehaviour {
 	void Start () 
 	{
 		numPersian = 36;
-		speed = 5.0f;
+		//speed = 5.0f;
 
 		//Inicializamos la lista henomotia
 		PersianList = new List<GameObject>();
