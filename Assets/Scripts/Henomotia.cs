@@ -100,7 +100,7 @@ public class Henomotia: MonoBehaviour {
                     foreach (GameObject spartan in SpartanList)
                     {
                         SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                        renderer.color = new Color(0, 0, 0, 0.5f);
+                        renderer.color = new Color(0, 0, 0, 1);
                     }
                 }
                 else if (myWeapon == Weapon.JAVELIN)
@@ -108,7 +108,7 @@ public class Henomotia: MonoBehaviour {
                     foreach (GameObject spartan in SpartanList)
                     {
                         SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                        renderer.color = new Color(1, 0, 1, 0.5f);
+                        renderer.color = new Color(1, 0, 1, 1);
                     }
                 }
             }
@@ -173,7 +173,7 @@ public class Henomotia: MonoBehaviour {
         foreach (GameObject spartan in SpartanList)
         {
             SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-            renderer.color = new Color(0, 1, 1, 0.5f);
+            renderer.color = new Color(0, 1, 1, 1);
         }
     }
 
@@ -373,7 +373,7 @@ public class Henomotia: MonoBehaviour {
             foreach (GameObject spartan in SpartanList)
             {
                 SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                renderer.color = new Color(1, 0, 0, 0.5f);
+                renderer.color = new Color(1, 0, 0, 1);
             }
             isColliding = true;
         }
