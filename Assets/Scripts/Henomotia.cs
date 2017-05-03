@@ -20,6 +20,7 @@ public class Henomotia: MonoBehaviour {
     private const float dist = 3;
     Quaternion hRotation;
     Vector3 destVector;
+    float timePassed;
 
 
 
@@ -33,7 +34,7 @@ public class Henomotia: MonoBehaviour {
 	//START
 	void Start ()
 	{
-
+        timePassed = 0.0f;
 		numSpartan = 36;
         speed = 5.0f;
 
@@ -115,6 +116,10 @@ public class Henomotia: MonoBehaviour {
             
         }
         updateFormation();
+        if(isColliding)
+        {
+            timePassed += 0.001f * Time.deltaTime;
+        }
     }
 
 	//MÉTODOS
@@ -383,6 +388,7 @@ public class Henomotia: MonoBehaviour {
         }
         
     }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Persian(Clone)")
@@ -391,6 +397,12 @@ public class Henomotia: MonoBehaviour {
             {
                 SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
                 renderer.color = new Color(1, 1, 1, 1);
+            }
+            if (timePassed >= 0.01f)
+            {
+                isColliding = false;
+                GetComponent<Rigidbody2D>().velocity = default(Vector3);
+                timePassed = 0.0f;
             }
         }
     }

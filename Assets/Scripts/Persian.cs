@@ -197,7 +197,7 @@ void Start ()
         bool isHenomotia = false;//és una variable que ens dirà si la col·lisió és d'una henomotia o no. També pot ser del mapa.
         for(int i=0; i<=8; i++)
         {
-            if (collision.gameObject.name == "Henomotia (" + i.ToString() + ")")//detecta si el nom del gameObject col·lisionat és d'alguna de les 8 henomoties
+            if (collision.gameObject.name.Contains("Henomotia")/* == "Henomotia (" + i.ToString() + ")"*/)//detecta si el nom del gameObject col·lisionat és d'alguna de les 8 henomoties
             {
                 isHenomotia=true;//en cas afirmatiu, retorna true.
             }   
