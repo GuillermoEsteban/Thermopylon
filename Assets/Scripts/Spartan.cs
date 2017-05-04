@@ -241,5 +241,10 @@ public class Spartan : MonoBehaviour {
     {
         return anim.GetBool("shieldUp");
     }
+
+    public bool getSpartanPosition()
+    {
+
+    }
 }
 

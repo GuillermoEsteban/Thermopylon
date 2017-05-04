@@ -10,7 +10,7 @@ public class Henomotia: MonoBehaviour {
 	enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}	//Enum de las tres armas
 
 	//ATRIBUTOS
-	private List<GameObject> SpartanList;	//Lista que alberga todos los espartanos
+	public List<GameObject> SpartanList;	//Lista que alberga todos los espartanos
 	private int numSpartan;	//Número de espartanos de la henomotia
 	private Formation formation;	//Formación de la henomotia
 	private float speed;	//Velocidad de la henomotia

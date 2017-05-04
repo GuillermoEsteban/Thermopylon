@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArrowScript : MonoBehaviour {
     //variables per moure les fletxes:
     private GameObject selectedHenomotia;
+    private Henomotia henomotia;
     private Vector3 henomotiaPosition;
     public float arrowSpeed;
 
@@ -27,7 +28,11 @@ public class ArrowScript : MonoBehaviour {
         if (inPosition)
         {
             timePassed += 0.01f;
-            if (timePassed >= 1.0f)
+            if (timePassed*Time.deltaTime >= 0.5f*Time.deltaTime)
+            {
+                detectSpartans();
+            }
+            else if (timePassed*Time.deltaTime >= 1.0f*Time.deltaTime)
             {
                 transform.position = new Vector3(henomotiaPosition.x, henomotiaPosition.y, 2);
             }
@@ -43,6 +48,7 @@ public class ArrowScript : MonoBehaviour {
     private void StartArrows()
     {
         selectedHenomotia = GameObject.Find("Henomotia (" + Random.Range(0, 9).ToString() + ")");
+        henomotia = selectedHenomotia.GetComponent<Henomotia>();//per detectar els espartans dins l'henomotia
         henomotiaPosition = selectedHenomotia.transform.position;
 
         transform.position = henomotiaPosition + new Vector3(Random.Range(200, 400), Random.Range(-50, 50), -1);
@@ -61,6 +67,14 @@ public class ArrowScript : MonoBehaviour {
         if (transform.position == henomotiaPosition + new Vector3(0, 0, -1))
         {
             inPosition = true;
+        }
+    }
+
+    private void detectSpartans()
+    {
+        foreach (GameObject spartan in henomotia.SpartanList)
+        {
+
         }
     }
 
