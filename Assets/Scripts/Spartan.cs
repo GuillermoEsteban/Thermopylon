@@ -47,6 +47,7 @@ public class Spartan : MonoBehaviour {
         
         anim.SetBool("moving", false);
         anim.SetBool("shieldUp", false);
+        anim.SetBool("arrow_death", false);
 
         //inicialització escut:
         firstShield = false;
@@ -69,7 +70,7 @@ public class Spartan : MonoBehaviour {
 	public void AngleUpdate()
 	{
         //només si no s'utilitza l'escut s'hauria de poder caminar:
-        if (anim.GetBool("shieldUp") == false)
+        if (anim.GetBool("shieldUp") == false && anim.GetBool("arrow_death")==false)
         {
             if (Input.GetMouseButtonDown (1))
 		    {
@@ -242,9 +243,10 @@ public class Spartan : MonoBehaviour {
         return anim.GetBool("shieldUp");
     }
 
-    public bool getSpartanPosition()
+
+    public void setArrowDeath()
     {
-        return true;
+        anim.SetBool("arrow_death", true);
     }
 }
 

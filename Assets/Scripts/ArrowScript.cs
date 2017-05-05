@@ -5,7 +5,6 @@ using UnityEngine;
 public class ArrowScript : MonoBehaviour {
     //variables per moure les fletxes:
     private GameObject selectedHenomotia;
-    private Henomotia henomotia;
     private Vector3 henomotiaPosition;
     public float arrowSpeed;
 
@@ -22,39 +21,35 @@ public class ArrowScript : MonoBehaviour {
     }
 	
 	// Update is called once per frame
+    void FixedUpdate()
+    {
+        timePassed += Time.deltaTime;
+    }
 	void Update () {
         moveArrows();
-
         if (inPosition)
         {
-            timePassed += 0.01f;
-            if (timePassed*Time.deltaTime >= 0.5f*Time.deltaTime)
-            {
-                detectSpartans();
-            }
-            if (timePassed*Time.deltaTime >= 1.0f*Time.deltaTime)
+            anim.SetBool("shadow", false);
+            if (timePassed >= 1.0f )
             {
                 transform.position = new Vector3(henomotiaPosition.x, henomotiaPosition.y, 2);
             }
-            if (timePassed * Time.deltaTime >= Random.Range(10f, 11f) * Time.deltaTime)
+            if (timePassed >= Random.Range(5.0f, 6.0f))
             {
-                anim.SetBool("disappear", true);//per què no entra?
-                StartArrows();
+                StartArrows();  
             }
         }
-        
     }
 
     private void StartArrows()
     {
         selectedHenomotia = GameObject.Find("Henomotia (" + Random.Range(0, 9).ToString() + ")");
-        henomotia = selectedHenomotia.GetComponent<Henomotia>();//per detectar els espartans dins l'henomotia
         henomotiaPosition = selectedHenomotia.transform.position;
 
         transform.position = henomotiaPosition + new Vector3(Random.Range(200, 400), Random.Range(-50, 50), -1);
 
         timePassed = 0.0f;
-        anim.SetBool("disappear", false);
+        anim.SetBool("shadow", true);
         inPosition = false;
     }
 
@@ -70,13 +65,23 @@ public class ArrowScript : MonoBehaviour {
         }
     }
 
-    private void detectSpartans()
+    void OnTriggerStay2D(Collider2D collision)//per què no entra?
     {
-        foreach (GameObject spartan in henomotia.SpartanList)
+
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.tag == "spartan" && !collision.gameObject.GetComponent<Spartan>().getShieldUp())
         {
-            if (spartan.GetComponent<Spartan>().getSpartanPosition())
+            Debug.Log(timePassed);
+
+            if(timePassed  >= 0.70f  && timePassed < 4.0f )
             {
-                
+                Debug.Log("asdghbag");
+                //collision.gameObject.GetComponent<Spartan>().setArrowDeath();
+            }
+            else if(timePassed >= 4.5f  && timePassed < 4.7f )
+            {
+                Instantiate(Resources.Load("deadSpartanByArrow") as GameObject,collision.transform);
+                Destroy(collision.gameObject);
             }
         }
     }

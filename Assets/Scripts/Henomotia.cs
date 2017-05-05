@@ -18,8 +18,8 @@ public class Henomotia: MonoBehaviour {
 	private Weapon myWeapon;  //Definimos el arma de la henomotia
     private const int filas =9;
     private const float dist = 3;
-    Quaternion hRotation;
-    Vector3 destVector;
+    //Quaternion hRotation;
+    //Vector3 destVector;
     float timePassed;
 
 
