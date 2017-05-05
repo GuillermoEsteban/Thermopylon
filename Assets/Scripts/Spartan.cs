@@ -244,7 +244,7 @@ public class Spartan : MonoBehaviour {
 
     public bool getSpartanPosition()
     {
-
+        return true;
     }
 }
 

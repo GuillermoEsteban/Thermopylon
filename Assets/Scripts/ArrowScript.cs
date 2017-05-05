@@ -32,11 +32,11 @@ public class ArrowScript : MonoBehaviour {
             {
                 detectSpartans();
             }
-            else if (timePassed*Time.deltaTime >= 1.0f*Time.deltaTime)
+            if (timePassed*Time.deltaTime >= 1.0f*Time.deltaTime)
             {
                 transform.position = new Vector3(henomotiaPosition.x, henomotiaPosition.y, 2);
             }
-            if (timePassed * Time.deltaTime >= Random.Range(50f, 100f) * Time.deltaTime)
+            if (timePassed * Time.deltaTime >= Random.Range(10f, 11f) * Time.deltaTime)
             {
                 anim.SetBool("disappear", true);//per què no entra?
                 StartArrows();
@@ -74,7 +74,10 @@ public class ArrowScript : MonoBehaviour {
     {
         foreach (GameObject spartan in henomotia.SpartanList)
         {
-
+            if (spartan.GetComponent<Spartan>().getSpartanPosition())
+            {
+                
+            }
         }
     }
 
