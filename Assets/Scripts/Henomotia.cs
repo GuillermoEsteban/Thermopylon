@@ -71,6 +71,13 @@ public class Henomotia: MonoBehaviour {
 
 	void Update()
 	{
+        if (this.numSpartans() == 0)
+        {
+            Debug.Log(this.numSpartans());
+            Destroy(this.gameObject);
+            Destroy(this.GetComponent<Rigidbody2D>());
+        }
+
         MoveHenomotia();
         
 
@@ -423,6 +430,19 @@ public class Henomotia: MonoBehaviour {
         }
     }
 
+    public int numSpartans()//retorna el número d'espartans de l'henomotia
+    {
+        int num = 0;
+        foreach(GameObject spartan in SpartanList)  
+        {
+            num++;
+        }
+        return num;
+    }
 
+    public void deleteSpartanList(GameObject spartan)
+    {
+        SpartanList.Remove(spartan);
+    }
 
 }

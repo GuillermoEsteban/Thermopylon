@@ -23,18 +23,21 @@ public class ArrowScript : MonoBehaviour {
 	// Update is called once per frame
     void FixedUpdate()
     {
-        timePassed += Time.deltaTime;
+        if (inPosition)
+        {
+            timePassed += Time.deltaTime;
+        } 
     }
 	void Update () {
         moveArrows();
         if (inPosition)
         {
             anim.SetBool("shadow", false);
-            if (timePassed >= 1.0f )
+            if (timePassed >= 0.2f )
             {
                 transform.position = new Vector3(henomotiaPosition.x, henomotiaPosition.y, 2);
             }
-            if (timePassed >= Random.Range(5.0f, 6.0f))
+            if (timePassed >= Random.Range(5f, 15f))
             {
                 StartArrows();  
             }
@@ -43,7 +46,11 @@ public class ArrowScript : MonoBehaviour {
 
     private void StartArrows()
     {
-        selectedHenomotia = GameObject.Find("Henomotia (" + Random.Range(0, 9).ToString() + ")");
+        selectedHenomotia = null;
+        while (selectedHenomotia == null)
+        {
+            selectedHenomotia = GameObject.Find("Henomotia (" +Random.Range(0, 9).ToString() + ")");
+        }
         henomotiaPosition = selectedHenomotia.transform.position;
 
         transform.position = henomotiaPosition + new Vector3(Random.Range(200, 400), Random.Range(-50, 50), -1);
@@ -65,25 +72,26 @@ public class ArrowScript : MonoBehaviour {
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision)//per què no entra?
+    void OnTriggerStay2D(Collider2D collision)
     {
-
-        Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.tag == "spartan" && !collision.gameObject.GetComponent<Spartan>().getShieldUp())
+        if (inPosition)
         {
-            Debug.Log(timePassed);
+            if (collision.gameObject.tag == "spartan" && !collision.gameObject.GetComponent<Spartan>().getShieldUp())
+            {
+                if (timePassed >= 0.05f && timePassed < 0.1f)
+                {
+                    collision.gameObject.GetComponent<Spartan>().setArrowDeath();
+                }
+                else if (timePassed >= 1.3f && timePassed < 2f)
+                {
+                    Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, collision.gameObject.transform.position, Quaternion.identity);
+                    selectedHenomotia.gameObject.GetComponent<Henomotia>().deleteSpartanList(collision.gameObject);
+                    Destroy(collision.gameObject);
 
-            if(timePassed  >= 0.70f  && timePassed < 4.0f )
-            {
-                Debug.Log("asdghbag");
-                //collision.gameObject.GetComponent<Spartan>().setArrowDeath();
-            }
-            else if(timePassed >= 4.5f  && timePassed < 4.7f )
-            {
-                Instantiate(Resources.Load("deadSpartanByArrow") as GameObject,collision.transform);
-                Destroy(collision.gameObject);
+                }
             }
         }
+        
     }
 
 }
