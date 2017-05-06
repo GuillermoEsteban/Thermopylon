@@ -23,7 +23,6 @@ public class Henomotia: MonoBehaviour {
     float timePassed;
 
 
-
     //SELECCIONAR HENOMOTIA:
     private static string selectedHenomotia;
 
@@ -73,7 +72,6 @@ public class Henomotia: MonoBehaviour {
 	{
         if (this.numSpartans() == 0)
         {
-            Debug.Log(this.numSpartans());
             Destroy(this.gameObject);
             Destroy(this.GetComponent<Rigidbody2D>());
         }
