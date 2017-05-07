@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SpartanArmy : MonoBehaviour {
 
@@ -11,21 +12,39 @@ public class SpartanArmy : MonoBehaviour {
 	public int startingSpartan;
 	public int currentSpartan;
 
+    private int totalNumSpartans;
 
-	void start()
+
+	void Start()
 	{
 		numHenomotia = 9;
-
 		HenomotiaList = new List<GameObject>();
+        totalNumSpartans = 9 * 36;
 
-		for (int i = 0; i < numHenomotia; i++)
-		{
-
-			HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
-			HenomotiaList[i].transform.parent= transform;
-		}
-
+        for (int i = 0; i <= numHenomotia; i++)
+        {
+            HenomotiaList.Add(GameObject.Find("Henomotia (" + i.ToString() + ")"));
+        }
 	}
+
+    void Update()
+    {
+        getTotalNumSpartans();
+        if (totalNumSpartans == 0)
+        {
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+        }
+    }
+
+    private void getTotalNumSpartans()
+    {
+        totalNumSpartans = 0;
+        for (int i = 0; i <= 9; i++)
+        {
+            totalNumSpartans += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
+        }
+        
+    }
 
 
 }
