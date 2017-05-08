@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Henomotia: MonoBehaviour {
 	
@@ -29,6 +32,7 @@ public class Henomotia: MonoBehaviour {
     //COLLIDE:
     private bool isColliding;
 
+	public GameObject FormationHUD;
 
 	//START
 	void Start ()
@@ -66,6 +70,9 @@ public class Henomotia: MonoBehaviour {
         isColliding = false;
 
         myWeapon = Weapon.ASPIS;
+
+		FormationHUD.SetActive(false);
+
     }
 
 	void Update()
@@ -80,9 +87,10 @@ public class Henomotia: MonoBehaviour {
         
 
         if (selectedHenomotia == name)
-        {
+		{
+			FormationHUD.SetActive(true);
             changeWeapon();
-            if (Input.GetKeyDown("c"))
+			if (Input.GetKeyDown("c"))
                 CircleFormation();
             else if (Input.GetKeyDown("x"))
                 SquareFormation();
@@ -118,7 +126,7 @@ public class Henomotia: MonoBehaviour {
                     }
                 }
             }
-            
+			FormationHUD.SetActive(false);  
         }
         updateFormation();
         if(isColliding)
