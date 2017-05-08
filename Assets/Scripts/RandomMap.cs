@@ -7,6 +7,7 @@ public class RandomMap : MonoBehaviour {
     private static List<GameObject> maps1;
     public int numMaps;
     private GameObject rndMap;
+    private int rndNum;
     private float sumX;
     private float sumY;
 
@@ -26,8 +27,10 @@ public class RandomMap : MonoBehaviour {
 
         for(int i = 0; i <= numMaps; ++i)
         {
-            rndMap = maps1[Random.Range(0, 5)];
-            Instantiate(rndMap, new Vector3(sumX, sumY, 2), Quaternion.identity);
+            rndNum = Random.Range(0, 5);
+            rndMap = maps1[rndNum];
+            Instantiate(rndMap, new Vector3(sumX, sumY, 2), Quaternion.identity,GameObject.Find("Map").transform);
+            maps1[rndNum].transform.parent= transform;
 
             if (rndMap.name == "lvl1_straight")
             {
@@ -52,7 +55,7 @@ public class RandomMap : MonoBehaviour {
             else if (rndMap.name == "lvl1_up")
             {
                 sumX += 25.9f;
-                sumY += 69;
+                sumY += 70.35f;
             }
         }
 
