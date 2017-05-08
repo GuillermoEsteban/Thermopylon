@@ -5,7 +5,7 @@ using UnityEngine;
 public class RandomMap : MonoBehaviour {
 
     private static List<GameObject> maps1;
-    private int numMaps;
+    public int numMaps;
     private GameObject rndMap;
     private float sumX;
     private float sumY;
@@ -20,13 +20,13 @@ public class RandomMap : MonoBehaviour {
         maps1.Add(Resources.Load<GameObject>("lvl1_down"));
         maps1.Add(Resources.Load<GameObject>("lvl1_up"));
 
-        numMaps = 10;
+       
         sumX = 96;
         sumY = 0;
 
         for(int i = 0; i <= numMaps; i++)
         {
-            rndMap = maps1[Random.Range(0, 4)];
+            rndMap = maps1[Random.Range(0, 5)];
             Instantiate(rndMap, new Vector3(sumX, sumY, 2), Quaternion.identity);
 
             if (rndMap.name == "lvl1_straight")
@@ -47,12 +47,12 @@ public class RandomMap : MonoBehaviour {
             else if (rndMap.name == "lvl1_down")
             {
                 sumX += 25.9f;
-                sumY -= 70.46f;
+                sumY -= 70.35f;
             }
             else if (rndMap.name == "lvl1_up")
             {
                 sumX += 25.9f;
-                sumY += 68;
+                sumY += 69;
             }
         }
 
