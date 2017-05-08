@@ -13,6 +13,7 @@ public class SpartanArmy : MonoBehaviour {
 	public int totalNumSpartans;
 	public int currentSpartan;
 	public Slider NumSpartanSlider;
+	public Text NumSpartan;
 	public Image damageImage;
 	public float flashSpeed = 5f;
 	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
@@ -45,8 +46,13 @@ public class SpartanArmy : MonoBehaviour {
 
 
 
-		if (totalNumSpartans == 0) 
-		{
+		if (totalNumSpartans == 0) {
+		
+			for (int i = 0; i < 20; i++)
+			{
+			damageImage.color = flashColour;
+			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+			}
 			SceneManager.LoadScene ("GameOver", LoadSceneMode.Single);
 		} 
 
@@ -65,6 +71,7 @@ public class SpartanArmy : MonoBehaviour {
 			}
             currentSpartan += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
 			NumSpartanSlider.value = currentSpartan;
+			NumSpartan.text = currentSpartan.ToString();
         }        
 
 		if (totalNumSpartans - currentSpartan != 0) {
