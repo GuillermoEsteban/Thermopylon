@@ -34,6 +34,7 @@ public class Henomotia: MonoBehaviour {
 
 	public GameObject FormationHUD;
 
+
 	//START
 	void Start ()
 	{
@@ -89,6 +90,9 @@ public class Henomotia: MonoBehaviour {
         if (selectedHenomotia == name)
 		{
 			FormationHUD.SetActive(true);
+			FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
+			FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
+
             changeWeapon();
 			if (Input.GetKeyDown("c"))
                 CircleFormation();
@@ -127,6 +131,9 @@ public class Henomotia: MonoBehaviour {
                 }
             }
 			FormationHUD.SetActive(false);  
+			FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
+			FormationHUD.GetComponent<CanvasGroup> ().interactable = false;
+
         }
         updateFormation();
         if(isColliding)
