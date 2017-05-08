@@ -10,16 +10,28 @@ public class SpartanArmy : MonoBehaviour {
 	private int numHenomotia;	//Número de espartanos de la henomotia 
 
 	public int startingSpartan;
+	public int totalNumSpartans;
 	public int currentSpartan;
+	public Slider NumSpartanSlider;
+	public Image damageImage;
+	public float flashSpeed = 5f;
+	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 
-    private int totalNumSpartans;
+	public GameObject henomotia;
+
+
+	bool isDead;  
+	bool damaged;  
+
+    
 
 
 	void Start()
 	{
 		numHenomotia = 9;
 		HenomotiaList = new List<GameObject>();
-        totalNumSpartans = 9 * 36;
+		totalNumSpartans = 9 * 36;
+		currentSpartan = totalNumSpartans;
 
         for (int i = 0; i <= numHenomotia; i++)
         {
@@ -30,21 +42,39 @@ public class SpartanArmy : MonoBehaviour {
     void Update()
     {
         getTotalNumSpartans();
-        if (totalNumSpartans == 0)
-        {
-            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
-        }
+
+
+
+		if (totalNumSpartans == 0) 
+		{
+			SceneManager.LoadScene ("GameOver", LoadSceneMode.Single);
+		} 
+
     }
+		
 
     private void getTotalNumSpartans()
     {
-        totalNumSpartans = 0;
-        for (int i = 0; i <= 9; i++)
+		totalNumSpartans = currentSpartan;
+		currentSpartan = 0;
+        for (int i = 0; i <= numHenomotia; i++)
         {
-            totalNumSpartans += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
-        }
-        
+			if (HenomotiaList[i] == null) 
+			{
+				continue;
+			}
+            currentSpartan += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
+			NumSpartanSlider.value = currentSpartan;
+        }        
+
+		if (totalNumSpartans - currentSpartan != 0) {
+			damageImage.color = flashColour;
+		} 
+		else 
+		{
+			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+		}
+
     }
-
-
 }
+
