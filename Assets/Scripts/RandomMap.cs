@@ -24,7 +24,7 @@ public class RandomMap : MonoBehaviour {
         sumX = 96;
         sumY = 0;
 
-        for(int i = 0; i <= numMaps; i++)
+        for(int i = 0; i <= numMaps; ++i)
         {
             rndMap = maps1[Random.Range(0, 5)];
             Instantiate(rndMap, new Vector3(sumX, sumY, 2), Quaternion.identity);
