@@ -32,7 +32,13 @@ public class Henomotia: MonoBehaviour {
     //COLLIDE:
     private bool isColliding;
 
-	public GameObject FormationHUD;
+	public GameObject FormationSelector;
+
+	public Button CircleButton;
+	public Button SquareButton;
+	public Button DeltaButton;
+
+	public bool selected;
 
 
 	//START
@@ -72,7 +78,19 @@ public class Henomotia: MonoBehaviour {
 
         myWeapon = Weapon.ASPIS;
 
-		FormationHUD.SetActive(false);
+
+		FormationSelector = GameObject.Find ("FormationSelector");
+	
+
+
+		FormationSelector.SetActive(true);
+
+		CircleButton = CircleButton.GetComponent<Button>();
+		SquareButton = SquareButton.GetComponent<Button>();
+		DeltaButton = DeltaButton.GetComponent<Button>();
+
+		selected = false;
+
 
     }
 
@@ -89,16 +107,24 @@ public class Henomotia: MonoBehaviour {
 
         if (selectedHenomotia == name)
 		{
-			FormationHUD.SetActive(true);
-			FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
-			FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
+	//		FormationHUD.SetActive(true);
+	//		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
+	//		FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
 
+			FormationSelector.SetActive(true);
+
+			selected = true;
+
+			CircleButton.onClick.AddListener(this.CircleFormation);
+			SquareButton.onClick.AddListener(this.SquareFormation);
+			DeltaButton.onClick.AddListener(this.DeltaFormation);
+		
             changeWeapon();
 			if (Input.GetKeyDown("c"))
                 CircleFormation();
-            else if (Input.GetKeyDown("x"))
+			else if (Input.GetKeyDown("x"))
                 SquareFormation();
-            else if (Input.GetKeyDown("v"))
+			else if (Input.GetKeyDown("v"))
                 DeltaFormation();
         }
         else
@@ -130,9 +156,11 @@ public class Henomotia: MonoBehaviour {
                     }
                 }
             }
-			FormationHUD.SetActive(false);  
-			FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
-			FormationHUD.GetComponent<CanvasGroup> ().interactable = false;
+		//	FormationSelector.SetActive(false);  
+	//		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
+	//		FormationHUD.GetComponent<CanvasGroup> ().interactable = false;
+
+
 
         }
         updateFormation();
