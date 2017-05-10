@@ -8,15 +8,14 @@ public class CameraController2 : MonoBehaviour
     //ZOOM DE LA CÀMERA
     public static Camera cam;//variable de la pròpia càmera
     private int zoomSpeed = 5;//velocitat del zoom
-    private static int maxZoom = 20;//el zoom màxim a que pot arribar
-    private static int minZoom = 380;//el zoom mínim
-    public static Sprite background;//l'sprite de background
-    private float limitX;//el límit en l'eix de les X
-    private float limitY;// límit en l'eix de les Y
+    private float maxZoom;//el zoom màxim a que pot arribar
+    private float minZoom;//el zoom mínim
 
     //MOVIMENT DE LA CÀMERA
     private float CameraSpeed;//la velocitat de la càmera en moviment per l'escena.
     private Vector3 goodPosition;//la posició dins dels límits.
+    private float limitX;//el límit en l'eix de les X
+    private float limitY;// límit en l'eix de les Y
 
     //CORRECCIÓ D'SCROLL EN EL MARGE
     bool correccioScrollMarge;//booleà per saber si es necessita corregir l'scroll en cas que la posició de la càmera estigui en un marge
@@ -29,6 +28,8 @@ public class CameraController2 : MonoBehaviour
         cam = Camera.main;//la variable càmera és ara la de la MainCamera.
         correccioScrollMarge = false;//les dues variables comencen en false, donada la posició de la càmera inicial.
         marge = false;
+
+        maxZoom = 20f;
 
     }
 
@@ -85,11 +86,11 @@ public class CameraController2 : MonoBehaviour
             cam.transform.Translate(0, CameraSpeed, 0);
             if (Input.GetKey("d"))
             {
-                cam.transform.Translate(CameraSpeed, CameraSpeed, 0);
+                cam.transform.Translate(CameraSpeed/2, CameraSpeed / 2, 0);
             }
             else if (Input.GetKey("a"))
             {
-                cam.transform.Translate(-CameraSpeed, CameraSpeed, 0);
+                cam.transform.Translate(-CameraSpeed / 2, CameraSpeed / 2, 0);
             }
         }
         else if (Input.GetKey("s"))
@@ -97,11 +98,11 @@ public class CameraController2 : MonoBehaviour
             cam.transform.Translate(0, -CameraSpeed, 0);
             if (Input.GetKey("d"))
             {
-                cam.transform.Translate(CameraSpeed, -CameraSpeed, 0);
+                cam.transform.Translate(CameraSpeed / 2, -CameraSpeed / 2, 0);
             }
             else if (Input.GetKey("a"))
             {
-                cam.transform.Translate(-CameraSpeed, -CameraSpeed, 0);
+                cam.transform.Translate(-CameraSpeed / 2, -CameraSpeed / 2, 0);
             }
         }
         else if (Input.GetKey("a"))
@@ -118,13 +119,13 @@ public class CameraController2 : MonoBehaviour
 
     public void limitCamera(Vector3 goodPosition)
     {   //en el cas que la posició de la càmera estigui fora del mapa:
-        if (cam.transform.position.x - cam.orthographicSize * 1.8f <= -71.4f || cam.transform.position.y + cam.orthographicSize >= -(limitY + 50) || cam.transform.position.x + cam.orthographicSize * 1.8f >= limitX + 50 || cam.transform.position.y - cam.orthographicSize <= -(limitY + 50))
+        if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -71.4f || cam.transform.position.y + cam.orthographicSize >= limitY +150 || cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX || cam.transform.position.y - cam.orthographicSize <= -(limitY + 150))
         {
             marge = true;//canviem la variable marge a true...
             zoomCamera();//...i tornem a cridar la funció del zoom, que ara tindrà marge=true i retornarà correccioScrollMarge=true:
             if (correccioScrollMarge)
             {
-                if (cam.transform.position.x - cam.orthographicSize * 1.8f <= -71.4f)
+                if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -71.4f)
                 {
                     goodPosition.x += 20;//aleshores per cada costat sobrepassat retornarà a goodPosition inicial +/- un canvi en l'eix.
                 }
@@ -132,7 +133,7 @@ public class CameraController2 : MonoBehaviour
                 {
                     goodPosition.y -= 10;
                 }
-                if (cam.transform.position.x + cam.orthographicSize * 1.8f >= limitX + 50)
+                if (cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX)
                 {
                     goodPosition.x -= 20;
                 }
@@ -151,6 +152,11 @@ public class CameraController2 : MonoBehaviour
     {
         limitX = maxX;
         limitY = maxY;
-        Debug.Log(limitX + " " + limitY);
+        
+        minZoom = (limitX + 71.4f) / (2 * cam.aspect);
+        cam.orthographicSize = minZoom;
+        cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 71.4f) / 2 - 71.4f, 0);
+        Debug.Log(limitX + " " + minZoom);
+
     }
 }

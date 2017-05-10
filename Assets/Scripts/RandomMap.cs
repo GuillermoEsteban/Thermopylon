@@ -19,7 +19,6 @@ public class RandomMap : MonoBehaviour {
     private int rndNum;
     private float sumX;
     private float maxX;
-    private float maxXAnterior;
     private float sumY;
     private float maxY;
     private float maxYAnterior;
@@ -63,7 +62,7 @@ public class RandomMap : MonoBehaviour {
 
     private void createMap(List<GameObject> maps,System.Action mapConditions )
     {
-        for (int i = 0; i <= numMapsTotal; ++i)
+        for (int i = 0; i <= numMapsTotal; i++)
         {
 
             rndMapAnterior = rndMap;
@@ -75,13 +74,14 @@ public class RandomMap : MonoBehaviour {
             rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
             mapConditions();
 
-            maxXAnterior = sumX;
+
+            maxX = sumX;
+            if (i == numMapsTotal)
+            {
+                maxX += rndMapCollider.size.x;
+            }
             maxYAnterior = sumY;
 
-            if (maxX < maxXAnterior)
-            {
-                maxX = maxXAnterior;
-            }
             if (maxY < Mathf.Abs(maxYAnterior))
             {
                 maxY = Mathf.Abs(maxYAnterior);
@@ -116,12 +116,12 @@ public class RandomMap : MonoBehaviour {
             }
             else if (rndMapAnterior.name == "lvl1_up")
             {
-                sumX += rndMapColliderAnterior.size.x;
+                sumX += rndMapColliderAnterior.size.x - 0.5f;
                 sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
             }
             else if (rndMapAnterior.name == "lvl1_down")
             {
-                sumX += rndMapColliderAnterior.size.x;
+                sumX += rndMapColliderAnterior.size.x - 0.5f;
                 sumY -= rndMapColliderAnterior.size.y;
             }
         }
@@ -189,7 +189,7 @@ public class RandomMap : MonoBehaviour {
             else if (rndMapAnterior.name == "lvl1_down")
             {
                 sumX += rndMapColliderAnterior.size.x + 17.78f;
-                sumY += -rndMapColliderAnterior.size.y + rndMapColliderAnterior.size.x - 22.813f;
+                sumY += -rndMapColliderAnterior.size.y + rndMapColliderAnterior.size.x - 18.93f;
                 sumZ += 2;
             }
         }
@@ -204,7 +204,7 @@ public class RandomMap : MonoBehaviour {
             {
                 sumX += rndMapColliderAnterior.size.x;
                 sumY += rndMapColliderAnterior.size.y - 83.32f;
-                sumZ -= 3.0f;
+                sumZ -= 5.0f;
             }
             else if (rndMapAnterior.name == "lvl1_diag_up")
             {
@@ -234,7 +234,7 @@ public class RandomMap : MonoBehaviour {
             else if (rndMapAnterior.name == "lvl1_diag_down")
             {
                 sumX += rndMapColliderAnterior.size.x;
-                sumY -= rndMapColliderAnterior.size.y;
+                sumY += -rndMapColliderAnterior.size.y - 6.899f;
                 sumZ -= 3.0f;
             }
             else if (rndMapAnterior.name == "lvl1_diag_up")
