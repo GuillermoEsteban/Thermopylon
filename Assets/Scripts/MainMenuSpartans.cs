@@ -8,19 +8,23 @@ public class MainMenuSpartans : MonoBehaviour {
     private float count;
     private float timePassed;
     private int i;
-	// Use this for initialization
-	void Start () {
+    Sprite[] newSprite;
+    // Use this for initialization
+    void Start () {
         timePassed = 0.0f;
         count = 0.0f;
         i = Random.Range(0, 5);
+        newSprite = Resources.LoadAll<Sprite>("Sprites/spartan_idle_0");
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if(count - timePassed >= 1f && count-timePassed <2f)
+        if(count - timePassed >= 0.17f && count-timePassed <1.0f)
         {
             Debug.Log(i);
-            this.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/spartan_idle_0_" + i.ToString()+".png");
+            Debug.Log("Sprites/spartan_idle_0_" + i.ToString());
+
+            this.GetComponent<Image>().sprite = newSprite[i];
 
             i++;
             if (i == 6)
