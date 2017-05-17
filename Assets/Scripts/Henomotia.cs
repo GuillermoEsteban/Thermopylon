@@ -462,6 +462,8 @@ public class Henomotia: MonoBehaviour {
                 timePassed = 0.0f;
             }
         }
+        else if(collision.gameObject.name.Contains("Henomotia"))
+            GetComponent<Rigidbody2D>().velocity = default(Vector3);
     }
 
     private void changeWeapon()
