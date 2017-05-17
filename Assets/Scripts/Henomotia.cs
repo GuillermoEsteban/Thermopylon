@@ -285,11 +285,7 @@ public class Henomotia: MonoBehaviour {
         
         for (int i=0;i<numSpartan;i++)
         {
-            Vector3 relativePos = SpartanList[i].GetComponent<Spartan>().getRelativePosition();
-            float relativeAngle = Vector3.Angle(Vector3.right, SpartanList[i].GetComponent<Spartan>().getRelativePosition()) + transform.rotation.eulerAngles.z;
-            float radius = SpartanList[i].GetComponent<Spartan>().getRelativePosition().magnitude;
-
-            Vector3 finalPos = new Vector3(radius * Mathf.Cos(Mathf.Deg2Rad * relativeAngle), radius * Mathf.Sin(Mathf.Deg2Rad * relativeAngle), relativePos.z);
+            Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
             SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + finalPos, speed * Time.deltaTime);
         }
     }
