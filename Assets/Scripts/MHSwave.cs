@@ -14,7 +14,7 @@ public class MHSwave : MonoBehaviour {
 	void Start () {
         posicio = gameObject.transform.position;
         temps = 0.0f;
-        amplitud = 0.35f;
+        amplitud = 0.2f;
         periode = 6.0f;
         
 	}

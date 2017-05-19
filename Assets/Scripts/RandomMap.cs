@@ -144,13 +144,14 @@ public class RandomMap : MonoBehaviour {
                 sumX += rndMapColliderAnterior.size.x;
                 sumY += rndMapColliderAnterior.size.y;
                 sumZ -= 0.5f;
-                //Instantiate(Resources.Load<GameObject>("lvl1_triangle_up_down"), new Vector3(sumX, sumY, 0), Quaternion.identity, GameObject.Find("Map").transform);
+                Instantiate(Resources.Load<GameObject>("lvl1_triangle_up_down"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("Map").transform);
             }
             else if (rndMapAnterior.name == "lvl1_up")
             {
                 sumX += rndMapColliderAnterior.size.x;
                 sumY+= rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
                 sumZ += 4;
+                
             }
             else if (rndMapAnterior.name == "lvl1_down")
             {
@@ -172,7 +173,7 @@ public class RandomMap : MonoBehaviour {
                 sumX += rndMapColliderAnterior.size.x + 18.55f;
                 sumY -= rndMapColliderAnterior.size.y;
                 sumZ += 2;
-                //Instantiate(Resources.Load<GameObject>("lvl1_triangle_down_up"), new Vector3(sumX, sumY, 0), Quaternion.identity, GameObject.Find("Map").transform);
+                
             }
             else if (rndMapAnterior.name == "lvl1_diag_up")
             {
@@ -230,6 +231,7 @@ public class RandomMap : MonoBehaviour {
             {
                 sumX += rndMapColliderAnterior.size.x;
                 sumY += rndMapColliderAnterior.size.y;
+                Instantiate(Resources.Load<GameObject>("lvl1_triangle_straight_up"), new Vector3(sumX + 5.7933f, sumY + 27.3f, sumZ-1), Quaternion.identity, GameObject.Find("Map").transform);
             }
             else if (rndMapAnterior.name == "lvl1_diag_down")
             {

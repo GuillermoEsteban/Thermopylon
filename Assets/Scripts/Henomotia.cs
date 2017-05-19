@@ -21,8 +21,11 @@ public class Henomotia: MonoBehaviour {
 	private Weapon myWeapon;  //Definimos el arma de la henomotia
     private const int filas =9;
     private const float dist = 3;
-    //Quaternion hRotation;
-    //Vector3 destVector;
+
+    private Quaternion _lookRotation;
+    private Vector3 _direction;
+    private float rotationSpeed;
+
     float timePassed;
 
 
@@ -47,6 +50,7 @@ public class Henomotia: MonoBehaviour {
         timePassed = 0.0f;
 		numSpartan = 36;
         speed = 5.0f;
+        rotationSpeed = 1.0f;
 
 		gameObject.GetComponent<CircleCollider2D>().enabled = false;
 		gameObject.GetComponent<PolygonCollider2D>().enabled = false;
@@ -67,6 +71,8 @@ public class Henomotia: MonoBehaviour {
         initializeSpartanPos();
 
         destiny = transform.position;
+
+        //_lookRotation = new Quaternion(0.0f,0.0f,0.0f,0.0f);
 
         //inicialitzem la Henomotia com la base:
         selectedHenomotia = "Henomotia";
@@ -163,7 +169,9 @@ public class Henomotia: MonoBehaviour {
 
 
         }
+
         updateFormation();
+
         if(isColliding)
         {
             timePassed += 0.001f * Time.deltaTime;
@@ -204,15 +212,14 @@ public class Henomotia: MonoBehaviour {
             {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 destiny = new Vector3(destiny.x, destiny.y, 0.0f);
-                //destVector = destiny - transform.position;
-                //hRotation = Quaternion.FromToRotation(transform.right,destVector);
-                //hRotation = new Quaternion(0.0f, 0.0f, hRotation.z,hRotation.w);      
+                _direction = (destiny - transform.position).normalized;
+                _lookRotation = Quaternion.LookRotation(_direction);
+
             }
 
-            transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, hRotation, 10 * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * rotationSpeed);
+           transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
         }
     }
 
@@ -275,9 +282,11 @@ public class Henomotia: MonoBehaviour {
 
     public void updateFormation()
     {
-        for(int i=0;i<numSpartan;i++)
+        
+        for (int i=0;i<numSpartan;i++)
         {
-            SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + SpartanList[i].GetComponent<Spartan>().getRelativePosition(), speed * Time.deltaTime);
+            Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
+            SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + finalPos, speed * Time.deltaTime);
         }
     }
 
@@ -453,6 +462,8 @@ public class Henomotia: MonoBehaviour {
                 timePassed = 0.0f;
             }
         }
+        else if(collision.gameObject.name.Contains("Henomotia"))
+            GetComponent<Rigidbody2D>().velocity = default(Vector3);
     }
 
     private void changeWeapon()
