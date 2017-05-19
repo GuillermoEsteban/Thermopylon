@@ -57,7 +57,7 @@ public class RandomMap2 : MonoBehaviour
         numMaps2 = 10; // Random.Range(3, 7);
         numMaps3 = 10; // Random.Range(5, 8);
         numMaps4 = 10;// Random.Range(7, 10);
-        createMap(numMaps1, mapConditions);
+        createMap(numMaps1, mapConditions1);
 
         //main = Camera.main;
         //main.GetComponent<CameraController2>().setMax(maxX, maxY);
@@ -73,7 +73,8 @@ public class RandomMap2 : MonoBehaviour
         mapsList.Add(Resources.Load<GameObject>("lvl2_up"));
 
         yTri += yTri;
-        createMap(numMaps2, mapConditions);
+        sumX += rndMapCollider.size.x;
+        createMap(numMaps2, mapConditions2);
 
         mapsList.Clear();
 
@@ -84,7 +85,8 @@ public class RandomMap2 : MonoBehaviour
         mapsList.Add(Resources.Load<GameObject>("lvl3_up"));
 
         yTri += yTri;
-        createMap(numMaps3, mapConditions);
+        sumX += rndMapCollider.size.x;
+        createMap(numMaps3, mapConditions3);
 
         mapsList.Clear();
 
@@ -95,7 +97,8 @@ public class RandomMap2 : MonoBehaviour
         mapsList.Add(Resources.Load<GameObject>("lvl4_up"));
 
         yTri += yTri;
-        createMap(numMaps4, mapConditions);
+        sumX += rndMapCollider.size.x;
+        createMap(numMaps4, mapConditions4);
     }
 
 
@@ -208,9 +211,9 @@ public class RandomMap2 : MonoBehaviour
             }
             else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
             {
-                sumX += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.x;
-                sumY += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.y;
-                Instantiate(Resources.Load<GameObject>("lvl1_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y + yTri;
+                Instantiate(Resources.Load<GameObject>("lvl1_diag_up"), new Vector3(sumX, sumY, sumZ - 3), Quaternion.identity, GameObject.Find("NewMap").transform);
             }
             else if (rndMapAnterior.name == "lvl1_up")
             {
@@ -350,8 +353,8 @@ public class RandomMap2 : MonoBehaviour
             }
             else if (rndMapAnterior.name == "lvl2_diag_up_triangles")
             {
-                sumX += Resources.Load<GameObject>("lvl2_diag_up").GetComponent<BoxCollider2D>().size.x;
-                sumY += Resources.Load<GameObject>("lvl2_diag_up").GetComponent<BoxCollider2D>().size.y;
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y + yTri;
                 Instantiate(Resources.Load<GameObject>("lvl2_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
             }
             else if (rndMapAnterior.name == "lvl2_up")
@@ -492,8 +495,8 @@ public class RandomMap2 : MonoBehaviour
             }
             else if (rndMapAnterior.name == "lvl3_diag_up_triangles")
             {
-                sumX += Resources.Load<GameObject>("lvl3_diag_up").GetComponent<BoxCollider2D>().size.x;
-                sumY += Resources.Load<GameObject>("lvl3_diag_up").GetComponent<BoxCollider2D>().size.y;
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y + yTri;
                 Instantiate(Resources.Load<GameObject>("lvl3_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
             }
             else if (rndMapAnterior.name == "lvl3_up")
@@ -634,8 +637,8 @@ public class RandomMap2 : MonoBehaviour
             }
             else if (rndMapAnterior.name == "lvl4_diag_up_triangles")
             {
-                sumX += Resources.Load<GameObject>("lvl4_diag_up").GetComponent<BoxCollider2D>().size.x;
-                sumY += Resources.Load<GameObject>("lvl4_diag_up").GetComponent<BoxCollider2D>().size.y;
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y + yTri;
                 Instantiate(Resources.Load<GameObject>("lvl4_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
             }
             else if (rndMapAnterior.name == "lvl4_up")
@@ -707,5 +710,590 @@ public class RandomMap2 : MonoBehaviour
         }
     }
 
+    private void mapConditions1()
+    {
+        //LEVEL 1*********************************************************************************
+        if (rndMap.name == "lvl1_straight")
+        {
+            if (rndMapAnterior.name == "lvl1_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
 
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl1_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl1_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl1_diag_down_triangles")
+        {
+            if (rndMapAnterior.name == "lvl1_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_down_triangles")
+            {
+                //sumX += Resources.Load<GameObject>("lvl1_diag_down").GetComponent<BoxCollider2D>().size.x;
+                //sumY -= Resources.Load<GameObject>("lvl1_diag_down").GetComponent<BoxCollider2D>().size.y;
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+                
+                Instantiate(Resources.Load<GameObject>("lvl1_diag_down"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += yTri;
+            }
+            else if (rndMapAnterior.name == "lvl1_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl1_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl1_diag_up_triangles")
+        {
+            if (rndMapAnterior.name == "lvl1_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
+            {
+                sumX += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.x;
+                sumY += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.y;
+                Instantiate(Resources.Load<GameObject>("lvl1_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl1_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl1_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+        }
+        else if (rndMap.name == "lvl1_down")
+        {
+            if (rndMapAnterior.name == "lvl1_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapCollider.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl1_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl1_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y - yTri;
+
+            }
+        }
+        else if (rndMap.name == "lvl1_up")
+        {
+            if (rndMapAnterior.name == "lvl1_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= +rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl1_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl1_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+    }
+
+    private void mapConditions2()
+    {
+        //LEVEL 2*********************************************************************************
+        if (rndMap.name == "lvl2_straight")
+        {
+            if (rndMapAnterior.name == "lvl2_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl2_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl2_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl2_diag_down_triangles")
+        {
+            if (rndMapAnterior.name == "lvl2_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+                Instantiate(Resources.Load<GameObject>("lvl2_diag_down"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl2_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl2_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl2_diag_up_triangles")
+        {
+            if (rndMapAnterior.name == "lvl2_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_up_triangles")
+            {
+                sumX += Resources.Load<GameObject>("lvl2_diag_up").GetComponent<BoxCollider2D>().size.x;
+                sumY += Resources.Load<GameObject>("lvl2_diag_up").GetComponent<BoxCollider2D>().size.y;
+                Instantiate(Resources.Load<GameObject>("lvl2_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl2_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl2_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+        }
+        else if (rndMap.name == "lvl2_down")
+        {
+            if (rndMapAnterior.name == "lvl2_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapCollider.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl2_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl2_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y - yTri;
+
+            }
+        }
+        else if (rndMap.name == "lvl2_up")
+        {
+            if (rndMapAnterior.name == "lvl2_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= +rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl2_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl2_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl2_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+    }
+
+    private void mapConditions3()
+    {
+        //LEVEL 3*********************************************************************************
+        if (rndMap.name == "lvl3_straight")
+        {
+            if (rndMapAnterior.name == "lvl3_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl3_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl3_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl3_diag_down_triangles")
+        {
+            if (rndMapAnterior.name == "lvl3_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+                Instantiate(Resources.Load<GameObject>("lvl3_diag_down"), new Vector3(sumX, sumY, sumZ - 3), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += yTri;
+            }
+            else if (rndMapAnterior.name == "lvl3_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl3_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl3_diag_up_triangles")
+        {
+            if (rndMapAnterior.name == "lvl3_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_up_triangles")
+            {
+                sumX += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.x;
+                sumY += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.y;
+                Instantiate(Resources.Load<GameObject>("lvl3_diag_up"), new Vector3(sumX, sumY, sumZ - 3), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl3_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl3_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+        }
+        else if (rndMap.name == "lvl3_down")
+        {
+            if (rndMapAnterior.name == "lvl3_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapCollider.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl3_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl3_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y - yTri;
+
+            }
+        }
+        else if (rndMap.name == "lvl3_up")
+        {
+            if (rndMapAnterior.name == "lvl3_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= +rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl3_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl3_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl3_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+    }
+
+    private void mapConditions4()
+    {
+        //LEVEL 4*********************************************************************************
+        if (rndMap.name == "lvl4_straight")
+        {
+            if (rndMapAnterior.name == "lvl4_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl4_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl4_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl4_diag_down_triangles")
+        {
+            if (rndMapAnterior.name == "lvl4_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+                Instantiate(Resources.Load<GameObject>("lvl4_diag_down"), new Vector3(sumX, sumY, sumZ - 4), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += yTri;
+            }
+            else if (rndMapAnterior.name == "lvl4_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl4_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+        else if (rndMap.name == "lvl4_diag_up_triangles")
+        {
+            if (rndMapAnterior.name == "lvl4_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_up_triangles")
+            {
+                sumX += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.x;
+                sumY += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.y;
+                Instantiate(Resources.Load<GameObject>("lvl4_diag_up"), new Vector3(sumX, sumY, sumZ - 4), Quaternion.identity, GameObject.Find("NewMap").transform);
+            }
+            else if (rndMapAnterior.name == "lvl4_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl4_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+        }
+        else if (rndMap.name == "lvl4_down")
+        {
+            if (rndMapAnterior.name == "lvl4_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapCollider.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += -rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl4_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y;
+            }
+            else if (rndMapAnterior.name == "lvl4_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y - yTri;
+
+            }
+        }
+        else if (rndMap.name == "lvl4_up")
+        {
+            if (rndMapAnterior.name == "lvl4_straight")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_down_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= +rndMapColliderAnterior.size.y + yTri;
+            }
+            else if (rndMapAnterior.name == "lvl4_diag_up_triangles")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - yTri;
+            }
+            else if (rndMapAnterior.name == "lvl4_up")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY += rndMapColliderAnterior.size.y - rndMapColliderAnterior.size.x;
+            }
+            else if (rndMapAnterior.name == "lvl4_down")
+            {
+                sumX += rndMapColliderAnterior.size.x;
+                sumY -= rndMapColliderAnterior.size.y;
+            }
+        }
+    }
 }
