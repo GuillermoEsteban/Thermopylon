@@ -152,7 +152,8 @@ public class CameraController2 : MonoBehaviour
     {
         limitX = maxX;
         limitY = maxY;
-        
+
+        Debug.Log(limitX + " " + cam.aspect);
         minZoom = (limitX + 71.4f) / (2 * cam.aspect);
         cam.orthographicSize = minZoom;
         cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 71.4f) / 2 - 71.4f, 0);
