@@ -4,25 +4,57 @@ using UnityEngine;
 
 public class PersianArmy : MonoBehaviour {
 
-    private List<GameObject> PersianList;//llista que contindrà tots els perses del gameObject en concret.
-	public int numPersians;//número de perses que contindrà. De moment és públic perquè anem canviant com vulguem.
+    private float maxRandom;
+    private float randomNumber;
+    private BoxCollider2D mapCollider;
+    private List<GameObject> PersianList;
+	public int numPersians;
+    
 
-    public int maxAreaX;//eix x del quadrat de l'àrea on s'instanciaran els perses
-    public int maxAreaY;//eix y
+    private float maxAreaX;//eix x del quadrat de l'àrea on s'instanciaran els perses
+    private float maxAreaY;//eix y
+    private Vector3 min;
 
 	void Start () {
+
+        mapCollider = this.GetComponent<BoxCollider2D>();
+        maxAreaX = mapCollider.size.x;
+        maxAreaY = mapCollider.size.y;
+        min = mapCollider.bounds.min;
+
         PersianList = new List<GameObject>();//creem la llista dels perses.
-        for(int i = 0; i <= numPersians; i++)
+
+        //Depenent del nivell, tindrà més o menys probabilitats que hi hagi enemics.
+        if (this.tag == "lvl1")
         {
-            //agafem el prefab de Persian i el posem tantes vegades com el loop en un lloc random dins els paràmetres.
-            PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), new Vector3(Random.Range(transform.position.x -maxAreaX,transform.position.x + maxAreaX), Random.Range(transform.position.y + maxAreaY,transform.position.y - maxAreaY), 0.0f), Quaternion.identity));
-            PersianList[i].transform.parent = transform;//posem cada persa com a child de PersianArmy
+            maxRandom = 0.4f;//40 % de probabilitats
+            numPersians = 100;
+        }
+        else if (this.tag == "lvl2")
+        {
+            maxRandom = 0.5f; //50 % de probabilitats
+            numPersians = 200;
+        }
+        else if (this.tag == "lvl3")
+        {
+            maxRandom = 0.6f; //60 % de probabilitats
+            numPersians = 300;
+        }
+        else if (this.tag == "lvl4")
+        {
+            maxRandom = 0.7f;//70% de probabilitats
+            numPersians = 400;
+        }
+
+        randomNumber = Random.value;//escollim un número aleatori entre 0.0 i 1.0.
+        if(randomNumber <= maxRandom)//si està dins la probabilitat, aleshores instanciarem els enemics.
+        {
+            for (int i = 0; i <= numPersians; i++)
+            {
+                //agafem el prefab de Persian i el posem tantes vegades com el loop en un lloc random dins els paràmetres.
+                PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), min + new Vector3(Random.Range(0,maxAreaX), Random.Range(0,maxAreaY), -1.0f), Quaternion.identity));
+                PersianList[i].transform.parent = transform;//posem cada persa com a child de PersianArmy
+            }
         }
 	}
-	
-	void Update () {
-
-	}
-
-
 }

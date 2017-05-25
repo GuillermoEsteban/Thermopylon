@@ -16,7 +16,7 @@ public class Persian : MonoBehaviour {
     Vector3 posicioActual;//la posició actual del persa
     Vector3 posicioAnterior;//la posició al frame anterior
 
-    public static float minDistance=10000.0f; //la distància mínima en què el persa anirà cap als espartans
+    public static float minDistance=100.0f; //la distància mínima en què el persa anirà cap als espartans
     private float angle;//angle de l'eix x al vector de moviment de cada persa
     private float posY;//si el persa va amunt en l'eix de les y o avall.
 
