@@ -23,7 +23,7 @@ public class Intro : MonoBehaviour {
 
         colorAlpha = this.image.color;
         colorAlpha.a = 0.0f;
-       this.image.color = colorAlpha;
+       this.image.color = colorAlpha; //sembla que no té connexió el color Alpha amb el crossFadeAlpha...
     }
 	
 	// Update is called once per frame
