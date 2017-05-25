@@ -44,8 +44,6 @@ public class SpartanArmy : MonoBehaviour {
     {
         getTotalNumSpartans();
 
-
-
 		if (totalNumSpartans == 0) {
 		
 			for (int i = 0; i < 20; i++)
@@ -54,7 +52,9 @@ public class SpartanArmy : MonoBehaviour {
 			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
 			}
 			SceneManager.LoadScene ("GameOver", LoadSceneMode.Single);
-		} 
+		}
+
+
 
     }
 		

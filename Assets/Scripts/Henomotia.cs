@@ -43,9 +43,13 @@ public class Henomotia: MonoBehaviour {
 
 	public bool selected;
 
+    //AUDIO:
+    private AudioSource henomotiAudio;
+    private static AudioClip[] audioClips;
 
-	//START
-	void Start ()
+
+    //START
+    void Start ()
 	{
         timePassed = 0.0f;
 		numSpartan = 36;
@@ -96,6 +100,16 @@ public class Henomotia: MonoBehaviour {
 		DeltaButton = DeltaButton.GetComponent<Button>();
 
 		selected = false;
+
+        //AUDIO:
+        henomotiAudio = this.GetComponent<AudioSource>();
+        audioClips = new AudioClip[4];
+        audioClips[0] = Resources.Load<AudioClip>("/Audio/eisvoli");
+        audioClips[1] = Resources.Load<AudioClip>("/Audio/prostagma");
+        audioClips[2] = Resources.Load<AudioClip>("/Audio/AUAUAU");
+        audioClips[3] = Resources.Load<AudioClip>("/Audio/perLaDemocracia");
+        audioClips[4] = Resources.Load<AudioClip>("/Audio/perEsparta");
+
 
 
     }
@@ -220,6 +234,10 @@ public class Henomotia: MonoBehaviour {
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * rotationSpeed);
            transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
+
+            //Audio:
+            henomotiAudio.clip = audioClips[Random.Range(2, 4)];
+            henomotiAudio.Play();
         }
     }
 
@@ -235,6 +253,11 @@ public class Henomotia: MonoBehaviour {
             SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
             renderer.color = new Color(0, 1, 1, 1);
         }
+
+        //Audio:
+        henomotiAudio.clip = audioClips[Random.Range(0, 2)];
+        henomotiAudio.Play();
+
     }
 
     public bool correctHenomotia()
