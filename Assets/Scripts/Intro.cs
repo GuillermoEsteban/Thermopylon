@@ -1,0 +1,100 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class Intro : MonoBehaviour {
+
+    private float FadeRate= 2.0f;
+    private float timeAlpha;
+    private Image image;
+    private Color colorAlpha;
+    
+	// Use this for initialization
+	void Start () {
+        timeAlpha = 0.0f;
+        this.image = this.GetComponent<Image>();
+
+        if (this.image == null)
+        {
+            Debug.LogError("Error: No image on " + this.name);
+        }
+
+        colorAlpha = this.image.color;
+        colorAlpha.a = 0.0f;
+       this.image.color = colorAlpha;
+    }
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+        if (0.0f <= timeAlpha && timeAlpha <= 2.0f)
+        {
+            image.CrossFadeAlpha(1.0f, 2, false);
+        }
+        else if (2.5f<= timeAlpha && timeAlpha <= 4.5f)
+        {
+            image.CrossFadeAlpha(0.0f, FadeRate, false);
+        }
+        timeAlpha += Time.deltaTime;
+        chooseImage();
+    }
+
+    private void chooseImage()
+    { 
+        //if (Time.time == 5.0f)
+        //{
+        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_1");
+        //    this.image.color = colorAlpha;
+        //    timeAlpha = 0.0f;
+        //}
+        //else if (Time.time == 7.0f)
+        //{
+        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_2");
+        //    this.image.color = colorAlpha;
+        //    timeAlpha = 0.0f;
+        //}
+        //else if (Time.time == 9.0f)
+        //{
+        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_3");
+        //    this.image.color = colorAlpha;
+        //    timeAlpha = 0.0f;
+        //}
+        //else if (Time.time == 11.0f)
+        //{
+        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_4");
+        //    this.image.color = colorAlpha;
+        //    timeAlpha = 0.0f;
+        //}
+        //else if (Time.time == 13.0f)
+        //{
+        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_5");
+        //    this.image.color = colorAlpha;
+        //    timeAlpha = 0.0f;
+        //}
+
+        if (Time.time == 5)
+        {
+            image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_6");
+            this.image.color = colorAlpha;
+            timeAlpha = 0.0f;
+        }
+        else if (Time.time == 10)
+        {
+            image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_the battle of thermopylae");
+            this.image.color = colorAlpha;
+            timeAlpha = 0.0f;
+        }
+        else if (Time.time == 15)
+        {
+            image = Resources.Load<Image>("/Backgrounds/intro/intro_history_thermopylon");
+            this.image.color = colorAlpha;
+            timeAlpha = 0.0f;
+        }
+        else if(Time.time == 20)
+        {
+            SceneManager.LoadScene("MenuPrincipal", LoadSceneMode.Single);
+        }
+    }
+}
+
