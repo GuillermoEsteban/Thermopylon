@@ -14,6 +14,7 @@ public class Intro : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         timeAlpha = 0.0f;
+
         this.image = this.GetComponent<Image>();
 
         if (this.image == null)
@@ -21,9 +22,11 @@ public class Intro : MonoBehaviour {
             Debug.LogError("Error: No image on " + this.name);
         }
 
-        colorAlpha = this.image.color;
-        colorAlpha.a = 0.0f;
-       this.image.color = colorAlpha; //sembla que no té connexió el color Alpha amb el crossFadeAlpha...
+        //colorAlpha = this.image.color;
+        //colorAlpha.a = 0.0f;
+        //this.image.color = colorAlpha; //sembla que no té connexió el color Alpha amb el crossFadeAlpha...
+
+        image.CrossFadeAlpha(0.0f, 0.0f, false);
     }
 	
 	// Update is called once per frame
@@ -73,28 +76,27 @@ public class Intro : MonoBehaviour {
         //    timeAlpha = 0.0f;
         //}
 
-        if (Time.time == 5)
+        if (Time.time > 4.9 && Time.time < 5.1)
         {
-            image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_6");
-            this.image.color = colorAlpha;
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_6");
+            //this.image.color = colorAlpha;
             timeAlpha = 0.0f;
         }
-        else if (Time.time == 10)
+        else if (Time.time > 9.9 && Time.time < 10.1)
         {
-            image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_the battle of thermopylae");
-            this.image.color = colorAlpha;
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_the battle of thermopylae");
+            //this.image.color = colorAlpha;
             timeAlpha = 0.0f;
         }
-        else if (Time.time == 15)
+        else if (Time.time > 14.9 && Time.time < 15.1)
         {
-            image = Resources.Load<Image>("/Backgrounds/intro/intro_history_thermopylon");
-            this.image.color = colorAlpha;
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_thermopylon");
+            //this.image.color = colorAlpha;
             timeAlpha = 0.0f;
         }
-        else if(Time.time == 20)
+        else if((Time.time > 19.9 && Time.time < 20.1))
         {
             SceneManager.LoadScene("MenuPrincipal", LoadSceneMode.Single);
         }
     }
 }
-
