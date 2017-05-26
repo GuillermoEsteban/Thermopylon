@@ -42,6 +42,12 @@ public class RandomMap2 : MonoBehaviour
 
     private Camera cam;
 
+    void Awake()
+    {
+        cam = Resources.Load<Camera>("MainCamera");
+        Instantiate(cam);
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -70,9 +76,7 @@ public class RandomMap2 : MonoBehaviour
         numMaps4 = Random.Range(random_X_lvl4, random_Y_lvl4);
 
         createMap(numMaps1, mapConditions1);
-
-        cam = Resources.Load<Camera>("MainCamera");
-        Instantiate(cam);
+        
         cam.GetComponent<CameraController2>().setMax(maxX, maxY);//PROBLEMES!
 
         //Acabem el level1 amb un straight

@@ -23,7 +23,7 @@ public class CameraController2 : MonoBehaviour
 
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         cam = Camera.main;//la variable càmera és ara la de la MainCamera.
         correccioScrollMarge = false;//les dues variables comencen en false, donada la posició de la càmera inicial.
@@ -152,6 +152,7 @@ public class CameraController2 : MonoBehaviour
     {
         limitX = maxX;
         limitY = maxY;
+
 
         Debug.Log(limitX + " " + cam.aspect);
         minZoom = (limitX + 71.4f) / (2 * cam.aspect);

@@ -109,9 +109,6 @@ public class Henomotia: MonoBehaviour {
         audioClips[2] = Resources.Load<AudioClip>("/Audio/AUAUAU");
         audioClips[3] = Resources.Load<AudioClip>("/Audio/perLaDemocracia");
         audioClips[4] = Resources.Load<AudioClip>("/Audio/perEsparta");
-
-
-
     }
 
 	void Update()
