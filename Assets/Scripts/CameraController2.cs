@@ -28,9 +28,16 @@ public class CameraController2 : MonoBehaviour
         cam = Camera.main;//la variable càmera és ara la de la MainCamera.
         correccioScrollMarge = false;//les dues variables comencen en false, donada la posició de la càmera inicial.
         marge = false;
+        maxZoom = 5.0f;
 
-        maxZoom = 20f;
+        limitX=GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitX();
+        limitY = GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitY();
+        Debug.Log(limitX + " " + limitY);
 
+        minZoom = (limitX + 60.1f) / (2 * cam.aspect) - 1.0f;
+        cam.orthographicSize = minZoom;
+        cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 60.1f) / 2 - 60.1f, 0);
+        
     }
 
     void Update()
@@ -79,14 +86,14 @@ public class CameraController2 : MonoBehaviour
 
     public void moveCamera()
     {
-        CameraSpeed = cam.orthographicSize / 30.0f;//el moviment de la càmera canvia segons l'ortographicSize. Així quan més gran sigui més gran serà la velocitat.
+        CameraSpeed = cam.orthographicSize / 20.0f;//el moviment de la càmera canvia segons l'ortographicSize. Així quan més gran sigui més gran serà la velocitat.
         goodPosition = cam.transform.position;//comencem dient que la posició correcta és l'actual.
         if (Input.GetKey("w"))
         {
             cam.transform.Translate(0, CameraSpeed, 0);
             if (Input.GetKey("d"))
             {
-                cam.transform.Translate(CameraSpeed/2, CameraSpeed / 2, 0);
+                cam.transform.Translate(CameraSpeed / 2, CameraSpeed / 2, 0);
             }
             else if (Input.GetKey("a"))
             {
@@ -119,27 +126,37 @@ public class CameraController2 : MonoBehaviour
 
     public void limitCamera(Vector3 goodPosition)
     {   //en el cas que la posició de la càmera estigui fora del mapa:
-        if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -71.4f || cam.transform.position.y + cam.orthographicSize >= limitY +150 || cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX || cam.transform.position.y - cam.orthographicSize <= -(limitY + 150))
+        if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -60.1f || cam.transform.position.y + cam.orthographicSize >= limitY + 150 || cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX || cam.transform.position.y - cam.orthographicSize <= -(limitY + 150))
         {
             marge = true;//canviem la variable marge a true...
             zoomCamera();//...i tornem a cridar la funció del zoom, que ara tindrà marge=true i retornarà correccioScrollMarge=true:
             if (correccioScrollMarge)
             {
-                if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -71.4f)
+                if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -60.1f)
                 {
-                    goodPosition.x += 20;//aleshores per cada costat sobrepassat retornarà a goodPosition inicial +/- un canvi en l'eix.
+                    goodPosition.x += cam.aspect*zoomSpeed*2;//aleshores per cada costat sobrepassat retornarà a goodPosition inicial +/- un canvi en l'eix.
+                    cam.transform.position = goodPosition;//i la goodPosition serà aquesta última.
+                    if (cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX)
+                    {
+                        cam.orthographicSize = minZoom;
+                    }
                 }
-                if (cam.transform.position.y + cam.orthographicSize >= (limitY + 50))
+                if (cam.transform.position.y + cam.orthographicSize >= (limitY + 150))
                 {
-                    goodPosition.y -= 10;
+                    goodPosition.y -= cam.aspect * zoomSpeed*2;
                 }
                 if (cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX)
                 {
-                    goodPosition.x -= 20;
+                    goodPosition.x -= cam.aspect * zoomSpeed*2;
+                    cam.transform.position = goodPosition;//i la goodPosition serà aquesta última.
+                    if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -60.1f)
+                    {
+                        cam.orthographicSize = minZoom;
+                    }
                 }
-                if (cam.transform.position.y - cam.orthographicSize <= -(limitY + 50))
+                if (cam.transform.position.y - cam.orthographicSize <= -(limitY + 150))
                 {
-                    goodPosition.y += 10;
+                    goodPosition.y += cam.aspect * zoomSpeed*2;
                 }
             }
             cam.transform.position = goodPosition;//i la goodPosition serà aquesta última.
@@ -147,18 +164,5 @@ public class CameraController2 : MonoBehaviour
             correccioScrollMarge = false;
         }
     }
-
-    public void setMax(float maxX, float maxY)
-    {
-        limitX = maxX;
-        limitY = maxY;
-
-
-        Debug.Log(limitX + " " + cam.aspect);
-        minZoom = (limitX + 71.4f) / (2 * cam.aspect);
-        cam.orthographicSize = minZoom;
-        cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 71.4f) / 2 - 71.4f, 0);
-        Debug.Log(limitX + " " + minZoom);
-
-    }
 }
+

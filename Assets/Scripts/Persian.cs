@@ -50,7 +50,11 @@ void Start ()
 	
 	void Update ()
     {
-        moveToSpartans();//l'única funció en l'update que es cridarà cada frame. La IA de moment es basa en trobar l'espartà més proper i apropar-s'hi. 
+        if (HenomotiaList[0] != null)
+        {
+            moveToSpartans();//l'única funció en l'update que es cridarà cada frame. La IA de moment es basa en trobar l'espartà més proper i apropar-s'hi. 
+        }
+       
 	}
 
 	public void moveToSpartans()

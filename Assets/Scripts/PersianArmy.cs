@@ -25,25 +25,26 @@ public class PersianArmy : MonoBehaviour {
         PersianList = new List<GameObject>();//creem la llista dels perses.
 
         //Depenent del nivell, tindrà més o menys probabilitats que hi hagi enemics.
+        //Cal tenir en compte que a les parts diagonals no s'instanciarà.
         if (this.tag == "lvl1")
         {
-            maxRandom = 0.4f;//40 % de probabilitats
+            maxRandom = 0.6f;//60 % de probabilitats
             numPersians = 100;
         }
         else if (this.tag == "lvl2")
         {
-            maxRandom = 0.5f; //50 % de probabilitats
+            maxRandom = 0.7f; //70 % de probabilitats
             numPersians = 200;
         }
         else if (this.tag == "lvl3")
         {
-            maxRandom = 0.6f; //60 % de probabilitats
+            maxRandom = 0.8f; //80 % de probabilitats
             numPersians = 300;
         }
         else if (this.tag == "lvl4")
         {
-            maxRandom = 0.7f;//70% de probabilitats
-            numPersians = 400;
+            maxRandom = 0.9f;//90% de probabilitats
+            numPersians = 600;
         }
 
         randomNumber = Random.value;//escollim un número aleatori entre 0.0 i 1.0.
