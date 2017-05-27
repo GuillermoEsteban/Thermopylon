@@ -67,9 +67,17 @@ public class Henomotia: MonoBehaviour {
 
         for (int i = 0; i < numSpartan; i++)
         {
+            if (i == 4)
+            {
+                SpartanList.Add((GameObject)Instantiate(Resources.Load("Enomotarca"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity));
+                SpartanList[i].transform.parent = transform;
+            }
+            else
+            {
+                SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity));
+                SpartanList[i].transform.parent = transform;
+            }
             
-            SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f,0.0f, 0.0f), Quaternion.identity));
-            SpartanList[i].transform.parent= transform;
         }
 
         initializeSpartanPos();

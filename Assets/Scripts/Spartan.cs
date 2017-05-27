@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 
 
@@ -20,7 +19,9 @@ public class Spartan : MonoBehaviour {
     private float posY;
 
     //Canvi de sprites
-    public Animator anim;
+    private Animator anim;
+    private Animation currentAnimation;
+    private float randomTime;
 
     //ATTACKS***********************************
     private  enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}
@@ -44,7 +45,8 @@ public class Spartan : MonoBehaviour {
 
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
-        
+        currentAnimation = GetComponent<Animation>();
+
         anim.SetBool("moving", false);
         anim.SetBool("shieldUp", false);
         anim.SetBool("arrow_death", false);
@@ -54,6 +56,7 @@ public class Spartan : MonoBehaviour {
 
         //busquem la henomotia del parent de l'espartà per a després poder saber si és la que l'usuari controla.
         henomotia = this.gameObject.GetComponentInParent<Henomotia>();
+
     }
 	
 	// Update is called once per frame
@@ -64,8 +67,7 @@ public class Spartan : MonoBehaviour {
             AngleUpdate();
             changeWeapon();
         }
-		
-	}
+    }
 
 	public void AngleUpdate()
 	{
@@ -201,7 +203,7 @@ public class Spartan : MonoBehaviour {
                 anim.SetBool("anim5", false);
                 anim.SetBool("anim6", false);
                 anim.SetBool("anim7", true);
-        }
+        }    
     }
 
 

@@ -12,7 +12,6 @@ public class Intro : MonoBehaviour {
     private Image lastImage;
 
     private bool text;
-    private Vector3 position;
 
     // Use this for initialization
     void Start () {
@@ -50,7 +49,7 @@ public class Intro : MonoBehaviour {
         {
             if (0.0f <= timeAlpha && timeAlpha <= 2.0f)
             {
-                image.CrossFadeAlpha(1.0f, 2, false);
+                image.CrossFadeAlpha(1.0f, 1.5f, false);
             }
         }
         timeAlpha += Time.deltaTime;
@@ -65,7 +64,6 @@ public class Intro : MonoBehaviour {
             image.CrossFadeAlpha(0.0f, 0.0f, false);
             timeAlpha = 0.0f;
             text = true;
-            position = image.sprite.pivot;
         }
         else if (Time.time > 6.9f &&Time.time < 7.1f)
         {
@@ -96,7 +94,7 @@ public class Intro : MonoBehaviour {
             timeAlpha = 0.0f;
         }
 
-        if (Time.time > 14.9 && Time.time < 15.1)
+        if (Time.time > 14.9f && Time.time < 15.1f)
         {
             lastImage.GetComponent<IntroText>().text(4);
             image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_6");
@@ -104,20 +102,24 @@ public class Intro : MonoBehaviour {
             timeAlpha = 0.0f;
             text = false;
         }
-        else if (Time.time > 18.9 && Time.time < 19.1)
+        else if (Time.time > 18.9f && Time.time < 19.0f)
         {
-            lastImage.GetComponent<IntroText>().destroyPlease();
+            if (GameObject.Find("text") != null)
+            {
+                lastImage.GetComponent<IntroText>().destroyPlease();
+            }
+            
             image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_the battle of thermopylae");
             image.CrossFadeAlpha(0.0f, 0.0f, false);
             timeAlpha = 0.0f;
         }
-        else if (Time.time > 22.9 && Time.time < 23.1)
+        else if (Time.time > 22.9f && Time.time < 23.1f)
         {
             image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_thermopylon");
             image.CrossFadeAlpha(0.0f, 0.0f, false);
             timeAlpha = 0.0f;
         }
-        else if((Time.time > 26.9 && Time.time < 27.1))
+        else if((Time.time > 26.9f && Time.time < 27.1f))
         {
             SceneManager.LoadScene("Menu Principal", LoadSceneMode.Single);
         }
