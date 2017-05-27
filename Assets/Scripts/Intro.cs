@@ -6,97 +6,120 @@ using UnityEngine.SceneManagement;
 
 public class Intro : MonoBehaviour {
 
-    private float FadeRate= 2.0f;
     private float timeAlpha;
     private Image image;
-    private Color colorAlpha;
-    
-	// Use this for initialization
-	void Start () {
+
+    private Image lastImage;
+
+    private bool text;
+    private Vector3 position;
+
+    // Use this for initialization
+    void Start () {
         timeAlpha = 0.0f;
 
-        this.image = this.GetComponent<Image>();
+        image = this.GetComponent<Image>();
 
-        if (this.image == null)
+        if (image == null)
         {
             Debug.LogError("Error: No image on " + this.name);
         }
 
-        //colorAlpha = this.image.color;
-        //colorAlpha.a = 0.0f;
-        //this.image.color = colorAlpha; //sembla que no té connexió el color Alpha amb el crossFadeAlpha...
 
         image.CrossFadeAlpha(0.0f, 0.0f, false);
+
+        text = false;
+
+        lastImage = GameObject.Find("text").GetComponent<Image>();  
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (0.0f <= timeAlpha && timeAlpha <= 2.0f)
+        if (!text)
         {
-            image.CrossFadeAlpha(1.0f, 2, false);
+            if (0.0f <= timeAlpha && timeAlpha <= 2.0f)
+            {
+                image.CrossFadeAlpha(1.0f, 3, false);
+            }
+            else if (2.5f <= timeAlpha && timeAlpha <= 4.5f)
+            {
+                image.CrossFadeAlpha(0.0f, 3, false);
+            }
         }
-        else if (2.5f<= timeAlpha && timeAlpha <= 4.5f)
+        else if (text)
         {
-            image.CrossFadeAlpha(0.0f, FadeRate, false);
+            if (0.0f <= timeAlpha && timeAlpha <= 2.0f)
+            {
+                image.CrossFadeAlpha(1.0f, 2, false);
+            }
         }
         timeAlpha += Time.deltaTime;
         chooseImage();
     }
 
     private void chooseImage()
-    { 
-        //if (Time.time == 5.0f)
-        //{
-        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_1");
-        //    this.image.color = colorAlpha;
-        //    timeAlpha = 0.0f;
-        //}
-        //else if (Time.time == 7.0f)
-        //{
-        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_2");
-        //    this.image.color = colorAlpha;
-        //    timeAlpha = 0.0f;
-        //}
-        //else if (Time.time == 9.0f)
-        //{
-        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_3");
-        //    this.image.color = colorAlpha;
-        //    timeAlpha = 0.0f;
-        //}
-        //else if (Time.time == 11.0f)
-        //{
-        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_4");
-        //    this.image.color = colorAlpha;
-        //    timeAlpha = 0.0f;
-        //}
-        //else if (Time.time == 13.0f)
-        //{
-        //    image = Resources.Load<Image>("/Backgrounds/intro/intro_history_300_5");
-        //    this.image.color = colorAlpha;
-        //    timeAlpha = 0.0f;
-        //}
-
+    {
         if (Time.time > 4.9 && Time.time < 5.1)
         {
-            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_6");
-            //this.image.color = colorAlpha;
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_1");
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
             timeAlpha = 0.0f;
+            text = true;
+            position = image.sprite.pivot;
         }
-        else if (Time.time > 9.9 && Time.time < 10.1)
+        else if (Time.time > 6.9f &&Time.time < 7.1f)
         {
-            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_the battle of thermopylae");
-            //this.image.color = colorAlpha;
+            lastImage.GetComponent<IntroText>().text(0);
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_2");
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
             timeAlpha = 0.0f;
         }
-        else if (Time.time > 14.9 && Time.time < 15.1)
+        else if (Time.time > 8.9f && Time.time < 9.1f)
+        {
+            lastImage.GetComponent<IntroText>().text(1);
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_3");
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
+            timeAlpha = 0.0f;
+        }
+        else if (Time.time > 10.9f && Time.time < 11.1f)
+        {
+            lastImage.GetComponent<IntroText>().text(2);
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_4");
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
+            timeAlpha = 0.0f;
+        }
+        else if (Time.time > 12.9f && Time.time < 13.1f)
+        {
+            lastImage.GetComponent<IntroText>().text(3);
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_5");
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
+            timeAlpha = 0.0f;
+        }
+
+        if (Time.time > 14.9 && Time.time < 15.1)
+        {
+            lastImage.GetComponent<IntroText>().text(4);
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_6");
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
+            timeAlpha = 0.0f;
+            text = false;
+        }
+        else if (Time.time > 18.9 && Time.time < 19.1)
+        {
+            lastImage.GetComponent<IntroText>().destroyPlease();
+            image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_the battle of thermopylae");
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
+            timeAlpha = 0.0f;
+        }
+        else if (Time.time > 22.9 && Time.time < 23.1)
         {
             image.sprite = Resources.Load<Sprite>("Backgrounds/intro/intro_history_thermopylon");
-            //this.image.color = colorAlpha;
+            image.CrossFadeAlpha(0.0f, 0.0f, false);
             timeAlpha = 0.0f;
         }
-        else if((Time.time > 19.9 && Time.time < 20.1))
+        else if((Time.time > 26.9 && Time.time < 27.1))
         {
-            SceneManager.LoadScene("MenuPrincipal", LoadSceneMode.Single);
+            SceneManager.LoadScene("Menu Principal", LoadSceneMode.Single);
         }
     }
 }
