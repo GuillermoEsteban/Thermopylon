@@ -8,7 +8,8 @@ public class MainMenuSpartans : MonoBehaviour {
     private float count;
     private float timePassed;
     private int i;
-    Sprite[] newSprite;
+    private Sprite[] newSprite;
+
     // Use this for initialization
     void Start () {
         timePassed = 0.0f;
@@ -21,9 +22,6 @@ public class MainMenuSpartans : MonoBehaviour {
 	void FixedUpdate () {
         if(count - timePassed >= 0.17f && count-timePassed <1.0f)
         {
-            Debug.Log(i);
-            Debug.Log("Sprites/spartan_idle_0_" + i.ToString());
-
             this.GetComponent<Image>().sprite = newSprite[i];
 
             i++;
@@ -35,6 +33,5 @@ public class MainMenuSpartans : MonoBehaviour {
             timePassed = count;
         }
         count += Time.deltaTime;
-
     }
 }
