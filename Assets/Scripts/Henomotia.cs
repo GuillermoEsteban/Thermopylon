@@ -97,21 +97,21 @@ public class Henomotia: MonoBehaviour {
         myWeapon = Weapon.ASPIS;
 
 
-		FormationSelector = GameObject.Find ("FormationSelector");
+		//FormationSelector = GameObject.Find ("FormationSelector");
 	
 
 
-		FormationSelector.SetActive(true);
+		//FormationSelector.SetActive(true);
 
-		CircleButton = CircleButton.GetComponent<Button>();
-		SquareButton = SquareButton.GetComponent<Button>();
-		DeltaButton = DeltaButton.GetComponent<Button>();
+		//CircleButton = CircleButton.GetComponent<Button>();
+		//SquareButton = SquareButton.GetComponent<Button>();
+		//DeltaButton = DeltaButton.GetComponent<Button>();
 
 		selected = false;
 
         //AUDIO:
         henomotiAudio = this.GetComponent<AudioSource>();
-        audioClips = new AudioClip[4];
+        audioClips = new AudioClip[5];
         audioClips[0] = Resources.Load<AudioClip>("/Audio/eisvoli");
         audioClips[1] = Resources.Load<AudioClip>("/Audio/prostagma");
         audioClips[2] = Resources.Load<AudioClip>("/Audio/AUAUAU");
@@ -136,13 +136,13 @@ public class Henomotia: MonoBehaviour {
 	//		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
 	//		FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
 
-			FormationSelector.SetActive(true);
+			//FormationSelector.SetActive(true);
 
-			selected = true;
+			//selected = true;  
 
-			CircleButton.onClick.AddListener(this.CircleFormation);
-			SquareButton.onClick.AddListener(this.SquareFormation);
-			DeltaButton.onClick.AddListener(this.DeltaFormation);
+			//CircleButton.onClick.AddListener(this.CircleFormation);
+			//SquareButton.onClick.AddListener(this.SquareFormation);
+			//DeltaButton.onClick.AddListener(this.DeltaFormation);
 		
             changeWeapon();
 			if (Input.GetKeyDown("c"))
