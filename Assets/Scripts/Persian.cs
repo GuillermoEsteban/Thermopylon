@@ -48,7 +48,7 @@ void Start ()
 		rb = GetComponent<Rigidbody2D>();
     }
 	
-	void Update ()
+	void FixedUpdate ()
     {
         if (HenomotiaList[0] != null)
         {

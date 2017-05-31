@@ -32,7 +32,6 @@ public class CameraController2 : MonoBehaviour
 
         limitX=GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitX();
         limitY = GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitY();
-        Debug.Log(limitX + " " + limitY);
 
         minZoom = (limitX + 60.1f) / (2 * cam.aspect) - 1.0f;
         cam.orthographicSize = minZoom;

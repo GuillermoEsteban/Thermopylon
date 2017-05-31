@@ -20,7 +20,6 @@ public class Spartan : MonoBehaviour {
 
     //Canvi de sprites
     private Animator anim;
-    private Animation currentAnimation;
     private float randomTime;
 
     //ATTACKS***********************************
@@ -45,7 +44,6 @@ public class Spartan : MonoBehaviour {
 
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
-        currentAnimation = GetComponent<Animation>();
 
         anim.SetBool("moving", false);
         anim.SetBool("shieldUp", false);

@@ -184,7 +184,7 @@ public class RandomMap2 : MonoBehaviour
             rndNum = Random.Range(0, mapsList.Count);
             rndMap = mapsList[rndNum];
 
-            rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
+            rndMapCollider = rndMap.GetComponent<BoxCollider2D>();  
             mapConditions();
 
 
@@ -794,7 +794,7 @@ public class RandomMap2 : MonoBehaviour
             else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
             {
                 sumX += rndMapColliderAnterior.size.x;
-                sumY += rndMapColliderAnterior.size.y - yTri;
+                sumY += rndMapColliderAnterior.size.y - yTri + 0.75f;
             }
             else if (rndMapAnterior.name == "lvl1_up")
             {
@@ -817,11 +817,9 @@ public class RandomMap2 : MonoBehaviour
             {
                 sumX += Resources.Load<GameObject>("lvl1_diag_down").GetComponent<BoxCollider2D>().size.x;
                 sumY -= Resources.Load<GameObject>("lvl1_diag_down").GetComponent<BoxCollider2D>().size.y;
-                // sumX += rndMapColliderAnterior.size.x;
-                //sumY -= rndMapColliderAnterior.size.y;
                 
                 Instantiate(Resources.Load<GameObject>("lvl1_diag_down"), new Vector3(sumX, sumY, sumZ - 3), Quaternion.identity, GameObject.Find("NewMap").transform);
-                sumZ -= 0.1f;
+                sumZ -= 0.05f;
             }
             else if (rndMapAnterior.name == "lvl1_diag_up_triangles")
             {
@@ -855,8 +853,9 @@ public class RandomMap2 : MonoBehaviour
             {
                 sumX += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.x;
                 sumY += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.y;
+                sumZ += 1;
                 
-                Instantiate(Resources.Load<GameObject>("lvl1_diag_up"), new Vector3(sumX, sumY, sumZ + 1), Quaternion.identity, GameObject.Find("NewMap").transform);
+                Instantiate(Resources.Load<GameObject>("lvl1_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
                 
             }
             else if (rndMapAnterior.name == "lvl1_up")
@@ -1003,6 +1002,7 @@ public class RandomMap2 : MonoBehaviour
             {
                 sumX += Resources.Load<GameObject>("lvl2_diag_up").GetComponent<BoxCollider2D>().size.x;
                 sumY += Resources.Load<GameObject>("lvl2_diag_up").GetComponent<BoxCollider2D>().size.y;
+                sumZ += 1;
                 Instantiate(Resources.Load<GameObject>("lvl2_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
             }
             else if (rndMapAnterior.name == "lvl2_up")
@@ -1149,7 +1149,8 @@ public class RandomMap2 : MonoBehaviour
             {
                 sumX += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.x;
                 sumY += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.y;
-                Instantiate(Resources.Load<GameObject>("lvl3_diag_up"), new Vector3(sumX, sumY, sumZ - 3), Quaternion.identity, GameObject.Find("NewMap").transform);
+                sumZ += 1;
+                Instantiate(Resources.Load<GameObject>("lvl3_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
             }
             else if (rndMapAnterior.name == "lvl3_up")
             {
@@ -1295,7 +1296,8 @@ public class RandomMap2 : MonoBehaviour
             {
                 sumX += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.x;
                 sumY += Resources.Load<GameObject>("lvl1_diag_up").GetComponent<BoxCollider2D>().size.y;
-                Instantiate(Resources.Load<GameObject>("lvl4_diag_up"), new Vector3(sumX, sumY, sumZ - 4), Quaternion.identity, GameObject.Find("NewMap").transform);
+                sumZ += 1;
+                Instantiate(Resources.Load<GameObject>("lvl4_diag_up"), new Vector3(sumX, sumY, sumZ - 2), Quaternion.identity, GameObject.Find("NewMap").transform);
             }
             else if (rndMapAnterior.name == "lvl4_up")
             {
