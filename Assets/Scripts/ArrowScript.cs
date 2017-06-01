@@ -35,9 +35,9 @@ public class ArrowScript : MonoBehaviour {
             anim.SetBool("shadow", false);
             if (timePassed >= 0.2f )
             {
-                transform.position = new Vector3(henomotiaPosition.x, henomotiaPosition.y, 2);
+                transform.position = new Vector3(henomotiaPosition.x, henomotiaPosition.y, -0.1f);
             }
-            if (timePassed >= Random.Range(5f, 15f))
+            if (timePassed >= Random.Range(20f, 30f))
             {
                 StartArrows();  
             }
@@ -53,7 +53,7 @@ public class ArrowScript : MonoBehaviour {
         }
         henomotiaPosition = selectedHenomotia.transform.position;
 
-        transform.position = henomotiaPosition + new Vector3(Random.Range(200, 400), Random.Range(-50, 50), -1);
+        transform.position = henomotiaPosition + new Vector3(Random.Range(500, 600), Random.Range(-50, 50), -1);
 
         timePassed = 0.0f;
         anim.SetBool("shadow", true);
@@ -87,7 +87,6 @@ public class ArrowScript : MonoBehaviour {
                     Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, collision.gameObject.transform.position, Quaternion.identity);
                     selectedHenomotia.gameObject.GetComponent<Henomotia>().deleteSpartanList(collision.gameObject);
                     Destroy(collision.gameObject);
-
                 }
             }
         }

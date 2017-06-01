@@ -44,6 +44,7 @@ public class Spartan : MonoBehaviour {
 
         //creem la variable animació per més comoditat:
         anim = GetComponent<Animator>();
+        anim.speed = Random.Range(0.9f, 1.0f);
 
         anim.SetBool("moving", false);
         anim.SetBool("shieldUp", false);

@@ -242,7 +242,6 @@ public class Henomotia: MonoBehaviour {
                 if(Random.Range(0,2) == 0)
                 {
                     henomotiAudio.clip = audioClips[Random.Range(2, 4)];
-                    Debug.Log("Move:" + henomotiAudio.clip.name);
                     henomotiAudio.Play();
                 }
 
@@ -274,7 +273,6 @@ public class Henomotia: MonoBehaviour {
         {
             //Audio:
             henomotiAudio.clip = audioClips[Random.Range(0, 2)];
-            Debug.Log("OnMouseDown:" + henomotiAudio.clip.name);
             henomotiAudio.Play();
         }
 
