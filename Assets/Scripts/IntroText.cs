@@ -15,6 +15,7 @@ public class IntroText : MonoBehaviour {
         texts.Add(Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_3"));
         texts.Add(Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_4"));
         texts.Add(Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_5"));
+        texts.Add(Resources.Load<Sprite>("Backgrounds/intro/intro_history_300_6"));
 
         this.GetComponent<Image>().CrossFadeAlpha(0.0f, 0.0f, false);
     }
