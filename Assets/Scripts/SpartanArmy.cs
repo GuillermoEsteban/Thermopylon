@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class SpartanArmy : MonoBehaviour {
 
-	public List<GameObject> HenomotiaList;	//Lista que alberga todos los espartanos
-	private int numHenomotia;	//Número de espartanos de la henomotia 
+    public static List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
+	public static int numHenomotia;
 
+    //HUD ANGEL:*******************************************
 	public int startingSpartan;
 	public int totalNumSpartans;
 	public int currentSpartan;
@@ -17,31 +18,22 @@ public class SpartanArmy : MonoBehaviour {
 	public Image damageImage;
 	public float flashSpeed = 5f;
 	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
-
-	public GameObject henomotia;
-
-
-	bool isDead;  
-	bool damaged;  
-
-    
-
+    //******************************************************
 
 	void Start()
 	{
-		numHenomotia = 9;
-		HenomotiaList = new List<GameObject>();
-		totalNumSpartans = 9 * 36;
+        HenomotiaList = new List<GameObject>();
+        getNumHenomotias();
+
+		totalNumSpartans = numHenomotia * 36;
 		currentSpartan = totalNumSpartans;
 
-        for (int i = 0; i <= numHenomotia; i++)
-        {
-            HenomotiaList.Add(GameObject.Find("Henomotia (" + i.ToString() + ")"));
-        }
+        getHenomotias();
 	}
 
     void Update()
     {
+        getNumHenomotias();
         getTotalNumSpartans();
 
 		if (totalNumSpartans == 0) {
@@ -53,17 +45,13 @@ public class SpartanArmy : MonoBehaviour {
 			}
 			SceneManager.LoadScene ("GameOver", LoadSceneMode.Single);
 		}
-
-
-
     }
-		
 
     private void getTotalNumSpartans()
     {
 		totalNumSpartans = currentSpartan;
 		currentSpartan = 0;
-        for (int i = 0; i <= numHenomotia; i++)
+        for (int i = 0; i < numHenomotia; i++)
         {
 			if (HenomotiaList[i] == null) 
 			{
@@ -82,6 +70,26 @@ public class SpartanArmy : MonoBehaviour {
 			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
 		}
 
+    }
+
+    private void getNumHenomotias()
+    {
+        int numHenomotiaAnterior = numHenomotia;
+        numHenomotia = this.gameObject.transform.childCount;//el nombre de childs que té SpartanArmy, on hi ha totes les Henomoties.
+
+        if(numHenomotia != numHenomotiaAnterior)
+        {
+            getHenomotias();
+        }
+    }
+
+    private void getHenomotias()
+    {
+        HenomotiaList.Clear();
+        for (int i = 0; i < numHenomotia; i++)
+        {
+            HenomotiaList.Add(this.gameObject.transform.GetChild(i).gameObject);//cadascun dels childs el va entrant a la llista.
+        }
     }
 }
 

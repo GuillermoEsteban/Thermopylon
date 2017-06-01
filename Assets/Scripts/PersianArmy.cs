@@ -18,8 +18,8 @@ public class PersianArmy : MonoBehaviour {
 	void Start () {
 
         mapCollider = this.GetComponent<BoxCollider2D>();
-        maxAreaX = mapCollider.size.x;
-        maxAreaY = mapCollider.size.y;
+        maxAreaX = mapCollider.size.x - 5.0f;
+        maxAreaY = mapCollider.size.y - 5.0f;
         min = mapCollider.bounds.min;
 
         PersianList = new List<GameObject>();//creem la llista dels perses.
@@ -29,28 +29,28 @@ public class PersianArmy : MonoBehaviour {
         if (this.tag == "lvl1")
         {
             maxRandom = 0.6f;//60 % de probabilitats
-            numPersians = 100;
+            numPersians = 1;//100;
         }
         else if (this.tag == "lvl2")
         {
             maxRandom = 0.7f; //70 % de probabilitats
-            numPersians = 200;
+            numPersians = 0;// 200;
         }
         else if (this.tag == "lvl3")
         {
             maxRandom = 0.8f; //80 % de probabilitats
-            numPersians = 300;
+            numPersians = 0; //300;
         }
         else if (this.tag == "lvl4")
         {
             maxRandom = 0.9f;//90% de probabilitats
-            numPersians = 600;
+            numPersians = 0; //600;
         }
 
         randomNumber = Random.value;//escollim un número aleatori entre 0.0 i 1.0.
         if(randomNumber <= maxRandom)//si està dins la probabilitat, aleshores instanciarem els enemics.
         {
-            for (int i = 0; i <= numPersians; i++)
+            for (int i = 0; i < numPersians; i++)
             {
                 //agafem el prefab de Persian i el posem tantes vegades com el loop en un lloc random dins els paràmetres.
                 PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), min + new Vector3(Random.Range(0,maxAreaX), Random.Range(0,maxAreaY), -1.0f), Quaternion.identity));

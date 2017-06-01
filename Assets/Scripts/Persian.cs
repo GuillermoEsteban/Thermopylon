@@ -5,7 +5,7 @@ using UnityEngine;
 public class Persian : MonoBehaviour {
 
     //walk cap a una henomotia:
-    private static List<GameObject> HenomotiaList;//variable de la llista de Henomoties 
+
     private Vector3 posicioHenomotia;
     private Vector3 posicioHenomotia_comparacio;//l'utilitzarem per comparar les dues posicions.
 	public float persianSpeed;//la rapidesa dels perses, pública perquè podem modificar-ho com vulguem.
@@ -28,17 +28,9 @@ public class Persian : MonoBehaviour {
 // Use this for initialization
 void Start ()
     {
-
-        HenomotiaList = new List<GameObject>();//creem la llista buida.
-
         anim = GetComponent<Animator>(); //agafem l'Animator propi de cada persa.
 
         anim.SetBool("moving", false); //comencen sense moure's.
-
-        for(int i = 0; i <= 8;i++)
-        {
-            HenomotiaList.Add(GameObject.Find("Henomotia ("+i.ToString()+")"));//busca les 8 henomoties i les afegeix a la llista.
-        }
 
         persianSpeed = 300; //inicialitzem la velocitat dels perses a 300, però està subjecte a canvis.
 
@@ -50,7 +42,7 @@ void Start ()
 	
 	void FixedUpdate ()
     {
-        if (HenomotiaList[0] != null)
+        if (SpartanArmy.HenomotiaList[0] != null)
         {
             moveToSpartans();//l'única funció en l'update que es cridarà cada frame. La IA de moment es basa en trobar l'espartà més proper i apropar-s'hi. 
         }
@@ -181,18 +173,21 @@ void Start ()
 
     public void closestHenomotia()//funció per a trobar l'henomotia més propera.
     {
-        posicioHenomotia = HenomotiaList[0].transform.position;//primer la posició de l'henomotia és la de la 1
+        posicioHenomotia = SpartanArmy.HenomotiaList[0].transform.position;//primer la posició de l'henomotia és la de la 1
         vectorDirector = posicioHenomotia - posicioActual;//el vector serà el de la posició del persa a la henomotia 1
-        for (int i =1; i <= 8; i++)//per a les 8 següents henomoties:
+        for (int i =1; i < SpartanArmy.HenomotiaList.Count -1; i++)//per a les 8 següents henomoties:
         { 
-            posicioHenomotia_comparacio = HenomotiaList[i].transform.position;//fem el mateix per a les comparacions per a cada henomotia.
-            vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
-
-            if (vectorDirector.magnitude > vectorDirector_comparacio.magnitude)//si la distància entre l'henomotia inicial és més gran que la de la comparació:
+            if(SpartanArmy.HenomotiaList[i] != null)
             {
-                vectorDirector = vectorDirector_comparacio;//aleshores canviem les dues variables per a les de la comparació
-                posicioHenomotia = posicioHenomotia_comparacio;//d'aquesta manera ens quedaran les variables finals com a les més properes a cada persa.
-            }
+                posicioHenomotia_comparacio = SpartanArmy.HenomotiaList[i].transform.position;//fem el mateix per a les comparacions per a cada henomotia.
+                vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
+
+                if (vectorDirector.magnitude > vectorDirector_comparacio.magnitude)//si la distància entre l'henomotia inicial és més gran que la de la comparació:
+                {
+                    vectorDirector = vectorDirector_comparacio;//aleshores canviem les dues variables per a les de la comparació
+                    posicioHenomotia = posicioHenomotia_comparacio;//d'aquesta manera ens quedaran les variables finals com a les més properes a cada persa.
+                }
+            } 
         }
     }
 

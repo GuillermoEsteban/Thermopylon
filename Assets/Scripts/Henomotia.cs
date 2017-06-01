@@ -10,7 +10,7 @@ public class Henomotia: MonoBehaviour {
 	//ENUMS
 	enum Formation { circle , square , delta }	//Enum de las tres formaciones
 
-	enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}	//Enum de las tres armas
+	enum Weapon { XIPHOS, JAVELIN, ASPIS, SHIELD}	//Enum de las tres armas (Al final les armes no es portaran a terme).
 
 	//ATRIBUTOS
 	public List<GameObject> SpartanList;	//Lista que alberga todos los espartanos
@@ -112,11 +112,11 @@ public class Henomotia: MonoBehaviour {
         //AUDIO:
         henomotiAudio = this.GetComponent<AudioSource>();
         audioClips = new AudioClip[5];
-        audioClips[0] = Resources.Load<AudioClip>("/Audio/eisvoli");
-        audioClips[1] = Resources.Load<AudioClip>("/Audio/prostagma");
-        audioClips[2] = Resources.Load<AudioClip>("/Audio/AUAUAU");
-        audioClips[3] = Resources.Load<AudioClip>("/Audio/perLaDemocracia");
-        audioClips[4] = Resources.Load<AudioClip>("/Audio/perEsparta");
+        audioClips[0] = Resources.Load<AudioClip>("Audio/eisvoli");
+        audioClips[1] = Resources.Load<AudioClip>("Audio/prostagma");
+        audioClips[2] = Resources.Load<AudioClip>("Audio/AUAUAU");
+        audioClips[3] = Resources.Load<AudioClip>("Audio/perLaDemocracia");
+        audioClips[4] = Resources.Load<AudioClip>("Audio/perEsparta");
     }
 
 	void Update()
@@ -126,75 +126,79 @@ public class Henomotia: MonoBehaviour {
             Destroy(this.gameObject);
             Destroy(this.GetComponent<Rigidbody2D>());
         }
-
-        MoveHenomotia();
-        
-
-        if (selectedHenomotia == name)
-		{
-	//		FormationHUD.SetActive(true);
-	//		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
-	//		FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
-
-			//FormationSelector.SetActive(true);
-
-			//selected = true;  
-
-			//CircleButton.onClick.AddListener(this.CircleFormation);
-			//SquareButton.onClick.AddListener(this.SquareFormation);
-			//DeltaButton.onClick.AddListener(this.DeltaFormation);
-		
-            changeWeapon();
-			if (Input.GetKeyDown("c"))
-                CircleFormation();
-			else if (Input.GetKeyDown("x"))
-                SquareFormation();
-			else if (Input.GetKeyDown("v"))
-                DeltaFormation();
-        }
         else
         {
-            if (!isColliding )
+            MoveHenomotia();
+
+
+            if (selectedHenomotia == name)
             {
-                if (myWeapon == Weapon.ASPIS)
-                {
-                    foreach (GameObject spartan in SpartanList)
-                    {
-                        SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                        renderer.color = new Color(1, 1, 1, 1);
-                    }
-                }
-                else if (myWeapon == Weapon.XIPHOS)
-                {
-                    foreach (GameObject spartan in SpartanList)
-                    {
-                        SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                        renderer.color = new Color(0, 0, 0, 1);
-                    }
-                }
-                else if (myWeapon == Weapon.JAVELIN)
-                {
-                    foreach (GameObject spartan in SpartanList)
-                    {
-                        SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                        renderer.color = new Color(1, 0, 1, 1);
-                    }
-                }
+                //		FormationHUD.SetActive(true);
+                //		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
+                //		FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
+
+                //FormationSelector.SetActive(true);
+
+                //selected = true;  
+
+                //CircleButton.onClick.AddListener(this.CircleFormation);
+                //SquareButton.onClick.AddListener(this.SquareFormation);
+                //DeltaButton.onClick.AddListener(this.DeltaFormation);
+
+                changeWeapon();
+                if (Input.GetKeyDown("c"))
+                    CircleFormation();
+                else if (Input.GetKeyDown("x"))
+                    SquareFormation();
+                else if (Input.GetKeyDown("v"))
+                    DeltaFormation();
             }
-		//	FormationSelector.SetActive(false);  
-	//		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
-	//		FormationHUD.GetComponent<CanvasGroup> ().interactable = false;
+            else
+            {
+                if (!isColliding)
+                {
+                    if (myWeapon == Weapon.ASPIS)
+                    {
+                        foreach (GameObject spartan in SpartanList)
+                        {
+                            SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                            renderer.color = new Color(1, 1, 1, 1);
+                        }
+                    }
+                    else if (myWeapon == Weapon.XIPHOS)
+                    {
+                        foreach (GameObject spartan in SpartanList)
+                        {
+                            SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                            renderer.color = new Color(0, 0, 0, 1);
+                        }
+                    }
+                    else if (myWeapon == Weapon.JAVELIN)
+                    {
+                        foreach (GameObject spartan in SpartanList)
+                        {
+                            SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
+                            renderer.color = new Color(1, 0, 1, 1);
+                        }
+                    }
+                }
+                //	FormationSelector.SetActive(false);  
+                //		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
+                //		FormationHUD.GetComponent<CanvasGroup> ().interactable = false;
 
 
 
+            }
+
+            updateFormation();
+
+            if (isColliding)
+            {
+                timePassed += 0.001f * Time.deltaTime;
+            }
         }
 
-        updateFormation();
-
-        if(isColliding)
-        {
-            timePassed += 0.001f * Time.deltaTime;
-        }
+       
     }
 
 	//MÉTODOS
@@ -234,15 +238,22 @@ public class Henomotia: MonoBehaviour {
                 _direction = (destiny - transform.position).normalized;
                 _lookRotation = Quaternion.LookRotation(_direction);
 
+                //Audio:
+                if(Random.Range(0,2) == 0)
+                {
+                    henomotiAudio.clip = audioClips[Random.Range(2, 4)];
+                    Debug.Log("Move:" + henomotiAudio.clip.name);
+                    henomotiAudio.Play();
+                }
+
+
             }
 
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * rotationSpeed);
            transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
 
-            //Audio:
-            henomotiAudio.clip = audioClips[Random.Range(2, 4)];
-            henomotiAudio.Play();
+
         }
     }
 
@@ -259,9 +270,13 @@ public class Henomotia: MonoBehaviour {
             renderer.color = new Color(0, 1, 1, 1);
         }
 
-        //Audio:
-        henomotiAudio.clip = audioClips[Random.Range(0, 2)];
-        henomotiAudio.Play();
+        if (Random.Range(0, 1) == 0)
+        {
+            //Audio:
+            henomotiAudio.clip = audioClips[Random.Range(0, 2)];
+            Debug.Log("OnMouseDown:" + henomotiAudio.clip.name);
+            henomotiAudio.Play();
+        }
 
     }
 
