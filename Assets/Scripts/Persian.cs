@@ -191,22 +191,10 @@ void Start ()
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)//on Collision Enter 2D és una funció predefinida a unity que es crida sola, quan capta que el collider del persa ha estat col·lisionat.
+
+    public void death()
     {
-        bool isHenomotia = false;//és una variable que ens dirà si la col·lisió és d'una henomotia o no. També pot ser del mapa.
-        for(int i=0; i<=8; i++)
-        {
-            if (collision.gameObject.name.Contains("Henomotia")/* == "Henomotia (" + i.ToString() + ")"*/)//detecta si el nom del gameObject col·lisionat és d'alguna de les 8 henomoties
-            {
-                isHenomotia=true;//en cas afirmatiu, retorna true.
-            }   
-        }
-        if (isHenomotia)
-        {
-            Destroy(gameObject);//si és true, aleshores es destrueix. F
-            //fem això de moment, ja que després hauran de lluitar abans de destruir-se.
-        }
-        
+        Destroy(gameObject);
     }
 
 }

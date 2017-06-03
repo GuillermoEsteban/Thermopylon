@@ -49,6 +49,9 @@ public class Spartan : MonoBehaviour {
         anim.SetBool("moving", false);
         anim.SetBool("shieldUp", false);
         anim.SetBool("arrow_death", false);
+        anim.SetBool("anim0", true);
+        //anim.SetBool("attack", false);
+        
 
         //inicialització escut:
         firstShield = false;
@@ -248,6 +251,11 @@ public class Spartan : MonoBehaviour {
     public void setArrowDeath()
     {
         anim.SetBool("arrow_death", true);
+    }
+
+    public void dontAttack()
+    {
+        anim.SetBool("attack", false);
     }
 }
 

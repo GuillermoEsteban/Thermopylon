@@ -49,26 +49,26 @@ public class SpartanArmy : MonoBehaviour {
 
     private void getTotalNumSpartans()
     {
-		totalNumSpartans = currentSpartan;
-		currentSpartan = 0;
-        for (int i = 0; i < numHenomotia; i++)
-        {
-			if (HenomotiaList[i] == null) 
-			{
-				continue;
-			}
-            currentSpartan += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
-			NumSpartanSlider.value = currentSpartan;
-			NumSpartan.text = currentSpartan.ToString();
-        }        
+		//totalNumSpartans = currentSpartan;
+		//currentSpartan = 0;
+  //      for (int i = 0; i < numHenomotia; i++)
+  //      {
+		//	if (HenomotiaList[i] == null) 
+		//	{
+		//		continue;
+		//	}
+  //          currentSpartan += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
+		//	//NumSpartanSlider.value = currentSpartan;
+		//	//NumSpartan.text = currentSpartan.ToString();
+  //      }        
 
-		if (totalNumSpartans - currentSpartan != 0) {
-			damageImage.color = flashColour;
-		} 
-		else 
-		{
-			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-		}
+		//if (totalNumSpartans - currentSpartan != 0) {
+		//	damageImage.color = flashColour;
+		//} 
+		//else 
+		//{
+		//	damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+		//}
 
     }
 
