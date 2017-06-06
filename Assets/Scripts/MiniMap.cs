@@ -22,9 +22,9 @@ public class MiniMap : MonoBehaviour
         limitX =GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitX();
 		limitY = GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitY();//en principi limitY no ens caldria
 
-		size = (limitX + 60.1f) / (2 * cam.aspect) - 1.0f;
+		size = (limitX) / (4* cam.aspect);
 		cam.orthographicSize = size;
-		cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 60.1f) / 2 - 60.1f, 0);
+		cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX) / 2 , 0);
 
 	}
 
