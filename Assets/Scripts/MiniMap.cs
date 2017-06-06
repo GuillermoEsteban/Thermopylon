@@ -5,7 +5,7 @@ using UnityEngine;
 public class MiniMap : MonoBehaviour
 {
 	//ZOOM DE LA CÀMERA
-	public static Camera cam;//variable de la pròpia càmera
+	public static Camera miniMapCam;//variable de la pròpia càmera
 	private int zoomSpeed = 5;//velocitat del zoom
 
 	private float size;

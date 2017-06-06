@@ -42,6 +42,7 @@ public class RandomMap2 : MonoBehaviour
 
     private Camera cam;
 	private Camera miniMapCamera;
+	private GameObject HUD;
 
     // Use this for initialization
     void Start()
@@ -158,8 +159,13 @@ public class RandomMap2 : MonoBehaviour
 
         createMap(numMaps4, mapConditions4);
 
+
 		miniMapCamera = Resources.Load<Camera>("miniMapCamera");
 		Instantiate(miniMapCamera);
+
+		HUD = Resources.Load<GameObject>("HUD");
+		Instantiate(HUD);
+
     }
 
 

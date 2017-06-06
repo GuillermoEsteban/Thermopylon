@@ -94,6 +94,10 @@ public class Henomotia: MonoBehaviour {
         myWeapon = Weapon.ASPIS;
 
 
+		GameObject HenomotiaIcon = (GameObject)Instantiate(Resources.Load("HenomotiaIcon"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+		HenomotiaIcon.transform.parent = transform;
+		HenomotiaIcon.transform.position = transform.position;
+
 		//FormationSelector = GameObject.Find ("FormationSelector");
 	
 
