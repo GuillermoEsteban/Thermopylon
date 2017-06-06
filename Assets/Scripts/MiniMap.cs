@@ -17,14 +17,14 @@ public class MiniMap : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
-        miniMapCam = GameObject.Find("miniMapCamera(Clone)").GetComponent<Camera>();
+		cam = GameObject.Find("miniMapCamera(Clone)").GetComponent<Camera>();
 
         limitX =GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitX();
 		limitY = GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitY();//en principi limitY no ens caldria
 
-		size = (limitX + 60.1f) / (2 * miniMapCam.aspect) - 1.0f;
-        miniMapCam.orthographicSize = size;
-        miniMapCam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 60.1f) / 2 - 60.1f, 0);
+		size = (limitX + 60.1f) / (2 * cam.aspect) - 1.0f;
+		cam.orthographicSize = size;
+		cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 60.1f) / 2 - 60.1f, 0);
 
 	}
 
