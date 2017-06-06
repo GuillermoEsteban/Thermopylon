@@ -4,91 +4,66 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SpartanArmy : MonoBehaviour {
+public class SpartanArmy : MonoBehaviour
+{
 
-    public static List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
-	public static int numHenomotia;
+    static public List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
+    public int numHenomotia = 9;
 
     //HUD ANGEL:*******************************************
-	public int startingSpartan;
-	public int totalNumSpartans;
-	public int currentSpartan;
-	public Slider NumSpartanSlider;
-	public Text NumSpartan;
-	public Image damageImage;
-	public float flashSpeed = 5f;
-	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public int startingSpartan;
+    public int totalNumSpartans;
+    public int currentSpartan;
+    public Slider NumSpartanSlider;
+    public Text NumSpartan;
+    public Image damageImage;
+    public float flashSpeed = 5f;
+    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     //******************************************************
 
-	void Start()
-	{
+    void Start()
+    {
         HenomotiaList = new List<GameObject>();
-        getNumHenomotias();
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(43.0f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(31.2f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(18.8f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(6.9f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-4.8f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-16.8f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-28.9f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-40.6f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-52.9f, 13.68f, 0.0f), Quaternion.identity));
+        for (int i = 0; i < HenomotiaList.Count; i++)
+        {
+            HenomotiaList[i].transform.parent = transform;
+            HenomotiaList[i].name = "Henomotia " + "(" + i + ")";
+        }
 
-		totalNumSpartans = numHenomotia * 36;
-		currentSpartan = totalNumSpartans;
+        totalNumSpartans = numHenomotia * 36;
 
-        getHenomotias();
-	}
+        currentSpartan = totalNumSpartans;
+    }
 
     void Update()
     {
-        getNumHenomotias();
-        getTotalNumSpartans();
-
-		if (totalNumSpartans == 0) {
-		
-			for (int i = 0; i < 20; i++)
-			{
-			damageImage.color = flashColour;
-			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-			}
-			SceneManager.LoadScene ("GameOver", LoadSceneMode.Single);
-		}
-    }
-
-    private void getTotalNumSpartans()
-    {
-		//totalNumSpartans = currentSpartan;
-		//currentSpartan = 0;
-  //      for (int i = 0; i < numHenomotia; i++)
-  //      {
-		//	if (HenomotiaList[i] == null) 
-		//	{
-		//		continue;
-		//	}
-  //          currentSpartan += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
-		//	//NumSpartanSlider.value = currentSpartan;
-		//	//NumSpartan.text = currentSpartan.ToString();
-  //      }        
-
-		//if (totalNumSpartans - currentSpartan != 0) {
-		//	damageImage.color = flashColour;
-		//} 
-		//else 
-		//{
-		//	damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-		//}
-
-    }
-
-    private void getNumHenomotias()
-    {
-        int numHenomotiaAnterior = numHenomotia;
-        numHenomotia = this.gameObject.transform.childCount;//el nombre de childs que té SpartanArmy, on hi ha totes les Henomoties.
-
-        if(numHenomotia != numHenomotiaAnterior)
+        spartanKilled();
+        if (totalNumSpartans == 0)
         {
-            getHenomotias();
+            for (int i = 0; i < 20; i++)
+            {
+                damageImage.color = flashColour;
+                damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            }
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
         }
     }
 
-    private void getHenomotias()
+    void spartanKilled()
     {
-        HenomotiaList.Clear();
-        for (int i = 0; i < numHenomotia; i++)
+        if(currentSpartan != totalNumSpartans)
         {
-            HenomotiaList.Add(this.gameObject.transform.GetChild(i).gameObject);//cadascun dels childs el va entrant a la llista.
+            damageImage.color = flashColour;
+            currentSpartan = totalNumSpartans;
         }
     }
 }

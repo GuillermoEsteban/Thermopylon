@@ -14,7 +14,7 @@ public class Henomotia: MonoBehaviour {
 
 	//ATRIBUTOS
 	public List<GameObject> SpartanList;	//Lista que alberga todos los espartanos
-	private int numSpartan;	//Número de espartanos de la henomotia
+	public int numSpartan;	//Número de espartanos de la henomotia
 	private Formation formation;	//Formación de la henomotia
 	private float speed;	//Velocidad de la henomotia
     private Vector3 destiny;
@@ -120,6 +120,8 @@ public class Henomotia: MonoBehaviour {
 	{
         if (numSpartans() == 0)
         {
+            gameObject.GetComponentInParent<SpartanArmy>().numHenomotia--;
+            SpartanArmy.HenomotiaList.Remove(gameObject);
             Destroy(gameObject);
             Destroy(GetComponent<Rigidbody2D>());
         }

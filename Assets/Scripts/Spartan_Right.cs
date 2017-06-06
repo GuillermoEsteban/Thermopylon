@@ -23,14 +23,16 @@ public class Spartan_Right : MonoBehaviour {
             }
             else
             {
-                this.transform.parent.gameObject.GetComponentInParent<Henomotia>().deleteSpartanList(this.transform.parent.gameObject);
                 Invoke("Destroy", 0.25f);
             }
         }
     }
     private void Destroy()
     {
-        Destroy(this.transform.parent.gameObject);
+        transform.parent.parent.GetComponent<Henomotia>().numSpartan--;
+        transform.parent.parent.parent.GetComponent<SpartanArmy>().totalNumSpartans--;
+        transform.parent.parent.GetComponent<Henomotia>().SpartanList.Remove(transform.parent.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }
 

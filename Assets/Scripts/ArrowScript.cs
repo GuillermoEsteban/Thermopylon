@@ -84,8 +84,10 @@ public class ArrowScript : MonoBehaviour {
                 }
                 else if (timePassed >= 1.3f && timePassed < 2f)
                 {
-                    Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, collision.gameObject.transform.position, Quaternion.identity);
+                    Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
                     selectedHenomotia.gameObject.GetComponent<Henomotia>().deleteSpartanList(collision.gameObject);
+                    selectedHenomotia.gameObject.GetComponent<Henomotia>().numSpartan--;
+                    selectedHenomotia.gameObject.transform.parent.GetComponent<SpartanArmy>().totalNumSpartans--;
                     Destroy(collision.gameObject);
                 }
             }
