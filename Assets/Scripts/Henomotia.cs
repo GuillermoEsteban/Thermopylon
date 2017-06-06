@@ -259,20 +259,15 @@ public class Henomotia: MonoBehaviour {
     //canvia el nom selectedHenomotia.
     private void OnMouseDown()
     {
+        if (!Input.GetKey(KeyCode.LeftControl) && (transform.GetComponentInParent<SpartanArmy>().selectedEnomotias.Count > 0))
+        {
+            transform.GetComponentInParent<SpartanArmy>().clearSelectedEnomotias();
+        }
         if (!selected)
         {
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                transform.GetComponentInParent<SpartanArmy>().selectedEnomotias.Add(gameObject);
-                selectedHenomotia = "Henomotia";
-                selected = true;
-            }
-            else
-            {
-                selectedHenomotia = GetComponent<Rigidbody2D>().name;
-            }
+            transform.GetComponentInParent<SpartanArmy>().selectedEnomotias.Add(gameObject);
+            selected = true;
         }
-
         foreach (GameObject spartan in SpartanList)
         {
             SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();

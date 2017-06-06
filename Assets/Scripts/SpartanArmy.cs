@@ -49,9 +49,8 @@ public class SpartanArmy : MonoBehaviour
 
     void Update()
     {
-        EnomotiaSelector();
-        spartanKilled();
-        gameOver();
+        //spartanKilled();
+        //gameOver();
     }
 
     void spartanKilled()
@@ -76,16 +75,13 @@ public class SpartanArmy : MonoBehaviour
         }
     }
 
-    void EnomotiaSelector()
+    public void clearSelectedEnomotias()
     {
-        if(Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftControl))
+        foreach (GameObject auxHeno in selectedEnomotias)
         {
-            foreach (GameObject auxHeno in selectedEnomotias)
-            {
-                auxHeno.GetComponent<Henomotia>().selected = false;
-            }
-            selectedEnomotias.Clear();
+            auxHeno.GetComponent<Henomotia>().selected = false;
         }
+        selectedEnomotias.Clear();
     }
 }
 
