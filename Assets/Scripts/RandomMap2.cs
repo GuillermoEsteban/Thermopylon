@@ -56,7 +56,7 @@ public class RandomMap2 : MonoBehaviour
 
         sumX = 0.0f;
         sumY = 0.0f;
-        sumZ = 0.0f;
+        sumZ = 40.0f;//Z canviada per problema de espartans.
 
         maxX = sumX;
         maxY = sumY;

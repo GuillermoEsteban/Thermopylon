@@ -49,7 +49,7 @@ public class Spartan : MonoBehaviour {
         anim.SetBool("moving", false);
         anim.SetBool("shieldUp", false);
         anim.SetBool("arrow_death", false);
-        anim.SetBool("anim0", true);
+        anim.SetBool("anim2", true);
         //anim.SetBool("attack", false);
         
 
