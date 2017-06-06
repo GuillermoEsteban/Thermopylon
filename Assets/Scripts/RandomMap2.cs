@@ -41,6 +41,7 @@ public class RandomMap2 : MonoBehaviour
     private float yTri;
 
     private Camera cam;
+	private Camera miniMapCamera;
 
     // Use this for initialization
     void Start()
@@ -156,6 +157,9 @@ public class RandomMap2 : MonoBehaviour
         yTri += 25.323f;
 
         createMap(numMaps4, mapConditions4);
+
+		miniMapCamera = Resources.Load<Camera>("miniMapCamera");
+		Instantiate(miniMapCamera);
     }
 
 
