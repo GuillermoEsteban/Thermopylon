@@ -49,7 +49,7 @@ public class Spartan : MonoBehaviour {
         anim.SetBool("moving", false);
         anim.SetBool("shieldUp", false);
         anim.SetBool("arrow_death", false);
-        anim.SetBool("anim0", true);
+        anim.SetBool("anim2", true);
         //anim.SetBool("attack", false);
         
 
@@ -57,7 +57,7 @@ public class Spartan : MonoBehaviour {
         firstShield = false;
 
         //busquem la henomotia del parent de l'espartà per a després poder saber si és la que l'usuari controla.
-        henomotia = this.gameObject.GetComponentInParent<Henomotia>();
+        henomotia = gameObject.GetComponentInParent<Henomotia>();
 
     }
 	
@@ -79,6 +79,7 @@ public class Spartan : MonoBehaviour {
             if (Input.GetMouseButtonDown (1))
 		    {
                 destiny = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                destiny = new Vector3(destiny.x, destiny.y,0.0f);
                 vectorDirector = (destiny - puntAnterior);
                 posY = vectorDirector.y;
                 //calculem l'angle
