@@ -9,6 +9,8 @@ public class SpartanArmy : MonoBehaviour
 
     static public List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
     public List<GameObject> selectedEnomotias;
+    public float playedTime =0.0f;
+    static public int persiansKilled = 0;
     public int numHenomotia = 9;
 
     //HUD ANGEL:*******************************************
@@ -51,6 +53,7 @@ public class SpartanArmy : MonoBehaviour
     {
         //spartanKilled();
         //gameOver();
+        playedTime += Time.deltaTime;
     }
 
     void spartanKilled()

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using System.Linq;
 
 
 public class Spartan : MonoBehaviour {
@@ -257,6 +258,24 @@ public class Spartan : MonoBehaviour {
     public void dontAttack()
     {
         anim.SetBool("attack", false);
+    }
+
+    public void die()
+    {
+        List<GameObject> auxList= transform.parent.GetComponent<Henomotia>().SpartanList;
+        int counter = 0;
+
+        auxList.Last().GetComponent<Spartan>().setRelativePosition(relativePosition);
+
+        while (auxList[counter].GetInstanceID() != gameObject.GetInstanceID() && counter<auxList.Count)
+            counter++;
+
+        auxList[counter] = auxList.Last();
+
+        transform.parent.GetComponent<Henomotia>().numSpartan--;
+        transform.parent.parent.GetComponent<SpartanArmy>().totalNumSpartans--;
+        Destroy(gameObject);
+        auxList.Remove(auxList.Last());
     }
 }
 

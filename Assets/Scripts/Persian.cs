@@ -194,6 +194,7 @@ void Start ()
     public void death()
     {
         Destroy(gameObject);
+        SpartanArmy.persiansKilled++;
     }
 
 }

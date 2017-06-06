@@ -30,9 +30,6 @@ public class Spartan_Down : MonoBehaviour {
 
     private void Destroy()
     {
-        transform.parent.parent.GetComponent<Henomotia>().numSpartan--;
-        transform.parent.parent.parent.GetComponent<SpartanArmy>().totalNumSpartans--;
-        transform.parent.parent.GetComponent<Henomotia>().SpartanList.Remove(transform.parent.gameObject);
-        Destroy(transform.parent.gameObject);
+        transform.parent.GetComponent<Spartan>().die();
     }
 }
