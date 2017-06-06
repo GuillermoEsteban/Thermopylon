@@ -134,7 +134,7 @@ public class Henomotia: MonoBehaviour {
             MoveHenomotia();
 
 
-            if (selectedHenomotia == name)
+            if (selectedHenomotia == name ||selected)
             {
                 //		FormationHUD.SetActive(true);
                 //		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
@@ -259,8 +259,19 @@ public class Henomotia: MonoBehaviour {
     //canvia el nom selectedHenomotia.
     private void OnMouseDown()
     {
-        selectedHenomotia = GetComponent<Rigidbody2D>().name;
-        Debug.Log(selectedHenomotia);
+        if (!selected)
+        {
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                transform.GetComponentInParent<SpartanArmy>().selectedEnomotias.Add(gameObject);
+                selectedHenomotia = "Henomotia";
+                selected = true;
+            }
+            else
+            {
+                selectedHenomotia = GetComponent<Rigidbody2D>().name;
+            }
+        }
 
         foreach (GameObject spartan in SpartanList)
         {
@@ -279,7 +290,7 @@ public class Henomotia: MonoBehaviour {
 
     public bool correctHenomotia()
     {
-        return gameObject.name == selectedHenomotia;
+        return gameObject.name == selectedHenomotia || selected;
     }
 
 	public void ChangeFormation()

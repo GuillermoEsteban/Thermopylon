@@ -8,6 +8,7 @@ public class SpartanArmy : MonoBehaviour
 {
 
     static public List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
+    public List<GameObject> selectedEnomotias;
     public int numHenomotia = 9;
 
     //HUD ANGEL:*******************************************
@@ -23,6 +24,7 @@ public class SpartanArmy : MonoBehaviour
 
     void Start()
     {
+        selectedEnomotias = new List<GameObject>();
         HenomotiaList = new List<GameObject>();
         HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(43.0f, 13.68f, 0.0f), Quaternion.identity));
         HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(31.2f, 13.68f, 0.0f), Quaternion.identity));
@@ -33,6 +35,7 @@ public class SpartanArmy : MonoBehaviour
         HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-28.9f, 13.68f, 0.0f), Quaternion.identity));
         HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-40.6f, 13.68f, 0.0f), Quaternion.identity));
         HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-52.9f, 13.68f, 0.0f), Quaternion.identity));
+
         for (int i = 0; i < HenomotiaList.Count; i++)
         {
             HenomotiaList[i].transform.parent = transform;
@@ -46,7 +49,22 @@ public class SpartanArmy : MonoBehaviour
 
     void Update()
     {
+        EnomotiaSelector();
         spartanKilled();
+        gameOver();
+    }
+
+    void spartanKilled()
+    {
+        if(currentSpartan != totalNumSpartans)
+        {
+            damageImage.color = flashColour;
+            currentSpartan = totalNumSpartans;
+        }
+    }
+
+    void gameOver()
+    {
         if (totalNumSpartans == 0)
         {
             for (int i = 0; i < 20; i++)
@@ -58,12 +76,15 @@ public class SpartanArmy : MonoBehaviour
         }
     }
 
-    void spartanKilled()
+    void EnomotiaSelector()
     {
-        if(currentSpartan != totalNumSpartans)
+        if(Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.LeftControl))
         {
-            damageImage.color = flashColour;
-            currentSpartan = totalNumSpartans;
+            foreach (GameObject auxHeno in selectedEnomotias)
+            {
+                auxHeno.GetComponent<Henomotia>().selected = false;
+            }
+            selectedEnomotias.Clear();
         }
     }
 }

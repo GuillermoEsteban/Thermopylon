@@ -17,7 +17,7 @@ public class PersianArmy : MonoBehaviour {
 
 	void Start () {
 
-        mapCollider = this.GetComponent<BoxCollider2D>();
+        mapCollider = GetComponent<BoxCollider2D>();
         maxAreaX = mapCollider.size.x - 5.0f;
         maxAreaY = mapCollider.size.y - 5.0f;
         min = mapCollider.bounds.min;
