@@ -89,9 +89,6 @@ public class Henomotia: MonoBehaviour {
         //inicialitzem la Henomotia com la base:
         selectedHenomotia = "Henomotia";
 
-        gameObject.GetComponent<CircleCollider2D>().enabled = false;
-        gameObject.GetComponent<BoxCollider2D>().enabled = true;
-
         isColliding = false;
 
         myWeapon = Weapon.ASPIS;
@@ -110,7 +107,7 @@ public class Henomotia: MonoBehaviour {
 		selected = false;
 
         //AUDIO:
-        henomotiAudio = this.GetComponent<AudioSource>();
+        henomotiAudio = GetComponent<AudioSource>();
         audioClips = new AudioClip[5];
         audioClips[0] = Resources.Load<AudioClip>("Audio/eisvoli");
         audioClips[1] = Resources.Load<AudioClip>("Audio/prostagma");
@@ -121,10 +118,10 @@ public class Henomotia: MonoBehaviour {
 
 	void Update()
 	{
-        if (this.numSpartans() == 0)
+        if (numSpartans() == 0)
         {
-            Destroy(this.gameObject);
-            Destroy(this.GetComponent<Rigidbody2D>());
+            Destroy(gameObject);
+            Destroy(GetComponent<Rigidbody2D>());
         }
         else
         {
@@ -244,15 +241,11 @@ public class Henomotia: MonoBehaviour {
                     henomotiAudio.clip = audioClips[Random.Range(2, 4)];
                     henomotiAudio.Play();
                 }
-
-
             }
 
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * rotationSpeed);
-           transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
-
-
+            transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
         }
     }
 
@@ -280,7 +273,7 @@ public class Henomotia: MonoBehaviour {
 
     public bool correctHenomotia()
     {
-        return this.gameObject.name == selectedHenomotia;
+        return gameObject.name == selectedHenomotia;
     }
 
 	public void ChangeFormation()
@@ -327,6 +320,7 @@ public class Henomotia: MonoBehaviour {
         {
             Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
             SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + finalPos, speed * Time.deltaTime);
+            SpartanList[i].transform.rotation = transform.rotation * Quaternion.Inverse(transform.rotation);
         }
     }
 
