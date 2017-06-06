@@ -15,7 +15,7 @@ public class Pause : MonoBehaviour
         }
         if (!paused)
         {
-            foreach(Transform child in this.transform)
+            foreach(Transform child in transform)
             {
                 Destroy(child.gameObject);
             }
@@ -50,11 +50,13 @@ public class Pause : MonoBehaviour
         if (Time.timeScale == 0f)
         {
             Time.timeScale = 1f;
+            GameObject.FindGameObjectWithTag("HUD").SetActive(true);
             return (false);
         }
         else
         {
             Time.timeScale = 0f;
+            GameObject.FindGameObjectWithTag("HUD").SetActive(false);
             return (true);
         }
     }

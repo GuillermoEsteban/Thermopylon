@@ -9,9 +9,9 @@ public class SpartanArmy : MonoBehaviour
 
     static public List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
     public List<GameObject> selectedEnomotias;
-    public float playedTime =0.0f;
+    static public float playedTime =0.0f;
     static public int persiansKilled = 0;
-    public int numHenomotia = 9;
+    public int numHenomotia;
 
     //HUD ANGEL:*******************************************
     public int startingSpartan;
@@ -43,16 +43,19 @@ public class SpartanArmy : MonoBehaviour
             HenomotiaList[i].transform.parent = transform;
             HenomotiaList[i].name = "Henomotia " + "(" + i + ")";
         }
+        numHenomotia = HenomotiaList.Count;
 
         totalNumSpartans = numHenomotia * 36;
 
         currentSpartan = totalNumSpartans;
+
+        GameObject.Find("HUD(Clone)").transform.FindChild("SpartanHealth").transform.FindChild("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
     }
 
     void Update()
     {
-        //spartanKilled();
-        //gameOver();
+        spartanKilled();
+        gameOver();
         playedTime += Time.deltaTime;
     }
 
@@ -60,20 +63,24 @@ public class SpartanArmy : MonoBehaviour
     {
         if(currentSpartan != totalNumSpartans)
         {
-            damageImage.color = flashColour;
             currentSpartan = totalNumSpartans;
+            GameObject.Find("HUD(Clone)").transform.FindChild("SpartanHealth").transform.FindChild("NumSpartanSlider").GetComponent<Slider>().value = currentSpartan;
+            GameObject.Find("HUD(Clone)").transform.FindChild("SpartanHealth").transform.FindChild("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
+
+            //damageImage.color = flashColour;
+
         }
     }
 
     void gameOver()
     {
-        if (totalNumSpartans == 0)
+        if (totalNumSpartans <= 0)
         {
-            for (int i = 0; i < 20; i++)
-            {
-                damageImage.color = flashColour;
-                damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-            }
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    damageImage.color = flashColour;
+            //    damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            //}
             SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
         }
     }
