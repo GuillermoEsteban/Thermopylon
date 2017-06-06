@@ -320,6 +320,7 @@ public class Henomotia: MonoBehaviour {
         {
             Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
             SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + finalPos, speed * Time.deltaTime);
+            SpartanList[i].transform.rotation = transform.rotation * Quaternion.Inverse(transform.rotation);
         }
     }
 
