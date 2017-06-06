@@ -4,79 +4,28 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour
 {
-
 	//ZOOM DE LA CÀMERA
 	public static Camera cam;//variable de la pròpia càmera
 	private int zoomSpeed = 5;//velocitat del zoom
-	private float maxZoom;//el zoom màxim a que pot arribar
-	private float minZoom;//el zoom mínim
 
-	//MOVIMENT DE LA CÀMERA
-	private float CameraSpeed;//la velocitat de la càmera en moviment per l'escena.
-	private Vector3 goodPosition;//la posició dins dels límits.
+	private float size;
+
 	private float limitX;//el límit en l'eix de les X
 	private float limitY;// límit en l'eix de les Y
-
-	//CORRECCIÓ D'SCROLL EN EL MARGE
-	bool correccioScrollMarge;//booleà per saber si es necessita corregir l'scroll en cas que la posició de la càmera estigui en un marge
-	bool marge;//si està en un marge de mapa.
 
 
 	// Use this for initialization
 	void Awake()
 	{
 		cam = Camera.main;//la variable càmera és ara la de la MainCamera.
-		correccioScrollMarge = false;//les dues variables comencen en false, donada la posició de la càmera inicial.
-		marge = false;
-		maxZoom = 5.0f;
 
 		limitX=GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitX();
-		limitY = GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitY();
+		limitY = GameObject.Find("NewMap").GetComponent<RandomMap2>().getLimitY();//en principi limitY no ens caldria
 
-		minZoom = (limitX + 60.1f) / (2 * cam.aspect) - 1.0f;
-		cam.orthographicSize = minZoom;
+		size = (limitX + 60.1f) / (2 * cam.aspect) - 1.0f;
+		cam.orthographicSize = size;
 		cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 60.1f) / 2 - 60.1f, 0);
 
-	}
-
-	public void limitCamera(Vector3 goodPosition)
-	{   //en el cas que la posició de la càmera estigui fora del mapa:
-		if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -60.1f || cam.transform.position.y + cam.orthographicSize >= limitY + 150 || cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX || cam.transform.position.y - cam.orthographicSize <= -(limitY + 150))
-		{
-			marge = true;//canviem la variable marge a true...
-			if (correccioScrollMarge)
-			{
-				if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -60.1f)
-				{
-					goodPosition.x += cam.aspect*zoomSpeed*2;//aleshores per cada costat sobrepassat retornarà a goodPosition inicial +/- un canvi en l'eix.
-					cam.transform.position = goodPosition;//i la goodPosition serà aquesta última.
-					if (cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX)
-					{
-						cam.orthographicSize = minZoom;
-					}
-				}
-				if (cam.transform.position.y + cam.orthographicSize >= (limitY + 150))
-				{
-					goodPosition.y -= cam.aspect * zoomSpeed*2;
-				}
-				if (cam.transform.position.x + cam.orthographicSize * cam.aspect >= limitX)
-				{
-					goodPosition.x -= cam.aspect * zoomSpeed*2;
-					cam.transform.position = goodPosition;//i la goodPosition serà aquesta última.
-					if (cam.transform.position.x - cam.orthographicSize * cam.aspect <= -60.1f)
-					{
-						cam.orthographicSize = minZoom;
-					}
-				}
-				if (cam.transform.position.y - cam.orthographicSize <= -(limitY + 150))
-				{
-					goodPosition.y += cam.aspect * zoomSpeed*2;
-				}
-			}
-			cam.transform.position = goodPosition;//i la goodPosition serà aquesta última.
-			marge = false;//tornem a posar les variables a false.
-			correccioScrollMarge = false;
-		}
 	}
 
 }
