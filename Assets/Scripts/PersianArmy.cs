@@ -15,7 +15,13 @@ public class PersianArmy : MonoBehaviour {
     private float maxAreaY;//eix y
     private Vector3 min;
 
+    private GameObject Persian_Army;
+
 	void Start () {
+
+        Persian_Army = new GameObject("Persian_Army");
+        Persian_Army.transform.parent = transform;
+        Persian_Army.gameObject.tag = transform.gameObject.tag;
 
         mapCollider = GetComponent<BoxCollider2D>();
         maxAreaX = mapCollider.size.x - 5.0f;
@@ -29,22 +35,22 @@ public class PersianArmy : MonoBehaviour {
         if (this.tag == "lvl1")
         {
             maxRandom = 0.6f;//60 % de probabilitats
-            numPersians = 1;// 100;
+            numPersians = 100;
         }
         else if (this.tag == "lvl2")
         {
             maxRandom = 0.7f; //70 % de probabilitats
-            numPersians = 0;// 200;
+            numPersians = 200;
         }
         else if (this.tag == "lvl3")
         {
             maxRandom = 0.8f; //80 % de probabilitats
-            numPersians = 0; //300;
+            numPersians = 300;
         }
         else if (this.tag == "lvl4")
         {
             maxRandom = 0.9f;//90% de probabilitats
-            numPersians = 0; //600;
+            numPersians = 600;
         }
 
         randomNumber = Random.value;//escollim un número aleatori entre 0.0 i 1.0.
@@ -54,8 +60,14 @@ public class PersianArmy : MonoBehaviour {
             {
                 //agafem el prefab de Persian i el posem tantes vegades com el loop en un lloc random dins els paràmetres.
                 PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), min + new Vector3(Random.Range(0, maxAreaX), Random.Range(0, maxAreaY), -40.0f), Quaternion.identity));
-                PersianList[i].transform.parent = transform;//posem cada persa com a child de PersianArmy
+                PersianList[i].transform.parent = Persian_Army.transform;//posem cada persa com a child de PersianArmy
             }
         }
+
+        if(this.tag != "lvl1")
+        {
+            Persian_Army.SetActive(false);
+        }
+
 	}
 }
