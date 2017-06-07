@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     bool paused = false;
+    public GameObject HUD;
+    public void Start()
+    {
+       HUD = GameObject.FindGameObjectWithTag("HUD");
+    }
 
     void Update()
     {
@@ -50,13 +55,13 @@ public class Pause : MonoBehaviour
         if (Time.timeScale == 0f)
         {
             Time.timeScale = 1f;
-            GameObject.FindGameObjectWithTag("HUD").SetActive(true);
+            HUD.SetActive(true);
             return (false);
         }
         else
         {
             Time.timeScale = 0f;
-            GameObject.FindGameObjectWithTag("HUD").SetActive(false);
+            HUD.SetActive(false);
             return (true);
         }
     }
