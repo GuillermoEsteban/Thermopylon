@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 
@@ -41,9 +42,13 @@ public class RandomMap2 : MonoBehaviour
     private float yTri;
 
     private Camera cam;
+	private Camera miniMapCamera;
+	private GameObject HUD;
+
+    public static string stringTag;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
 
         mapsList = new List<GameObject>();
@@ -56,7 +61,7 @@ public class RandomMap2 : MonoBehaviour
 
         sumX = 0.0f;
         sumY = 0.0f;
-        sumZ = 0.0f;
+        sumZ = 40.0f;//Z canviada per problema de espartans.
 
         maxX = sumX;
         maxY = sumY;
@@ -80,7 +85,8 @@ public class RandomMap2 : MonoBehaviour
         rndMap = mapsList[0];
         rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
         mapConditions1();
-        Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        GameObject instance = Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        
 
         mapsList.Clear();
 
@@ -108,8 +114,10 @@ public class RandomMap2 : MonoBehaviour
         rndMap = mapsList[0];//i acabem amb un altre straight
         rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
         mapConditions2();
-        Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
-
+        GameObject instance1 =Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        stringTag = "lvl2";
+        instance.AddComponent<Map_SetActive>();
+        
 
         mapsList.Clear();
 
@@ -134,9 +142,12 @@ public class RandomMap2 : MonoBehaviour
         rndMapAnterior = rndMap;
         rndMapColliderAnterior = rndMapAnterior.GetComponent<BoxCollider2D>();
         rndMap = mapsList[0];//i acabem amb un altre straight
+        
         rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
         mapConditions3();
-        Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        GameObject instance2 =Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        stringTag = "lvl3";
+        instance1.AddComponent<Map_SetActive>();
 
         mapsList.Clear();
 
@@ -156,6 +167,55 @@ public class RandomMap2 : MonoBehaviour
         yTri += 25.323f;
 
         createMap(numMaps4, mapConditions4);
+        stringTag = "lvl4";
+        instance2.AddComponent<Map_SetActive>();
+
+
+
+        miniMapCamera = Resources.Load<Camera>("miniMapCamera");
+		Instantiate(miniMapCamera);
+
+		HUD =Instantiate(Resources.Load<GameObject>("HUD"))as GameObject;
+
+        GameObject.Find("CircleButton").GetComponent<Button>().onClick.AddListener(delegate { setCircleFormation(); });
+        GameObject.Find("DeltaButton").GetComponent<Button>().onClick.AddListener(delegate { setDeltaFormation(); });
+        GameObject.Find("SquareButton").GetComponent<Button>().onClick.AddListener(delegate { setSquareFormation(); });
+    }
+
+    public void setCircleFormation()
+    {
+
+        foreach (GameObject henomotia in SpartanArmy.selectedEnomotias)
+        {
+            if (henomotia.GetComponent<Henomotia>().selected)
+            {
+                henomotia.GetComponent<Henomotia>().CircleFormation();
+            }
+        }
+    }
+
+    public void setDeltaFormation()
+    {
+
+        foreach (GameObject henomotia in SpartanArmy.selectedEnomotias)
+        {
+            if (henomotia.GetComponent<Henomotia>().selected)
+            {
+                henomotia.GetComponent<Henomotia>().DeltaFormation();
+            }
+        }
+    }
+
+    public void setSquareFormation()
+    {
+
+        foreach (GameObject henomotia in SpartanArmy.selectedEnomotias)
+        {
+            if (henomotia.GetComponent<Henomotia>().selected)
+            {
+                henomotia.GetComponent<Henomotia>().SquareFormation();
+            }
+        }
     }
 
 

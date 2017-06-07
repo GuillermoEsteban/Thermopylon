@@ -5,7 +5,6 @@ using UnityEngine;
 public class Persian : MonoBehaviour {
 
     //walk cap a una henomotia:
-
     private Vector3 posicioHenomotia;
     private Vector3 posicioHenomotia_comparacio;//l'utilitzarem per comparar les dues posicions.
 	public float persianSpeed;//la rapidesa dels perses, pública perquè podem modificar-ho com vulguem.
@@ -195,6 +194,7 @@ void Start ()
     public void death()
     {
         Destroy(gameObject);
+        SpartanArmy.persiansKilled++;
     }
 
 }

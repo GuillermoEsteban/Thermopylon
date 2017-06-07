@@ -14,8 +14,8 @@ public class CameraController2 : MonoBehaviour
     //MOVIMENT DE LA CÀMERA
     private float CameraSpeed;//la velocitat de la càmera en moviment per l'escena.
     private Vector3 goodPosition;//la posició dins dels límits.
-    private float limitX;//el límit en l'eix de les X
-    private float limitY;// límit en l'eix de les Y
+    public static float limitX;//el límit en l'eix de les X
+    public static float limitY;// límit en l'eix de les Y
 
     //CORRECCIÓ D'SCROLL EN EL MARGE
     bool correccioScrollMarge;//booleà per saber si es necessita corregir l'scroll en cas que la posició de la càmera estigui en un marge
@@ -36,7 +36,17 @@ public class CameraController2 : MonoBehaviour
         minZoom = (limitX + 60.1f) / (2 * cam.aspect) - 1.0f;
         cam.orthographicSize = minZoom;
         cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX + 60.1f) / 2 - 60.1f, 0);
-        
+
+		/*
+		GameObject RainHitBox = (GameObject)Instantiate(Resources.Load("RainHitbox"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+		RainHitBox.transform.parent = transform;
+		RainHitBox.transform.position = transform.position;
+		RainHitBox.GetComponent<BoxCollider> ().size = new Vector3(288,288,1);
+
+		GameObject RainParticles = (GameObject)Instantiate(Resources.Load("RainParticles"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+		RainParticles.transform.parent = transform;
+		RainParticles.transform.position = transform.position + new Vector3(288,288,-10);
+		*/
     }
 
     void Update()

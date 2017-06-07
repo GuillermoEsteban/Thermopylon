@@ -14,7 +14,7 @@ public class Henomotia: MonoBehaviour {
 
 	//ATRIBUTOS
 	public List<GameObject> SpartanList;	//Lista que alberga todos los espartanos
-	private int numSpartan;	//Número de espartanos de la henomotia
+	public int numSpartan;	//Número de espartanos de la henomotia
 	private Formation formation;	//Formación de la henomotia
 	private float speed;	//Velocidad de la henomotia
     private Vector3 destiny;
@@ -27,10 +27,6 @@ public class Henomotia: MonoBehaviour {
     private float rotationSpeed;
 
     float timePassed;
-
-
-    //SELECCIONAR HENOMOTIA:
-    private static string selectedHenomotia;
 
     //COLLIDE:
     private bool isColliding;
@@ -66,19 +62,21 @@ public class Henomotia: MonoBehaviour {
         SpartanList = new List<GameObject>();
 
         for (int i = 0; i < numSpartan; i++)
-        {
-            if (i == 4)
             {
-                SpartanList.Add((GameObject)Instantiate(Resources.Load("Enomotarca"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity));
-                SpartanList[i].transform.parent = transform;
-            }
-            else
-            {
-                SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity));
-                SpartanList[i].transform.parent = transform;
-            }
-            
-        }
+            //    if (i == 4)
+            //    {
+            //        SpartanList.Add((GameObject)Instantiate(Resources.Load("Enomotarca"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity));
+            //        SpartanList[i].transform.parent = transform;
+            //    }
+            //    else
+            //    {
+            //        SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity));
+            //        SpartanList[i].transform.parent = transform;
+            //    }
+            SpartanList.Add((GameObject)Instantiate(Resources.Load("Spartan_Sprite"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity));
+            SpartanList[i].transform.parent = transform;
+
+    }
 
         initializeSpartanPos();
 
@@ -87,15 +85,15 @@ public class Henomotia: MonoBehaviour {
         //_lookRotation = new Quaternion(0.0f,0.0f,0.0f,0.0f);
 
         //inicialitzem la Henomotia com la base:
-        selectedHenomotia = "Henomotia";
-
-        gameObject.GetComponent<CircleCollider2D>().enabled = false;
-        gameObject.GetComponent<BoxCollider2D>().enabled = true;
 
         isColliding = false;
 
         myWeapon = Weapon.ASPIS;
 
+
+		GameObject HenomotiaIcon = (GameObject)Instantiate(Resources.Load("HenomotiaIcon"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+		HenomotiaIcon.transform.parent = transform;
+		HenomotiaIcon.transform.position = transform.position;
 
 		//FormationSelector = GameObject.Find ("FormationSelector");
 	
@@ -110,7 +108,7 @@ public class Henomotia: MonoBehaviour {
 		selected = false;
 
         //AUDIO:
-        henomotiAudio = this.GetComponent<AudioSource>();
+        henomotiAudio = GetComponent<AudioSource>();
         audioClips = new AudioClip[5];
         audioClips[0] = Resources.Load<AudioClip>("Audio/eisvoli");
         audioClips[1] = Resources.Load<AudioClip>("Audio/prostagma");
@@ -121,29 +119,27 @@ public class Henomotia: MonoBehaviour {
 
 	void Update()
 	{
-        if (this.numSpartans() == 0)
+        if (numSpartans() == 0)
         {
-            Destroy(this.gameObject);
-            Destroy(this.GetComponent<Rigidbody2D>());
+            gameObject.GetComponentInParent<SpartanArmy>().numHenomotia--;
+            SpartanArmy.HenomotiaList.Remove(gameObject);
+            Destroy(gameObject);
+            Destroy(GetComponent<Rigidbody2D>());
         }
         else
         {
             MoveHenomotia();
 
 
-            if (selectedHenomotia == name)
+            if (selected)
             {
-                //		FormationHUD.SetActive(true);
-                //		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
-                //		FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
+                //FormationHUD.SetActive(true);
+                //FormationHUD.GetComponent<CanvasGroup>().alpha = 1;
+                //FormationHUD.GetComponent<CanvasGroup>().interactable = true;
 
                 //FormationSelector.SetActive(true);
 
-                //selected = true;  
-
-                //CircleButton.onClick.AddListener(this.CircleFormation);
-                //SquareButton.onClick.AddListener(this.SquareFormation);
-                //DeltaButton.onClick.AddListener(this.DeltaFormation);
+                //selected = true;
 
                 changeWeapon();
                 if (Input.GetKeyDown("c"))
@@ -244,25 +240,25 @@ public class Henomotia: MonoBehaviour {
                     henomotiAudio.clip = audioClips[Random.Range(2, 4)];
                     henomotiAudio.Play();
                 }
-
-
             }
-
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * rotationSpeed);
-           transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
-
-
+            transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
         }
     }
 
     //seleccionar un collider:
-    //canvia el nom selectedHenomotia.
     private void OnMouseDown()
     {
-        selectedHenomotia = GetComponent<Rigidbody2D>().name;
-        Debug.Log(selectedHenomotia);
-
+        if (!Input.GetKey(KeyCode.LeftControl) && (SpartanArmy.selectedEnomotias.Count > 0))
+        {
+            transform.GetComponentInParent<SpartanArmy>().clearSelectedEnomotias();
+        }
+        if (!selected)
+        {
+            SpartanArmy.selectedEnomotias.Add(gameObject);
+            selected = true;
+        }
         foreach (GameObject spartan in SpartanList)
         {
             SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
@@ -280,7 +276,7 @@ public class Henomotia: MonoBehaviour {
 
     public bool correctHenomotia()
     {
-        return this.gameObject.name == selectedHenomotia;
+        return selected;
     }
 
 	public void ChangeFormation()
@@ -327,6 +323,7 @@ public class Henomotia: MonoBehaviour {
         {
             Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
             SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + finalPos, speed * Time.deltaTime);
+            SpartanList[i].transform.rotation = transform.rotation * Quaternion.Inverse(transform.rotation);
         }
     }
 

@@ -4,92 +4,94 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SpartanArmy : MonoBehaviour {
+public class SpartanArmy : MonoBehaviour
+{
 
-    public static List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
-	public static int numHenomotia;
+    static public List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
+    static public List<GameObject> selectedEnomotias;
+    static public float playedTime =0.0f;
+    static public int persiansKilled = 0;
+    public int numHenomotia;
 
     //HUD ANGEL:*******************************************
-	public int startingSpartan;
-	public int totalNumSpartans;
-	public int currentSpartan;
-	public Slider NumSpartanSlider;
-	public Text NumSpartan;
-	public Image damageImage;
-	public float flashSpeed = 5f;
-	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public int startingSpartan;
+    public int totalNumSpartans;
+    public int currentSpartan;
+    public Slider NumSpartanSlider;
+    public Text NumSpartan;
+    public Image damageImage;
+    public float flashSpeed = 5f;
+    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     //******************************************************
 
-	void Start()
-	{
+    void Awake()
+    {
+        selectedEnomotias = new List<GameObject>();
         HenomotiaList = new List<GameObject>();
-        getNumHenomotias();
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(43.0f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(31.2f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(18.8f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(6.9f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-4.8f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-16.8f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-28.9f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-40.6f, 13.68f, 0.0f), Quaternion.identity));
+        HenomotiaList.Add((GameObject)Instantiate(Resources.Load("Henomotia"), new Vector3(-52.9f, 13.68f, 0.0f), Quaternion.identity));
 
-		totalNumSpartans = numHenomotia * 36;
-		currentSpartan = totalNumSpartans;
+        for (int i = 0; i < HenomotiaList.Count; i++)
+        {
+            HenomotiaList[i].transform.parent = transform;
+            HenomotiaList[i].name = "Henomotia " + "(" + i + ")";
+        }
+        numHenomotia = HenomotiaList.Count;
 
-        getHenomotias();
-	}
+        totalNumSpartans = numHenomotia * 36;
+
+        currentSpartan = totalNumSpartans;
+
+        GameObject.Find("HUD(Clone)").transform.Find("SpartanHealth").transform.Find("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
+    }
 
     void Update()
     {
-        getNumHenomotias();
-        getTotalNumSpartans();
-
-		if (totalNumSpartans == 0) {
-		
-			for (int i = 0; i < 20; i++)
-			{
-			damageImage.color = flashColour;
-			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-			}
-			SceneManager.LoadScene ("GameOver", LoadSceneMode.Single);
-		}
+        spartanKilled();
+        gameOver();
+        playedTime += Time.deltaTime;
     }
 
-    private void getTotalNumSpartans()
+    void spartanKilled()
     {
-		//totalNumSpartans = currentSpartan;
-		//currentSpartan = 0;
-  //      for (int i = 0; i < numHenomotia; i++)
-  //      {
-		//	if (HenomotiaList[i] == null) 
-		//	{
-		//		continue;
-		//	}
-  //          currentSpartan += HenomotiaList[i].GetComponent<Henomotia>().numSpartans();
-		//	//NumSpartanSlider.value = currentSpartan;
-		//	//NumSpartan.text = currentSpartan.ToString();
-  //      }        
-
-		//if (totalNumSpartans - currentSpartan != 0) {
-		//	damageImage.color = flashColour;
-		//} 
-		//else 
-		//{
-		//	damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-		//}
-
-    }
-
-    private void getNumHenomotias()
-    {
-        int numHenomotiaAnterior = numHenomotia;
-        numHenomotia = this.gameObject.transform.childCount;//el nombre de childs que té SpartanArmy, on hi ha totes les Henomoties.
-
-        if(numHenomotia != numHenomotiaAnterior)
+        if(currentSpartan != totalNumSpartans)
         {
-            getHenomotias();
+            currentSpartan = totalNumSpartans;
+            GameObject.Find("HUD(Clone)").transform.Find("SpartanHealth").transform.Find("NumSpartanSlider").GetComponent<Slider>().value = currentSpartan;
+            GameObject.Find("HUD(Clone)").transform.Find("SpartanHealth").transform.Find("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
+
+            //damageImage.color = flashColour;
+
         }
     }
 
-    private void getHenomotias()
+    void gameOver()
     {
-        HenomotiaList.Clear();
-        for (int i = 0; i < numHenomotia; i++)
+        if (totalNumSpartans <= 0)
         {
-            HenomotiaList.Add(this.gameObject.transform.GetChild(i).gameObject);//cadascun dels childs el va entrant a la llista.
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    damageImage.color = flashColour;
+            //    damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            //}
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
         }
+    }
+
+    public void clearSelectedEnomotias()
+    {
+        foreach (GameObject auxHeno in selectedEnomotias)
+        {
+            auxHeno.GetComponent<Henomotia>().selected = false;
+        }
+        selectedEnomotias.Clear();
     }
 }
 
