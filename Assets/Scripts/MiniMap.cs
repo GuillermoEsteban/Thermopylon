@@ -24,7 +24,6 @@ public class MiniMap : MonoBehaviour
 		size = (limitX) / (2* cam.aspect) -100;
 		cam.orthographicSize = size;
 		cam.GetComponent<Rigidbody2D>().position = new Vector2((limitX) / 2 , 0);
-
 	}
 
 }

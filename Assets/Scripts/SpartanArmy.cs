@@ -49,7 +49,7 @@ public class SpartanArmy : MonoBehaviour
 
         currentSpartan = totalNumSpartans;
 
-        GameObject.Find("HUD(Clone)").transform.FindChild("SpartanHealth").transform.FindChild("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
+        GameObject.Find("HUD(Clone)").transform.Find("SpartanHealth").transform.Find("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
     }
 
     void Update()
@@ -64,8 +64,8 @@ public class SpartanArmy : MonoBehaviour
         if(currentSpartan != totalNumSpartans)
         {
             currentSpartan = totalNumSpartans;
-            GameObject.Find("HUD(Clone)").transform.FindChild("SpartanHealth").transform.FindChild("NumSpartanSlider").GetComponent<Slider>().value = currentSpartan;
-            GameObject.Find("HUD(Clone)").transform.FindChild("SpartanHealth").transform.FindChild("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
+            GameObject.Find("HUD(Clone)").transform.Find("SpartanHealth").transform.Find("NumSpartanSlider").GetComponent<Slider>().value = currentSpartan;
+            GameObject.Find("HUD(Clone)").transform.Find("SpartanHealth").transform.Find("NumSpartan").GetComponent<Text>().text = currentSpartan.ToString();
 
             //damageImage.color = flashColour;
 
