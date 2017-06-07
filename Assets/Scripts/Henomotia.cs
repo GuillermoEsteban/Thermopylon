@@ -28,10 +28,6 @@ public class Henomotia: MonoBehaviour {
 
     float timePassed;
 
-
-    //SELECCIONAR HENOMOTIA:
-    private static string selectedHenomotia;
-
     //COLLIDE:
     private bool isColliding;
 
@@ -87,7 +83,6 @@ public class Henomotia: MonoBehaviour {
         //_lookRotation = new Quaternion(0.0f,0.0f,0.0f,0.0f);
 
         //inicialitzem la Henomotia com la base:
-        selectedHenomotia = "Henomotia";
 
         isColliding = false;
 
@@ -134,19 +129,15 @@ public class Henomotia: MonoBehaviour {
             MoveHenomotia();
 
 
-            if (selectedHenomotia == name ||selected)
+            if (selected)
             {
-                //		FormationHUD.SetActive(true);
-                //		FormationHUD.GetComponent<CanvasGroup> ().alpha = 1;
-                //		FormationHUD.GetComponent<CanvasGroup> ().interactable = true;
+                //FormationHUD.SetActive(true);
+                //FormationHUD.GetComponent<CanvasGroup>().alpha = 1;
+                //FormationHUD.GetComponent<CanvasGroup>().interactable = true;
 
                 //FormationSelector.SetActive(true);
 
-                //selected = true;  
-
-                //CircleButton.onClick.AddListener(this.CircleFormation);
-                //SquareButton.onClick.AddListener(this.SquareFormation);
-                //DeltaButton.onClick.AddListener(this.DeltaFormation);
+                //selected = true;
 
                 changeWeapon();
                 if (Input.GetKeyDown("c"))
@@ -255,16 +246,15 @@ public class Henomotia: MonoBehaviour {
     }
 
     //seleccionar un collider:
-    //canvia el nom selectedHenomotia.
     private void OnMouseDown()
     {
-        if (!Input.GetKey(KeyCode.LeftControl) && (transform.GetComponentInParent<SpartanArmy>().selectedEnomotias.Count > 0))
+        if (!Input.GetKey(KeyCode.LeftControl) && (SpartanArmy.selectedEnomotias.Count > 0))
         {
             transform.GetComponentInParent<SpartanArmy>().clearSelectedEnomotias();
         }
         if (!selected)
         {
-            transform.GetComponentInParent<SpartanArmy>().selectedEnomotias.Add(gameObject);
+            SpartanArmy.selectedEnomotias.Add(gameObject);
             selected = true;
         }
         foreach (GameObject spartan in SpartanList)
@@ -284,7 +274,7 @@ public class Henomotia: MonoBehaviour {
 
     public bool correctHenomotia()
     {
-        return gameObject.name == selectedHenomotia || selected;
+        return selected;
     }
 
 	public void ChangeFormation()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 
@@ -163,9 +164,47 @@ public class RandomMap2 : MonoBehaviour
 		miniMapCamera = Resources.Load<Camera>("miniMapCamera");
 		Instantiate(miniMapCamera);
 
-		HUD = Resources.Load<GameObject>("HUD");
-		Instantiate(HUD);
+		HUD =Instantiate(Resources.Load<GameObject>("HUD"))as GameObject;
 
+        GameObject.Find("CircleButton").GetComponent<Button>().onClick.AddListener(delegate { setCircleFormation(); });
+        GameObject.Find("DeltaButton").GetComponent<Button>().onClick.AddListener(delegate { setDeltaFormation(); });
+        GameObject.Find("SquareButton").GetComponent<Button>().onClick.AddListener(delegate { setSquareFormation(); });
+    }
+
+    public void setCircleFormation()
+    {
+
+        foreach (GameObject henomotia in SpartanArmy.selectedEnomotias)
+        {
+            if (henomotia.GetComponent<Henomotia>().selected)
+            {
+                henomotia.GetComponent<Henomotia>().CircleFormation();
+            }
+        }
+    }
+
+    public void setDeltaFormation()
+    {
+
+        foreach (GameObject henomotia in SpartanArmy.selectedEnomotias)
+        {
+            if (henomotia.GetComponent<Henomotia>().selected)
+            {
+                henomotia.GetComponent<Henomotia>().DeltaFormation();
+            }
+        }
+    }
+
+    public void setSquareFormation()
+    {
+
+        foreach (GameObject henomotia in SpartanArmy.selectedEnomotias)
+        {
+            if (henomotia.GetComponent<Henomotia>().selected)
+            {
+                henomotia.GetComponent<Henomotia>().SquareFormation();
+            }
+        }
     }
 
 
