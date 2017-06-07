@@ -123,6 +123,7 @@ public class Henomotia: MonoBehaviour {
         {
             gameObject.GetComponentInParent<SpartanArmy>().numHenomotia--;
             SpartanArmy.HenomotiaList.Remove(gameObject);
+            SpartanArmy.selectedEnomotias.Remove(gameObject);
             Destroy(gameObject);
             Destroy(GetComponent<Rigidbody2D>());
         }
