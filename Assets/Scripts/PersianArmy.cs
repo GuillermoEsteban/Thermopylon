@@ -29,7 +29,7 @@ public class PersianArmy : MonoBehaviour {
         if (this.tag == "lvl1")
         {
             maxRandom = 0.6f;//60 % de probabilitats
-            numPersians = 1;//100;
+            numPersians = 100;
         }
         else if (this.tag == "lvl2")
         {
@@ -53,7 +53,7 @@ public class PersianArmy : MonoBehaviour {
             for (int i = 0; i < numPersians; i++)
             {
                 //agafem el prefab de Persian i el posem tantes vegades com el loop en un lloc random dins els paràmetres.
-                PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), min + new Vector3(Random.Range(0, maxAreaX), Random.Range(0, maxAreaY), -1.0f), Quaternion.identity));
+                PersianList.Add((GameObject)Instantiate(Resources.Load("Persian"), min + new Vector3(Random.Range(0, maxAreaX), Random.Range(0, maxAreaY), -40.0f), Quaternion.identity));
                 PersianList[i].transform.parent = transform;//posem cada persa com a child de PersianArmy
             }
         }
