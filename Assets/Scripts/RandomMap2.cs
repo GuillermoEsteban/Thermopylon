@@ -44,6 +44,8 @@ public class RandomMap2 : MonoBehaviour
 	private Camera miniMapCamera;
 	private GameObject HUD;
 
+    public static string stringTag;
+
     // Use this for initialization
     void Awake()
     {
@@ -82,7 +84,8 @@ public class RandomMap2 : MonoBehaviour
         rndMap = mapsList[0];
         rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
         mapConditions1();
-        Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        GameObject instance = Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        
 
         mapsList.Clear();
 
@@ -110,8 +113,10 @@ public class RandomMap2 : MonoBehaviour
         rndMap = mapsList[0];//i acabem amb un altre straight
         rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
         mapConditions2();
-        Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
-
+        GameObject instance1 =Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        stringTag = "lvl2";
+        instance.AddComponent<Map_SetActive>();
+        
 
         mapsList.Clear();
 
@@ -136,9 +141,12 @@ public class RandomMap2 : MonoBehaviour
         rndMapAnterior = rndMap;
         rndMapColliderAnterior = rndMapAnterior.GetComponent<BoxCollider2D>();
         rndMap = mapsList[0];//i acabem amb un altre straight
+        
         rndMapCollider = rndMap.GetComponent<BoxCollider2D>();
         mapConditions3();
-        Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        GameObject instance2 =Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
+        stringTag = "lvl3";
+        instance1.AddComponent<Map_SetActive>();
 
         mapsList.Clear();
 
@@ -158,9 +166,12 @@ public class RandomMap2 : MonoBehaviour
         yTri += 25.323f;
 
         createMap(numMaps4, mapConditions4);
+        stringTag = "lvl4";
+        instance2.AddComponent<Map_SetActive>();
 
 
-		miniMapCamera = Resources.Load<Camera>("miniMapCamera");
+
+        miniMapCamera = Resources.Load<Camera>("miniMapCamera");
 		Instantiate(miniMapCamera);
 
 		HUD = Resources.Load<GameObject>("HUD");
