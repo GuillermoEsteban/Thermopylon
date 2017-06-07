@@ -15,7 +15,7 @@ public class Pause : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameObject instance = Instantiate(Resources.Load<GameObject>("black_background"),new Vector3(0, 0, -40.0f), Quaternion.identity, this.transform);
+            GameObject instance = Instantiate(Resources.Load<GameObject>("black_background"),new Vector3(0, 0, -40.0f), Quaternion.identity, transform);
             paused = togglePause();
         }
         if (!paused)
