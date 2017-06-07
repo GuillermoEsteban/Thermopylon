@@ -30,7 +30,7 @@ public class ArrowScript : MonoBehaviour {
     }
 	void Update () {
         moveArrows();
-        if (inPosition)
+        if (inPosition && SpartanArmy.HenomotiaList.Count>0)
         {
             anim.SetBool("shadow", false);
             if (timePassed >= 0.2f )
@@ -46,18 +46,18 @@ public class ArrowScript : MonoBehaviour {
 
     private void StartArrows()
     {
-        selectedHenomotia = null;
-        while (selectedHenomotia == null)
+        if (SpartanArmy.HenomotiaList.Count > 0)
         {
-            selectedHenomotia = GameObject.Find("Henomotia (" +Random.Range(0, 9).ToString() + ")");
+            selectedHenomotia = SpartanArmy.HenomotiaList[Random.Range(0, SpartanArmy.HenomotiaList.Count)];
+
+            henomotiaPosition = selectedHenomotia.transform.position;
+
+            transform.position = henomotiaPosition + new Vector3(Random.Range(500, 600), Random.Range(-50, 50), -1);
+
+            timePassed = 0.0f;
+            anim.SetBool("shadow", true);
+            inPosition = false;
         }
-        henomotiaPosition = selectedHenomotia.transform.position;
-
-        transform.position = henomotiaPosition + new Vector3(Random.Range(500, 600), Random.Range(-50, 50), -1);
-
-        timePassed = 0.0f;
-        anim.SetBool("shadow", true);
-        inPosition = false;
     }
 
     private void moveArrows()

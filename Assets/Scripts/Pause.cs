@@ -5,12 +5,17 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     bool paused = false;
+    public GameObject HUD;
+    public void Start()
+    {
+       HUD = GameObject.FindGameObjectWithTag("HUD");
+    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameObject instance = Instantiate(Resources.Load<GameObject>("black_background"),new Vector3(0, 0, -40.0f), Quaternion.identity, this.transform);
+            GameObject instance = Instantiate(Resources.Load<GameObject>("black_background"),new Vector3(0, 0, -40.0f), Quaternion.identity, transform);
             paused = togglePause();
         }
         if (!paused)
@@ -50,13 +55,13 @@ public class Pause : MonoBehaviour
         if (Time.timeScale == 0f)
         {
             Time.timeScale = 1f;
-            GameObject.FindGameObjectWithTag("HUD").SetActive(true);
+            HUD.SetActive(true);
             return (false);
         }
         else
         {
             Time.timeScale = 0f;
-            GameObject.FindGameObjectWithTag("HUD").SetActive(false);
+            HUD.SetActive(false);
             return (true);
         }
     }

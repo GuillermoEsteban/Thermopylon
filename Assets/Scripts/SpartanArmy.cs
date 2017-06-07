@@ -24,7 +24,7 @@ public class SpartanArmy : MonoBehaviour
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
     //******************************************************
 
-    void Start()
+    void Awake()
     {
         selectedEnomotias = new List<GameObject>();
         HenomotiaList = new List<GameObject>();

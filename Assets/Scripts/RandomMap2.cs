@@ -45,7 +45,7 @@ public class RandomMap2 : MonoBehaviour
 	private GameObject HUD;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
 
         mapsList = new List<GameObject>();

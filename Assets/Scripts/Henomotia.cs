@@ -248,7 +248,6 @@ public class Henomotia: MonoBehaviour {
                     henomotiAudio.Play();
                 }
             }
-
             transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * rotationSpeed);
             transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
