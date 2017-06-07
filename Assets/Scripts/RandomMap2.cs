@@ -43,7 +43,6 @@ public class RandomMap2 : MonoBehaviour
 
     private Camera cam;
 	private Camera miniMapCamera;
-	private GameObject HUD;
 
     public static string stringTag;
 
@@ -175,7 +174,7 @@ public class RandomMap2 : MonoBehaviour
         miniMapCamera = Resources.Load<Camera>("miniMapCamera");
 		Instantiate(miniMapCamera);
 
-		HUD =Instantiate(Resources.Load<GameObject>("HUD"))as GameObject;
+		Instantiate(Resources.Load<GameObject>("HUD"));
 
         GameObject.Find("CircleButton").GetComponent<Button>().onClick.AddListener(delegate { setCircleFormation(); });
         GameObject.Find("DeltaButton").GetComponent<Button>().onClick.AddListener(delegate { setDeltaFormation(); });

@@ -263,20 +263,20 @@ public class Spartan : MonoBehaviour {
     public void die()
     {
         List<GameObject> auxList= transform.parent.GetComponent<Henomotia>().SpartanList;
-        int counter = 0;
+        //int counter = 0;
 
-        auxList.Last().GetComponent<Spartan>().setRelativePosition(relativePosition);
+        //auxList.Last().GetComponent<Spartan>().setRelativePosition(relativePosition);
 
-        while (auxList[counter].GetInstanceID() != gameObject.GetInstanceID() && counter<auxList.Count)
-            counter++;
+        //while (auxList[counter].GetInstanceID() != gameObject.GetInstanceID() && counter<auxList.Count)
+        //    counter++;
 
-        auxList[counter] = auxList.Last();
+        //auxList[counter] = auxList.Last();
 
         transform.parent.GetComponent<Henomotia>().numSpartan--;
         transform.parent.parent.GetComponent<SpartanArmy>().totalNumSpartans--;
         Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, gameObject.transform.position + new Vector3(0,0,10), gameObject.transform.rotation);
         Destroy(gameObject);
-        auxList.Remove(auxList.Last());
+        auxList.Remove(gameObject);
     }
 }
 
