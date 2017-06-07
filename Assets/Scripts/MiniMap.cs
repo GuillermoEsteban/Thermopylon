@@ -6,12 +6,11 @@ public class MiniMap : MonoBehaviour
 {
 	//ZOOM DE LA CÀMERA
 	public static Camera cam;//variable de la pròpia càmera
-	private int zoomSpeed = 5;//velocitat del zoom
 
 	private float size;
 
 	private float limitX;//el límit en l'eix de les X
-	private float limitY;// límit en l'eix de les Y
+	//private float limitY;// límit en l'eix de les Y
 
 
 	// Use this for initialization
