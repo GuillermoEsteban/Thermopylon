@@ -16,11 +16,6 @@ public class Map_SetActive : MonoBehaviour {
         nextTag = RandomMap2.stringTag;
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "spartan" && !collided)

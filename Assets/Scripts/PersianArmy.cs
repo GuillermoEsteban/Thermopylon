@@ -35,7 +35,7 @@ public class PersianArmy : MonoBehaviour {
         if (this.tag == "lvl1")
         {
             maxRandom = 0.6f;//60 % de probabilitats
-            numPersians = 0;
+            numPersians = 100;
         }
         else if (this.tag == "lvl2")
         {
