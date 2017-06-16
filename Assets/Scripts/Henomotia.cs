@@ -80,7 +80,7 @@ public class Henomotia: MonoBehaviour {
 
         initializeSpartanPos();
 
-        destiny = transform.position;
+        destiny = GetComponent<Rigidbody2D>().position;
 
         //_lookRotation = new Quaternion(0.0f,0.0f,0.0f,0.0f);
 
@@ -91,9 +91,10 @@ public class Henomotia: MonoBehaviour {
         myWeapon = Weapon.ASPIS;
 
 
-		GameObject HenomotiaIcon = (GameObject)Instantiate(Resources.Load("HenomotiaIcon"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
-		HenomotiaIcon.transform.parent = transform;
-		HenomotiaIcon.transform.position = transform.position;
+        //HO TREC PERQUÈ NO MOLESTI A LES PROVES:)))))))))))))))))))))))
+		//GameObject HenomotiaIcon = (GameObject)Instantiate(Resources.Load("HenomotiaIcon"), new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+		//HenomotiaIcon.transform.parent = transform;
+		//HenomotiaIcon.transform.position = transform.position;
 
 		//FormationSelector = GameObject.Find ("FormationSelector");
 	
@@ -219,7 +220,7 @@ public class Henomotia: MonoBehaviour {
             finalPos = spartPos + cont;
             finalPos.z = finalPos.y / 1000.0f;
             SpartanList[i].GetComponent<Spartan>().setRelativePosition(finalPos);   //la posición de cada espartano se ve determinada por el centro de la henomotia + la posicion relativa al centro sacada de sumar la posición del primer espartano y el contador.
-            SpartanList[i].transform.position = finalPos + transform.position; 
+            SpartanList[i].GetComponent<Rigidbody2D>().position = finalPos + transform.position; 
             cont.y -= dist;
         }
     }
@@ -236,13 +237,13 @@ public class Henomotia: MonoBehaviour {
                 _lookRotation = Quaternion.LookRotation(_direction);
 
                 //Audio:
-                if(Random.Range(0,2) == 0)
+                if(Random.Range(0,5) == 0)
                 {
                     henomotiAudio.clip = audioClips[Random.Range(2, 4)];
                     henomotiAudio.Play();
                 }
             }
-            transform.position = Vector3.MoveTowards(transform.position, destiny, speed * Time.deltaTime);
+            GetComponent<Rigidbody2D>().position = Vector3.MoveTowards(GetComponent<Rigidbody2D>().position, destiny, speed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * rotationSpeed);
             transform.eulerAngles = new Vector3(0.0f, 0.0f, transform.eulerAngles.z);
         }
@@ -266,7 +267,7 @@ public class Henomotia: MonoBehaviour {
             renderer.color = new Color(0, 1, 1, 1);
         }
 
-        if (Random.Range(0, 1) == 0)
+        if (Random.Range(0, 5) == 0)
         {
             //Audio:
             henomotiAudio.clip = audioClips[Random.Range(0, 2)];
@@ -323,8 +324,20 @@ public class Henomotia: MonoBehaviour {
         for (int i=0;i<SpartanList.Count;i++)
         {
             Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
-            SpartanList[i].transform.position = Vector3.MoveTowards(SpartanList[i].transform.position, transform.position + finalPos, speed * Time.deltaTime);
+
+            //CREC QUE ÉS AQUÍ ON FALLA:
+            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+            SpartanList[i].GetComponent<Rigidbody2D>().position = Vector3.MoveTowards(SpartanList[i].GetComponent<Rigidbody2D>().position, transform.position + finalPos, speed * Time.deltaTime);
             SpartanList[i].transform.rotation = transform.rotation * Quaternion.Inverse(transform.rotation);
+
+
+
+
+            //SpartanList[i].GetComponent<Rigidbody2D>().AddForceAtPosition(new Vector2(2, 2), transform.position + finalPos, ForceMode2D.Force);
         }
     }
 

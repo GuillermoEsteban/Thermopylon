@@ -274,7 +274,7 @@ public class Spartan : MonoBehaviour {
 
         transform.parent.GetComponent<Henomotia>().numSpartan--;
         transform.parent.parent.GetComponent<SpartanArmy>().totalNumSpartans--;
-        Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, gameObject.transform.position + new Vector3(0,0,10), gameObject.transform.rotation);
+        Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, gameObject.transform.position + new Vector3(0,0,20), gameObject.transform.rotation);
         Destroy(gameObject);
         auxList.Remove(gameObject);
     }
