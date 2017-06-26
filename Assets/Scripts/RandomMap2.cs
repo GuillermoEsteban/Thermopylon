@@ -46,17 +46,15 @@ public class RandomMap2 : MonoBehaviour
 
     public static string stringTag;
 
+
+    //VARIABLE BOOL PER INICIALTZAR EL PRIMER NIVELL O EL SEGON:
+    public bool level1 = false;
+
     // Use this for initialization
     void Awake()
     {
 
         mapsList = new List<GameObject>();
-
-        mapsList.Add(Resources.Load<GameObject>("lvl1_straight"));
-        mapsList.Add(Resources.Load<GameObject>("lvl1_diag_down_triangles"));
-        mapsList.Add(Resources.Load<GameObject>("lvl1_diag_up_triangles"));
-        mapsList.Add(Resources.Load<GameObject>("lvl1_down"));
-        mapsList.Add(Resources.Load<GameObject>("lvl1_up"));
 
         sumX = 0.0f;
         sumY = 0.0f;
@@ -65,18 +63,34 @@ public class RandomMap2 : MonoBehaviour
         maxX = sumX;
         maxY = sumY;
 
-        rndMap = mapsList[0];//inicialitzem el primer mapa, que sempre serà el lvl1_straight.
         yTri = 25.323f;
+
+
+        mapsList.Add(Resources.Load<GameObject>("lvl1_straight"));
+        mapsList.Add(Resources.Load<GameObject>("lvl1_diag_down_triangles"));
+        mapsList.Add(Resources.Load<GameObject>("lvl1_diag_up_triangles"));
+        mapsList.Add(Resources.Load<GameObject>("lvl1_down"));
+        mapsList.Add(Resources.Load<GameObject>("lvl1_up"));
+        
+
+        rndMap = mapsList[0];//inicialitzem el primer mapa, que sempre serà el lvl1_straight.
+
 
         numMaps1 = Random.Range(random_X_lvl1, random_Y_lvl1);
         numMaps2 = Random.Range(random_X_lvl2, random_Y_lvl2);
         numMaps3 = Random.Range(random_X_lvl3, random_Y_lvl3);
         numMaps4 = Random.Range(random_X_lvl4, random_Y_lvl4);
 
-        createMap(numMaps1, mapConditions1);
+        if (level1)
+        {
+            createMap(numMaps1, mapConditions1);
 
-        cam = Resources.Load<Camera>("MainCamera");
-        Instantiate(cam);
+            cam = Resources.Load<Camera>("MainCamera");
+            Instantiate(cam);
+        }
+        
+
+
 
         //Acabem el level1 amb un straight
         rndMapAnterior = rndMap;
@@ -107,6 +121,12 @@ public class RandomMap2 : MonoBehaviour
         Instantiate(rndMap, new Vector3(sumX, sumY, sumZ), Quaternion.identity, GameObject.Find("NewMap").transform);
 
         createMap(numMaps2, mapConditions2);
+
+        if (!level1)
+        {
+            cam = Resources.Load<Camera>("MainCamera");
+            Instantiate(cam);
+        }
 
         rndMapAnterior = rndMap;
         rndMapColliderAnterior = rndMapAnterior.GetComponent<BoxCollider2D>();

@@ -15,9 +15,14 @@ public class Persian : MonoBehaviour {
     Vector3 posicioActual;//la posició actual del persa
     Vector3 posicioAnterior;//la posició al frame anterior
 
-    public static float minDistance=100.0f; //la distància mínima en què el persa anirà cap als espartans
+    public static float minDistanceHenomotia=100.0f; //la distància mínima en què el persa anirà cap a l'enomotia
+    public static float minDistanceSpartan = 10.0f; //la distància mínima en què el persa anirà cap als espartans
     private float angle;//angle de l'eix x al vector de moviment de cada persa
     private float posY;//si el persa va amunt en l'eix de les y o avall.
+
+
+    //walk cap a un espartà:
+    private int numberHenomotia;
 
 	private Rigidbody2D rb;
     
@@ -37,22 +42,33 @@ void Start ()
         posicioAnterior = GetComponent<Rigidbody2D>().transform.position;
 
 		rb = GetComponent<Rigidbody2D>();
+
+        //inicialitzem el número de la henomotia: per defecte serà la 0 la que està més aprop.
+        numberHenomotia = 0;
+        vectorDirector=new Vector3(1000,1000,1000);
     }
 	
 	void FixedUpdate ()
     {
-        if (SpartanArmy.HenomotiaList[0] != null)
+        if (SpartanArmy.HenomotiaList.Count != 0)
         {
-            moveToSpartans();//l'única funció en l'update que es cridarà cada frame. La IA de moment es basa en trobar l'espartà més proper i apropar-s'hi. 
+           moveTo();
         }
        
 	}
 
-	public void moveToSpartans()
+	private void moveTo()
 	{
-        closestHenomotia();//primer busquem quina és l'henomotia més propera en el frame actual. Això definirà les variables 'vectorDirector' i 'posicioHenomotia' correctes.
-
-		if (vectorDirector.magnitude <= minDistance)//si la distància del persa a la henomotia és més petita que la distància que li hem definit:
+        if (vectorDirector.magnitude <= minDistanceSpartan && SpartanArmy.HenomotiaList[numberHenomotia].gameObject.transform.name=="Henomotia ("+numberHenomotia.ToString() + ")")
+        {
+            closestSpartan();
+        }
+        else
+        {
+            closestHenomotia();
+        }
+        
+		if (vectorDirector.magnitude <= minDistanceHenomotia)//si la distància del persa a la henomotia és més petita que la distància que li hem definit:
 		{
 			posY = vectorDirector.y;//agafem la y d'aquest vector per a saber si és positiu o negatiu.
 			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);//calculem l'angle, que va del vector cap a la dreta al vectorDirector normalitzat (unitari)
@@ -74,7 +90,7 @@ void Start ()
 		}
 	}
     //funció per canviar la imatge de l'sprite segons l'angle:
-    public void changeSprite()
+    private void changeSprite()
     {
         if (anim.GetBool("moving")){ //sempre que no s'estigui movent:
             if (angle < 22.5f)//aquesta funció bàsicament utilitza la variable 'angle' per a posar un booleà de l'animator true o false. En cada if posarem un true i la resta false.
@@ -170,7 +186,36 @@ void Start ()
         }
     }
 
-    public void closestHenomotia()//funció per a trobar l'henomotia més propera.
+    
+    private void closestSpartan()
+    {
+        bool first_pass = true;
+        List<GameObject> closest_henomotia = new List<GameObject>();
+        closest_henomotia.AddRange(SpartanArmy.HenomotiaList[numberHenomotia].GetComponent<Henomotia>().SpartanList);
+       
+        foreach (GameObject spartan in closest_henomotia)
+        {
+            if (spartan != null)
+            {
+                if (first_pass)
+                {
+                    posicioHenomotia = closest_henomotia[0].GetComponent<Rigidbody2D>().transform.position;//primer la posició de l'espartà és la del 0.
+                    vectorDirector = posicioHenomotia - posicioActual;
+                    first_pass = false;
+                }
+                posicioHenomotia_comparacio = spartan.transform.position;//fem el mateix per a les comparacions per a cada henomotia.
+                vectorDirector_comparacio = posicioHenomotia_comparacio - posicioActual;
+
+                if (vectorDirector.magnitude > vectorDirector_comparacio.magnitude)//si la distància entre l'henomotia inicial és més gran que la de la comparació:
+                {
+                    vectorDirector = vectorDirector_comparacio;//aleshores canviem les dues variables per a les de la comparació
+                    posicioHenomotia = posicioHenomotia_comparacio;//d'aquesta manera ens quedaran les variables finals com a les més properes a cada persa.
+                }
+            }
+        }
+    }
+
+    private void closestHenomotia()//funció per a trobar l'henomotia més propera.
     {
         posicioHenomotia = SpartanArmy.HenomotiaList[0].transform.position;//primer la posició de l'henomotia és la de la 1
         vectorDirector = posicioHenomotia - posicioActual;//el vector serà el de la posició del persa a la henomotia 1
@@ -185,9 +230,11 @@ void Start ()
                 {
                     vectorDirector = vectorDirector_comparacio;//aleshores canviem les dues variables per a les de la comparació
                     posicioHenomotia = posicioHenomotia_comparacio;//d'aquesta manera ens quedaran les variables finals com a les més properes a cada persa.
+                    numberHenomotia = i;
                 }
             } 
         }
+
     }
 
 
