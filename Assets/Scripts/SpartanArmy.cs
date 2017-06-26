@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class SpartanArmy : MonoBehaviour
 {
 
-    static public List<GameObject> HenomotiaList;// ah de ser pública perquè hi puguin accedir-hi els perses!
+    static public List<GameObject> HenomotiaList;// ha de ser pública perquè hi puguin accedir-hi els perses!
     static public List<GameObject> selectedEnomotias;
     static public float playedTime =0.0f;
     static public int persiansKilled = 0;

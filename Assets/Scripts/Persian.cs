@@ -59,13 +59,13 @@ void Start ()
 
 	private void moveTo()
 	{
-        if (vectorDirector.magnitude <= minDistanceSpartan && SpartanArmy.HenomotiaList[numberHenomotia]!=null)
+        if (vectorDirector.magnitude <= minDistanceSpartan && SpartanArmy.HenomotiaList[numberHenomotia].gameObject.transform.name=="Henomotia ("+numberHenomotia.ToString() + ")")
         {
             closestSpartan();
         }
         else
         {
-            closestHenomotia();//primer busquem quina és l'henomotia més propera en el frame actual. Això definirà les variables 'vectorDirector' i 'posicioHenomotia' correctes.
+            closestHenomotia();
         }
         
 		if (vectorDirector.magnitude <= minDistanceHenomotia)//si la distància del persa a la henomotia és més petita que la distància que li hem definit:
