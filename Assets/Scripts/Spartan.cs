@@ -33,6 +33,8 @@ public class Spartan : MonoBehaviour {
     //parent henomotia:
     public Henomotia henomotia;
 
+    public bool colliding = false;
+
 
     void Start ()
     {
@@ -277,6 +279,36 @@ public class Spartan : MonoBehaviour {
         Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, gameObject.transform.position + new Vector3(0,0,20), gameObject.transform.rotation);
         Destroy(gameObject);
         auxList.Remove(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+       
+        if (collision.gameObject.tag == "spartan")
+        {
+            if (transform.parent.GetComponent<Henomotia>().changingFormationH())
+            {
+                collision.collider.isTrigger = true;
+                this.gameObject.GetComponent<Collider2D>().isTrigger = true;
+            }
+            else
+            {
+                collision.collider.isTrigger = false;
+                this.gameObject.GetComponent<Collider2D>().isTrigger = false;
+            }
+        }
+
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "spartan")
+        {
+            collision.collider.isTrigger = false;
+            this.gameObject.GetComponent<Collider2D>().isTrigger = false;
+        }
+
     }
 }
 

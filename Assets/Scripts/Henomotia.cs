@@ -30,6 +30,7 @@ public class Henomotia: MonoBehaviour {
 
     //COLLIDE:
     private bool isColliding;
+    public bool changingFormation;
 
 	public GameObject FormationSelector;
 
@@ -42,6 +43,8 @@ public class Henomotia: MonoBehaviour {
     //AUDIO:
     private AudioSource henomotiAudio;
     private static AudioClip[] audioClips;
+
+   
 
 
     //START
@@ -57,6 +60,7 @@ public class Henomotia: MonoBehaviour {
 		gameObject.GetComponent<BoxCollider2D>().enabled = true;
 
         formation = Formation.square;
+        changingFormation = false;
 
         //Inicializamos la lista henomotia
         SpartanList = new List<GameObject>();
@@ -145,11 +149,25 @@ public class Henomotia: MonoBehaviour {
 
                 changeWeapon();
                 if (Input.GetKeyDown("c"))
+                {
+                    if (formation != Formation.circle)
+                        changingFormation = true;
                     CircleFormation();
+                }   
                 else if (Input.GetKeyDown("x"))
+                {
+                    if (formation != Formation.square)
+                        changingFormation = true;
                     SquareFormation();
+                }
+                    
                 else if (Input.GetKeyDown("v"))
+                {
+                    if (formation != Formation.delta)
+                        changingFormation = true;
                     DeltaFormation();
+                }
+                    
             }
             else
             {
@@ -321,23 +339,32 @@ public class Henomotia: MonoBehaviour {
 
     public void updateFormation()
     {
+
+        bool allInPlace = true;//variable per saber si tots estan en la posició correcta en la formació
+
         for (int i=0;i<SpartanList.Count;i++)
         {
             Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
 
-            //CREC QUE ÉS AQUÍ ON FALLA:
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            SpartanList[i].GetComponent<Rigidbody2D>().position = Vector3.MoveTowards(SpartanList[i].GetComponent<Rigidbody2D>().position, transform.position + finalPos, speed * Time.deltaTime);
+            SpartanList[i].GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            SpartanList[i].GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
+            SpartanList[i].GetComponent<Rigidbody2D>().position = Vector3.MoveTowards(SpartanList[i].GetComponent<Rigidbody2D>().position, gameObject.GetComponent<Rigidbody2D>().position + (Vector2)finalPos, speed * Time.deltaTime);
             SpartanList[i].transform.rotation = transform.rotation * Quaternion.Inverse(transform.rotation);
 
+            
+            //comprovem que l'espartà arriba a la posició que necessita al canviar de formació:
+            if (changingFormation)
+            {
+                if((SpartanList[i].GetComponent<Rigidbody2D>().position.magnitude - (gameObject.GetComponent<Rigidbody2D>().position + (Vector2)finalPos).magnitude) >5.0f)
+                {
+                    allInPlace = false;
+                }
+            }
+        }
 
-
-
-            //SpartanList[i].GetComponent<Rigidbody2D>().AddForceAtPosition(new Vector2(2, 2), transform.position + finalPos, ForceMode2D.Force);
+        if (allInPlace)
+        {
+            changingFormation = false;
         }
     }
 
@@ -479,43 +506,7 @@ public class Henomotia: MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.name == "Persian(Clone)")
-        {
-            foreach (GameObject spartan in SpartanList)
-            {
-                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                renderer.color = new Color(1, 0, 0, 1);
-            }
-            isColliding = true;
-        }
-        else
-        {
-            isColliding = false;
-        }
-        
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.name == "Persian(Clone)")
-        {
-            foreach (GameObject spartan in SpartanList)
-            {
-                SpriteRenderer renderer = spartan.GetComponent<SpriteRenderer>();
-                renderer.color = new Color(1, 1, 1, 1);
-            }
-            if (timePassed >= 0.01f)
-            {
-                isColliding = false;
-                GetComponent<Rigidbody2D>().velocity = default(Vector3);
-                timePassed = 0.0f;
-            }
-        }
-        else if(collision.gameObject.name.Contains("Henomotia"))
-            GetComponent<Rigidbody2D>().velocity = default(Vector3);
-    }
+    
 
     private void changeWeapon()
     {
@@ -548,4 +539,8 @@ public class Henomotia: MonoBehaviour {
         SpartanList.Remove(spartan);
     }
 
+    public bool changingFormationH()
+    {
+        return changingFormation;
+    }
 }
