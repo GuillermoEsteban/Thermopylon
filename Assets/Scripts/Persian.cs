@@ -234,6 +234,7 @@ void Start ()
                     vectorDirector = vectorDirector_comparacio;//aleshores canviem les dues variables per a les de la comparació
                     posicioHenomotia = posicioHenomotia_comparacio;//d'aquesta manera ens quedaran les variables finals com a les més properes a cada persa.
                     numberHenomotia = i;
+                    
                 }
             } 
         }

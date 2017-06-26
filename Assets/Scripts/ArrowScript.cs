@@ -84,7 +84,8 @@ public class ArrowScript : MonoBehaviour {
                 }
                 else if (timePassed >= 1.3f && timePassed < 2f)
                 {
-                    Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+                    GameObject spartan_dead =Instantiate(Resources.Load("deadSpartanByArrow") as GameObject, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+                    spartan_dead.transform.position += new Vector3(0, 0, 20);
                     selectedHenomotia.gameObject.GetComponent<Henomotia>().deleteSpartanList(collision.gameObject);
                     selectedHenomotia.gameObject.GetComponent<Henomotia>().numSpartan--;
                     selectedHenomotia.gameObject.transform.parent.GetComponent<SpartanArmy>().totalNumSpartans--;
@@ -96,11 +97,8 @@ public class ArrowScript : MonoBehaviour {
                 if (timePassed >= 0.05f && timePassed < 0.1f)
                 {
                     collision.gameObject.GetComponent<Persian>().death_anim();
-                }
-                else if (timePassed >= 1.3f && timePassed < 2f)
-                {
-                    Instantiate(Resources.Load("deadPersian") as GameObject, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
-                    Destroy(collision.gameObject);
+                    GameObject persian_dead = Instantiate(Resources.Load("deadPersian") as GameObject, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+                    persian_dead.transform.position += new Vector3(0, 0, 20);
                 }
             }
         }
