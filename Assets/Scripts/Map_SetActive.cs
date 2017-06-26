@@ -28,8 +28,6 @@ public class Map_SetActive : MonoBehaviour {
                     army.gameObject.SetActive(true);
                 }
             }
-
-            Debug.Log("Trigger Map collided!");
             CameraController2.limitX = x;
             CameraController2.limitY = y;
             collided = true;

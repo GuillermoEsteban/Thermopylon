@@ -35,6 +35,8 @@ void Start ()
         anim = GetComponent<Animator>(); //agafem l'Animator propi de cada persa.
 
         anim.SetBool("moving", false); //comencen sense moure's.
+        anim.SetBool("death", false);
+        anim.SetBool("attack", false);
 
         persianSpeed = 300; //inicialitzem la velocitat dels perses a 300, però està subjecte a canvis.
 
@@ -74,7 +76,8 @@ void Start ()
 			angle = Vector3.Angle(Vector3.right, vectorDirector.normalized);//calculem l'angle, que va del vector cap a la dreta al vectorDirector normalitzat (unitari)
 
 			//rb.MovePosition(posicioActual + (posicioHenomotia - posicioActual).normalized * Time.deltaTime * 10);
-			rb.velocity = ((posicioHenomotia - posicioActual).normalized * Time.deltaTime * persianSpeed);
+            if(SpartanArmy.HenomotiaList[numberHenomotia].gameObject.transform.name == "Henomotia (" + numberHenomotia.ToString() + ")")
+			    rb.velocity = ((posicioHenomotia - posicioActual).normalized * Time.deltaTime * persianSpeed);
 
 			posicioActual = GetComponent<Rigidbody2D>().transform.position;//la posició actual del rigidbody.
 
@@ -234,14 +237,25 @@ void Start ()
                 }
             } 
         }
-
     }
 
-
+    public void death_anim()
+    {
+        gameObject.GetComponent<Collider2D>().isTrigger = true;
+        gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        anim.SetBool("death", true);
+        Invoke("death", 0.5f);
+    }
     public void death()
     {
+        Instantiate(Resources.Load("deadPersian") as GameObject, gameObject.transform.position + new Vector3(0, 0, 20), gameObject.transform.rotation);
         Destroy(gameObject);
         SpartanArmy.persiansKilled++;
+    }
+
+    public void dontAttack()
+    {
+        anim.SetBool("attack", false);
     }
 
 }

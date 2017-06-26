@@ -40,7 +40,7 @@ public class PersianArmy : MonoBehaviour {
         else if (this.tag == "lvl2")
         {
             maxRandom = 0.7f; //70 % de probabilitats
-            numPersians = 200;
+            numPersians = 100;
         }
         else if (this.tag == "lvl3")
         {

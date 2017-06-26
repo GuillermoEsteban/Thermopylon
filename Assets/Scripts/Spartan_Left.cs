@@ -25,7 +25,7 @@ public class Spartan_Left : MonoBehaviour {
             if (anim.GetBool("anim7")==true || anim.GetBool("anim6") == true || anim.GetBool("anim5") == true)
             {
                 anim.SetBool("attack", true);
-                collider.gameObject.GetComponent<Persian>().Invoke("death",0.5f);
+                collider.gameObject.GetComponent<Persian>().Invoke("death_anim", .1f);
                 this.gameObject.GetComponentInParent<Spartan>().Invoke("dontAttack", .5f);
 
                 //if (!coRoutineOn)
@@ -33,6 +33,8 @@ public class Spartan_Left : MonoBehaviour {
             }
             else
             {
+                collider.gameObject.GetComponent<Animator>().SetBool("attack", true);
+                collider.gameObject.GetComponent<Persian>().Invoke("dontAttack", .5f);
                 Invoke("Destroy", 0.25f);
             }
         } 

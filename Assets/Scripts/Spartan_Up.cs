@@ -25,7 +25,7 @@ public class Spartan_Up : MonoBehaviour {
             if (anim.GetBool("anim3") == true || anim.GetBool("anim4") == true || anim.GetBool("anim5") == true)
             {
                 anim.SetBool("attack", true);
-                collider.gameObject.GetComponent<Persian>().Invoke("death", .5f);
+                collider.gameObject.GetComponent<Persian>().Invoke("death_anim", .25f);
                 gameObject.GetComponentInParent<Spartan>().Invoke("dontAttack", .5f);
 
                 //if (!coRoutineOn)
@@ -33,6 +33,8 @@ public class Spartan_Up : MonoBehaviour {
             }
             else
             {
+                collider.gameObject.GetComponent<Animator>().SetBool("attack", true);
+                collider.gameObject.GetComponent<Persian>().Invoke("dontAttack", .5f);
                 Invoke("Destroy", .25f);
             }
         }

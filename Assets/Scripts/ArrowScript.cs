@@ -91,6 +91,18 @@ public class ArrowScript : MonoBehaviour {
                     Destroy(collision.gameObject);
                 }
             }
+            else if (collision.gameObject.tag == "persian")
+            {
+                if (timePassed >= 0.05f && timePassed < 0.1f)
+                {
+                    collision.gameObject.GetComponent<Persian>().death_anim();
+                }
+                else if (timePassed >= 1.3f && timePassed < 2f)
+                {
+                    Instantiate(Resources.Load("deadPersian") as GameObject, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+                    Destroy(collision.gameObject);
+                }
+            }
         }
         
     }
