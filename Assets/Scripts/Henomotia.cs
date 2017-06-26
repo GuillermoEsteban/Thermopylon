@@ -30,7 +30,7 @@ public class Henomotia: MonoBehaviour {
 
     //COLLIDE:
     private bool isColliding;
-    private bool changingFormation;
+    public bool changingFormation;
 
 	public GameObject FormationSelector;
 
@@ -150,23 +150,22 @@ public class Henomotia: MonoBehaviour {
                 changeWeapon();
                 if (Input.GetKeyDown("c"))
                 {
+                    if (formation != Formation.circle)
+                        changingFormation = true;
                     CircleFormation();
-                    changingFormation = true;
                 }   
                 else if (Input.GetKeyDown("x"))
                 {
+                    if (formation != Formation.square)
+                        changingFormation = true;
                     SquareFormation();
-                    changingFormation = true;
                 }
                     
                 else if (Input.GetKeyDown("v"))
                 {
+                    if (formation != Formation.delta)
+                        changingFormation = true;
                     DeltaFormation();
-                    changingFormation = true;
-                }
-                else
-                {
-                    changingFormation = false;
                 }
                     
             }
@@ -347,12 +346,6 @@ public class Henomotia: MonoBehaviour {
         {
             Vector3 finalPos = transform.rotation * SpartanList[i].GetComponent<Spartan>().getRelativePosition();
 
-            //CREC QUE ÉS AQUÍ ON FALLA:
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
             SpartanList[i].GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             SpartanList[i].GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
             SpartanList[i].GetComponent<Rigidbody2D>().position = Vector3.MoveTowards(SpartanList[i].GetComponent<Rigidbody2D>().position, gameObject.GetComponent<Rigidbody2D>().position + (Vector2)finalPos, speed * Time.deltaTime);
@@ -362,12 +355,11 @@ public class Henomotia: MonoBehaviour {
             //comprovem que l'espartà arriba a la posició que necessita al canviar de formació:
             if (changingFormation)
             {
-                if(SpartanList[i].GetComponent<Rigidbody2D>().transform.position.magnitude <= (transform.position + finalPos).magnitude +3)
+                if((SpartanList[i].GetComponent<Rigidbody2D>().position.magnitude - (gameObject.GetComponent<Rigidbody2D>().position + (Vector2)finalPos).magnitude) >5.0f)
                 {
                     allInPlace = false;
                 }
             }
-            //SpartanList[i].GetComponent<Rigidbody2D>().AddForceAtPosition(new Vector2(2, 2), transform.position + finalPos, ForceMode2D.Force);
         }
 
         if (allInPlace)
