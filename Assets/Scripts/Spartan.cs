@@ -33,6 +33,8 @@ public class Spartan : MonoBehaviour {
     //parent henomotia:
     public Henomotia henomotia;
 
+    public bool colliding = false;
+
 
     void Start ()
     {

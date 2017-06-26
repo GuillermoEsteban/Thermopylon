@@ -331,7 +331,9 @@ public class Henomotia: MonoBehaviour {
             //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
             //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
             //VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-            SpartanList[i].GetComponent<Rigidbody2D>().position = Vector3.MoveTowards(SpartanList[i].GetComponent<Rigidbody2D>().position, transform.position + finalPos, speed * Time.deltaTime);
+            SpartanList[i].GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            SpartanList[i].GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
+            SpartanList[i].GetComponent<Rigidbody2D>().position = Vector3.MoveTowards(SpartanList[i].GetComponent<Rigidbody2D>().position, gameObject.GetComponent<Rigidbody2D>().position + (Vector2)finalPos, speed * Time.deltaTime);
             SpartanList[i].transform.rotation = transform.rotation * Quaternion.Inverse(transform.rotation);
 
 
