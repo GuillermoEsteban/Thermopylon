@@ -241,7 +241,7 @@ void Start ()
 
     public void death_anim()
     {
-        gameObject.GetComponent<Collider2D>().isTrigger = true;
+        //gameObject.GetComponent<Collider2D>().isTrigger = true;
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         anim.SetBool("death", true);
         Invoke("death", 0.5f);
